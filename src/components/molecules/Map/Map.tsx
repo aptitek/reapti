@@ -4,7 +4,7 @@ import { Box, Flex } from 'styled-system/jsx';
 import { ContentContext } from '../../../i18n/context.tsx';
 import { DEFAULT_LOCALE } from '../../../i18n/locales.ts';
 import { resolveA11yString } from '../../../i18n/strings.ts';
-import { Me3Button } from '../../atoms/Me3Button/Me3Button.tsx';
+import { M3eButton } from '@m3e/react/button';
 import { MapPin } from '../../atoms/MapPin/MapPin.tsx';
 import { MapSkeleton } from '../../atoms/MapSkeleton/MapSkeleton.tsx';
 import { useMapZoom } from './useMapZoom.ts';
@@ -102,7 +102,7 @@ function MapControls({
       gap="1"
       zIndex={4}
     >
-      <Me3Button
+      <M3eButton
         size="small"
         variant="tonal"
         shape="rounded"
@@ -112,7 +112,7 @@ function MapControls({
         <Box fontSize="sm" fontWeight="bold">
           +
         </Box>
-      </Me3Button>
+      </M3eButton>
       <Box
         textAlign="center"
         fontSize="xs"
@@ -122,7 +122,7 @@ function MapControls({
       >
         {zoomText}
       </Box>
-      <Me3Button
+      <M3eButton
         size="small"
         variant="tonal"
         shape="rounded"
@@ -132,7 +132,7 @@ function MapControls({
         <Box fontSize="sm" fontWeight="bold">
           -
         </Box>
-      </Me3Button>
+      </M3eButton>
     </Flex>
   );
 }

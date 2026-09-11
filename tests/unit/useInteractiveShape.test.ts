@@ -6,7 +6,7 @@ import type { M3eButtonElement } from '@m3e/web/button';
 import {
   useInteractiveShape,
   resolveActiveShape,
-} from '../../src/components/atoms/Me3Button/useInteractiveShape.ts';
+} from '../../src/hooks/useInteractiveShape.ts';
 
 describe('useInteractiveShape Hook Unit Tests', () => {
   it('resolves active shapes with shifted state and fallback', () => {

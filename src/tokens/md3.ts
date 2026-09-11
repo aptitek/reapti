@@ -62,7 +62,7 @@ export const md3Tokens = {
 };
 
 const c = (light: string, dark: string) => ({
-  value: { _light: light, _dark: dark },
+  value: { base: light, _light: light, _dark: dark },
 });
 
 export const md3SemanticTokens = {

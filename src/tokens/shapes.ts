@@ -1,3 +1,4 @@
+import type { ShapeName } from '@m3e/web/shape';
 import shapePathsData from './shape-paths.json' with { type: 'json' };
 
 export interface RectBounds {
@@ -7,46 +8,9 @@ export interface RectBounds {
   height: number;
 }
 
-export type ExpressiveShapeName =
-  | '4-leaf-clover'
-  | '4-sided-cookie'
-  | '6-sided-cookie'
-  | '7-sided-cookie'
-  | '8-leaf-clover'
-  | '9-sided-cookie'
-  | '12-sided-cookie'
-  | 'arch'
-  | 'arrow'
-  | 'boom'
-  | 'bun'
-  | 'burst'
-  | 'circle'
-  | 'diamond'
-  | 'fan'
-  | 'flower'
-  | 'gem'
-  | 'ghost-ish'
-  | 'heart'
-  | 'hexagon'
-  | 'oval'
-  | 'pentagon'
-  | 'pill'
-  | 'pixel-circle'
-  | 'pixel-triangle'
-  | 'puffy'
-  | 'puffy-diamond'
-  | 'semicircle'
-  | 'slanted'
-  | 'soft-boom'
-  | 'soft-burst'
-  | 'square'
-  | 'sunny'
-  | 'triangle'
-  | 'very-sunny';
+export type ExpressiveShapeName = ShapeName;
 
 export const SHAPE_PATHS: Record<string, string> = shapePathsData;
-
-const BASE_VIEWPORT = 380;
 
 /**
  * Checks whether a given shape name is a recognized M3 expressive shape.
@@ -98,44 +62,33 @@ export function getRoundedRectPath(bounds: RectBounds, radius: number): string {
   ].join(' ');
 }
 
-function scaleSegment(coordsStr: string, bounds: RectBounds): string {
-  const nums = coordsStr
-    .trim()
-    .split(/[\s,]+/)
-    .filter(Boolean)
-    .map(Number);
-  const scaled: string[] = [];
-
-  for (let i = 0; i < nums.length; i += 2) {
-    if (i + 1 < nums.length) {
-      const px = Number(
-        ((nums[i]! / BASE_VIEWPORT) * bounds.width + bounds.x).toFixed(2)
-      );
-      const py = Number(
-        ((nums[i + 1]! / BASE_VIEWPORT) * bounds.height + bounds.y).toFixed(2)
-      );
-      scaled.push(`${px} ${py}`);
-    } else {
-      scaled.push(String(nums[i]!));
-    }
-  }
-
-  return scaled.join(' ');
-}
-
 /**
- * Scales an M3 Expressive shape path (normalized to 380x380) to target bounds.
+ * Scales an M3 Expressive shape path (normalized to 0..1) to target bounds.
  */
 export function scaleNormalizedPath(
   pathStr: string,
   bounds: RectBounds
 ): string {
+  const { x, y, width: w, height: h } = bounds;
   return pathStr.replace(
     /([A-DF-Za-df-z])([^A-DF-Za-df-z]*)/g,
     (_, cmd: string, coordsStr: string) => {
       const trimmed = coordsStr.trim();
       if (!trimmed) return cmd;
-      return `${cmd}${scaleSegment(trimmed, bounds)}`;
+      const nums = trimmed.match(/-?[0-9]*\.?[0-9]+(?:e[-+]?[0-9]+)?/gi) ?? [];
+      const scaled: string[] = [];
+      for (let i = 0; i < nums.length; i += 2) {
+        const nx = nums[i];
+        const ny = nums[i + 1];
+        if (nx !== undefined && ny !== undefined) {
+          const px = Number((parseFloat(nx) * w + x).toFixed(2));
+          const py = Number((parseFloat(ny) * h + y).toFixed(2));
+          scaled.push(`${px} ${py}`);
+        } else if (nx !== undefined) {
+          scaled.push(nx);
+        }
+      }
+      return `${cmd}${scaled.join(' ')}`;
     }
   );
 }
@@ -147,18 +100,14 @@ export interface ResolveBorderPathOptions {
 }
 
 /**
- * Resolves the perimeter SVG path for a button given its shape, bounds, and corner radius.
+ * Resolves the perimeter SVG path for a button given its shape and bounds.
+ * Uses the same unified normalized 0..1 path calculation for all shapes.
  */
 export function resolveBorderPath({
   shape,
   bounds,
-  radius = 8,
 }: ResolveBorderPathOptions): string {
-  if (isExpressiveShape(shape)) {
-    const rawPath = SHAPE_PATHS[shape];
-    if (rawPath) {
-      return scaleNormalizedPath(rawPath, bounds);
-    }
-  }
-  return getRoundedRectPath(bounds, radius);
+  const shapeName = toExpressiveShape(shape);
+  const rawPath = SHAPE_PATHS[shapeName] ?? SHAPE_PATHS.pill;
+  return scaleNormalizedPath(rawPath, bounds);
 }

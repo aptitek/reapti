@@ -1,29 +1,29 @@
 import { useState } from 'react';
 import type { FocusEvent, PointerEvent } from 'react';
-import type { M3eButtonElement } from '@m3e/web/button';
-import { toExpressiveShape } from '../../../tokens/shapes.ts';
 import type { ShapeName } from '@m3e/web/shape';
-import type { Me3Shape } from './Me3Button.tsx';
+import { toExpressiveShape } from '../tokens/shapes.ts';
 
-export interface InteractiveCallbacks {
-  onPointerEnter?: (e: PointerEvent<M3eButtonElement>) => void;
-  onPointerLeave?: (e: PointerEvent<M3eButtonElement>) => void;
-  onFocus?: (e: FocusEvent<M3eButtonElement>) => void;
-  onBlur?: (e: FocusEvent<M3eButtonElement>) => void;
+export type InteractiveShapeName = ShapeName | string;
+
+export interface InteractiveCallbacks<T = HTMLElement> {
+  onPointerEnter?: (e: PointerEvent<T>) => void;
+  onPointerLeave?: (e: PointerEvent<T>) => void;
+  onFocus?: (e: FocusEvent<T>) => void;
+  onBlur?: (e: FocusEvent<T>) => void;
 }
 
 export function resolveActiveShape(
-  shape: Me3Shape,
-  targetShape: Me3Shape | undefined,
+  shape: InteractiveShapeName,
+  targetShape: InteractiveShapeName | undefined,
   isShifted: boolean
 ): ShapeName {
   return toExpressiveShape(isShifted && targetShape ? targetShape : shape);
 }
 
-export function useInteractiveShape(
-  shape: Me3Shape = 'rounded',
-  targetShape?: Me3Shape,
-  callbacks?: InteractiveCallbacks
+export function useInteractiveShape<T = HTMLElement>(
+  shape: InteractiveShapeName = 'rounded',
+  targetShape?: InteractiveShapeName,
+  callbacks?: InteractiveCallbacks<T>
 ) {
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -31,19 +31,19 @@ export function useInteractiveShape(
   const isShifted = Boolean(targetShape && (isHovered || isFocused));
   const activeShape = resolveActiveShape(shape, targetShape, isShifted);
 
-  const handlePointerEnter = (e: PointerEvent<M3eButtonElement>) => {
+  const handlePointerEnter = (e: PointerEvent<T>) => {
     setIsHovered(true);
     callbacks?.onPointerEnter?.(e);
   };
-  const handlePointerLeave = (e: PointerEvent<M3eButtonElement>) => {
+  const handlePointerLeave = (e: PointerEvent<T>) => {
     setIsHovered(false);
     callbacks?.onPointerLeave?.(e);
   };
-  const handleFocus = (e: FocusEvent<M3eButtonElement>) => {
+  const handleFocus = (e: FocusEvent<T>) => {
     setIsFocused(true);
     callbacks?.onFocus?.(e);
   };
-  const handleBlur = (e: FocusEvent<M3eButtonElement>) => {
+  const handleBlur = (e: FocusEvent<T>) => {
     setIsFocused(false);
     callbacks?.onBlur?.(e);
   };
