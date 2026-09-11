@@ -12,6 +12,8 @@ const IGNORED_SOURCE_PATTERNS = [
   /\/types\//,
   /\/content\//,
   /main\.tsx$/,
+  /\.stories\.(ts|tsx)$/,
+  /\.(test|spec)\.(ts|tsx)$/,
 ];
 
 function isIgnored(filePath) {
@@ -39,6 +41,10 @@ const EXPLICIT_COMPANIONS = {
   'src/i18n/ContentProvider.tsx': ['tests/unit/i18n-content.test.ts'],
   'src/i18n/locales.ts': ['tests/unit/i18n-content.test.ts'],
   'src/i18n/registry.ts': ['tests/unit/i18n-content.test.ts'],
+  'src/i18n/strings.ts': [
+    'tests/unit/a11y-enforcement.test.ts',
+    'tests/unit/i18n-content.test.ts',
+  ],
   'src/i18n/types.ts': ['tests/unit/i18n-content.test.ts'],
 };
 

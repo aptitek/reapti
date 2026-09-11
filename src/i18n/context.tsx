@@ -6,7 +6,8 @@ import {
 } from 'react';
 import { DEFAULT_LOCALE, type Locale } from './locales.ts';
 import { CONTENT_REGISTRY } from './registry.ts';
-import type { ContentKey, MdxComponent } from './types.ts';
+import { resolveA11yString } from './strings.ts';
+import type { A11yKey, ContentKey, MdxComponent } from './types.ts';
 
 export interface ContentContextValue {
   locale: Locale;
@@ -35,6 +36,14 @@ export function useContentElement(key: ContentKey): ReactNode {
     );
   }
   return createElement(ctx.getContent(key));
+}
+
+export function useA11yString(key: A11yKey): string {
+  const ctx = useContext(ContentContext);
+  if (!ctx) {
+    throw new Error('useA11yString must be used within a <ContentProvider>');
+  }
+  return resolveA11yString(ctx.locale, key);
 }
 
 export function resolveContent(locale: Locale, key: ContentKey): MdxComponent {

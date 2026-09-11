@@ -10,6 +10,7 @@ import { CONTENT_REGISTRY } from '../../src/i18n/registry.ts';
 import {
   useLocale,
   useContentElement,
+  useA11yString,
   resolveContent,
 } from '../../src/i18n/context.tsx';
 import { ContentProvider } from '../../src/i18n/ContentProvider.tsx';
@@ -17,7 +18,12 @@ import { ContentProvider } from '../../src/i18n/ContentProvider.tsx';
 function ConsumerComponent(): ReactElement {
   const { locale } = useLocale();
   const element = useContentElement('app');
-  return createElement('span', { 'data-locale': locale }, element);
+  const a11y = useA11yString('appMain');
+  return createElement(
+    'span',
+    { 'data-locale': locale, 'data-a11y': a11y },
+    element
+  );
 }
 
 function BadLocaleConsumer(): ReactElement {
@@ -27,6 +33,11 @@ function BadLocaleConsumer(): ReactElement {
 
 function BadElementConsumer(): ReactElement {
   useContentElement('app');
+  return createElement('span');
+}
+
+function BadA11yConsumer(): ReactElement {
+  useA11yString('appMain');
   return createElement('span');
 }
 
@@ -81,5 +92,11 @@ describe('i18n Context and ContentProvider', () => {
     expect(() =>
       renderToStaticMarkup(createElement(BadElementConsumer))
     ).toThrow('useContentElement must be used within a <ContentProvider>');
+  });
+
+  it('throws helpful error when useA11yString is called outside provider', () => {
+    expect(() => renderToStaticMarkup(createElement(BadA11yConsumer))).toThrow(
+      'useA11yString must be used within a <ContentProvider>'
+    );
   });
 });

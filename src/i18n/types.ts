@@ -3,6 +3,8 @@ import type { Locale } from './locales.ts';
 
 export type ContentKey = 'app' | 'cta';
 
+export type A11yKey = 'appMain' | 'ctaAction';
+
 export type MdxComponent = ComponentType<{
   components?: Record<string, unknown>;
   [key: string]: unknown;

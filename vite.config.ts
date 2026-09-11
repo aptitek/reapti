@@ -19,6 +19,14 @@ export default defineConfig({
       'styled-system': path.resolve(dirname, './styled-system'),
     },
   },
+  optimizeDeps: {
+    include: ['@m3e/react/button'],
+  },
+  server: {
+    fs: {
+      allow: [dirname, path.resolve(dirname, 'node_modules')],
+    },
+  },
   test: {
     passWithNoTests: true,
     coverage: {
@@ -58,6 +66,7 @@ export default defineConfig({
           // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
           storybookTest({
             configDir: path.join(dirname, '.storybook'),
+            disableAddonDocs: false,
           }),
         ],
         test: {

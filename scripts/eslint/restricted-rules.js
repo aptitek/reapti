@@ -151,4 +151,18 @@ export const restrictedSyntaxRules = [
     message:
       'Hardcoded localized string detected in fallback expression. Content must originate from i18n MDX files.',
   },
+  // Rule 12: Hardcoded Localized String in Accessibility and Alt Attributes (Direct Literal)
+  {
+    selector:
+      'JSXAttribute[name.name=/^(alt|aria-label|aria-placeholder|aria-roledescription|aria-valuetext|title)$/] > Literal[value=/[a-zA-Z\u00C0-\u024F]/]',
+    message:
+      'Hardcoded localized string detected in attribute "{{name.name}}". Separation of Concerns violation: all user-facing alt text and accessibility labels must originate from i18n content.',
+  },
+  // Rule 13: Hardcoded Localized String in Accessibility and Alt Attributes (Expression Literal)
+  {
+    selector:
+      'JSXAttribute[name.name=/^(alt|aria-label|aria-placeholder|aria-roledescription|aria-valuetext|title)$/] > JSXExpressionContainer > Literal[value=/[a-zA-Z\u00C0-\u024F]/]',
+    message:
+      'Hardcoded localized string detected in attribute "{{name.name}}". Separation of Concerns violation: all user-facing alt text and accessibility labels must originate from i18n content.',
+  },
 ];

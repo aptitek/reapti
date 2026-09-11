@@ -19,6 +19,7 @@
     "lint:mdx": "wireit",
     "lint:sonar": "wireit",
     "lint:tdd": "wireit",
+    "lint:storybook": "wireit",
     "lint:fix": "wireit",
     "test": "wireit",
     "test:unit": "wireit",
@@ -89,7 +90,8 @@
         "lint:knip",
         "lint:typecheck",
         "lint:sonar",
-        "lint:tdd"
+        "lint:tdd",
+        "lint:storybook"
       ]
     },
     "lint:eslint": {
@@ -163,6 +165,13 @@
         "src/**/*",
         "tests/**/*",
         "scripts/lint-tdd-companions.mjs"
+      ]
+    },
+    "lint:storybook": {
+      "command": "node scripts/lint-storybook-coverage.mjs",
+      "files": [
+        "src/**/*.tsx",
+        "scripts/lint-storybook-coverage.mjs"
       ]
     },
     "lint:fix": {
