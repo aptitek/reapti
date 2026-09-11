@@ -1,0 +1,52 @@
+.holo-decorator_text {
+  background-image:
+    var(--holo-gradient), linear-gradient(currentColor, currentColor);
+  background-size: calc(var(--holo-bg-size-x, 100%) * 2)
+    calc(var(--holo-bg-size-y, 100%) * 2);
+  background-position: calc(
+      -0.5 * var(--holo-bg-size-x, 100%) - var(--holo-offset-x, 0px)
+    )
+    calc(-0.5 * var(--holo-bg-size-y, 100%) - var(--holo-offset-y, 0px));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-blend-mode: screen;
+  transition: opacity 400ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.is-facing-away .holo-decorator_text {
+  opacity: 0;
+}
+
+.holo-decorator_image {
+  position: relative;
+  display: inline-flex;
+}
+
+.holo-decorator_image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.7;
+  background-image: var(--holo-gradient);
+  background-size: calc(var(--holo-bg-size-x, 100%) * 2)
+    calc(var(--holo-bg-size-y, 100%) * 2);
+  background-position: calc(
+      -0.5 * var(--holo-bg-size-x, 100%) - var(--holo-offset-x, 0px)
+    )
+    calc(-0.5 * var(--holo-bg-size-y, 100%) - var(--holo-offset-y, 0px));
+  mask-image: var(--holo-mask-url);
+  -webkit-mask-image: var(--holo-mask-url);
+  mask-size: var(--holo-mask-size, contain);
+  -webkit-mask-size: var(--holo-mask-size, contain);
+  mask-position: center;
+  -webkit-mask-position: center;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  transition: opacity 400ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.is-facing-away .holo-decorator_image::after {
+  opacity: 0;
+}

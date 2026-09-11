@@ -1,0 +1,131 @@
+.flip_card_root {
+  position: relative;
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  aspect-ratio: var(--flip-card-ratio, auto);
+  perspective: var(--flip-card-perspective, 1000px);
+  -webkit-user-select: none;
+}
+
+.flip_card_root:focus-visible {
+  outline: 2px solid var(--colors-primary);
+  outline-offset: 2px;
+  border-radius: var(--radii-medium);
+}
+
+.flip_card_tilt {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--flip-card-rotate-x, 0deg))
+    rotateY(var(--flip-card-rotate-y, 0deg));
+}
+
+.flip_card_flip {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  transform-style: preserve-3d;
+  transform: rotateY(var(--flip-card-flip-angle, 0deg));
+  transition: transform 600ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.flip_card_face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: var(--radii-medium);
+  background-color: var(--colors-surface);
+  color: var(--colors-on-surface);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: opacity 400ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.flip_card_front {
+  transform: translateZ(1px);
+}
+
+.flip_card_back {
+  transform: rotateY(180deg) translateZ(1px);
+}
+
+/* Glass / Transparent Mode */
+.flip_card_root[data-transparent='true'] .flip_card_face {
+  backface-visibility: visible;
+  -webkit-backface-visibility: visible;
+  -webkit-backdrop-filter: blur(20px);
+  background-color: var(--colors-surface-container-lowest);
+  border: 1px solid var(--colors-outline-variant);
+  background-clip: padding-box;
+  box-shadow: var(--shadows-elevation4);
+}
+
+.flip_card_root[data-transparent='true'] .flip_card_face.is-facing-away {
+  opacity: 0.2;
+}
+
+/* Elevations */
+.flip_card_face[data-elevation='0'] {
+  box-shadow: var(--shadows-elevation0);
+}
+
+.flip_card_face[data-elevation='1'] {
+  box-shadow: var(--shadows-elevation1);
+}
+
+.flip_card_face[data-elevation='2'] {
+  box-shadow: var(--shadows-elevation2);
+}
+
+.flip_card_face[data-elevation='3'] {
+  box-shadow: var(--shadows-elevation3);
+}
+
+.flip_card_face[data-elevation='4'] {
+  box-shadow: var(--shadows-elevation4);
+}
+
+.flip_card_face[data-elevation='5'] {
+  box-shadow: var(--shadows-elevation5);
+}
+
+/* Sheen Layer */
+.flip_card_sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  inline-size: 200%;
+  block-size: 200%;
+  inset-inline-start: var(--sheen-x, 50%);
+  inset-block-start: var(--sheen-y, 50%);
+  transform: translate(-50%, -50%);
+  background: var(--sheen-gradient);
+  mix-blend-mode: overlay;
+}
+
+/* Holo Foil Layer */
+.flip_card_holo {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0.55;
+  background-image: var(--holo-gradient);
+  background-size: 200% 200%;
+  background-position: center;
+}
+
+.flip_card_holo[data-has-mask='true'] {
+  mask-image: var(--holo-mask-image);
+  -webkit-mask-image: var(--holo-mask-image);
+  mask-size: cover;
+  -webkit-mask-size: cover;
+  mask-position: center;
+  -webkit-mask-position: center;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+}
