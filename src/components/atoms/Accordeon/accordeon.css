@@ -29,23 +29,17 @@
   transform-style: preserve-3d;
   transform-origin: center center;
   border-radius: var(--radii-medium);
-  filter: drop-shadow(0 0 0 transparent);
   transition:
     transform 600ms cubic-bezier(0.2, 0, 0, 1),
     inline-size 600ms cubic-bezier(0.2, 0, 0, 1),
-    block-size 600ms cubic-bezier(0.2, 0, 0, 1),
-    filter 600ms cubic-bezier(0.2, 0, 0, 1);
+    block-size 600ms cubic-bezier(0.2, 0, 0, 1);
   transform: rotateY(0deg);
 }
 
 .accordeon_root[data-folded='true'] .accordeon_viewport {
-  inline-size: 60%;
+  inline-size: 40%;
   block-size: 92%;
   transform: rotateY(var(--accordeon-max-angle, 0deg));
-  filter: drop-shadow(1px 0 0 var(--colors-outline-variant))
-    drop-shadow(-1px 0 0 var(--colors-outline-variant))
-    drop-shadow(0 1px 0 var(--colors-outline-variant))
-    drop-shadow(0 -1px 0 var(--colors-outline-variant));
 }
 
 .accordeon_content {
