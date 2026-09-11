@@ -65,6 +65,8 @@ describe('M3 Shapes Scaling & Unified Border Path', () => {
     expect(withOdd).toContain('10');
     const withEmpty = scaleNormalizedPath('M Z', bounds);
     expect(withEmpty).toContain('M');
+    const withNoCoords = scaleNormalizedPath('M no-coords Z', bounds);
+    expect(withNoCoords).toContain('M');
   });
 
   it('resolves unified border path for expressive shapes without rogue lines', () => {

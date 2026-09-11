@@ -78,13 +78,13 @@ export function scaleNormalizedPath(
       const nums = trimmed.match(/-?[0-9]*\.?[0-9]+(?:e[-+]?[0-9]+)?/gi) ?? [];
       const scaled: string[] = [];
       for (let i = 0; i < nums.length; i += 2) {
-        const nx = nums[i];
+        const nx = nums[i]!;
         const ny = nums[i + 1];
-        if (nx !== undefined && ny !== undefined) {
+        if (ny !== undefined) {
           const px = Number((parseFloat(nx) * w + x).toFixed(2));
           const py = Number((parseFloat(ny) * h + y).toFixed(2));
           scaled.push(`${px} ${py}`);
-        } else if (nx !== undefined) {
+        } else {
           scaled.push(nx);
         }
       }
@@ -108,6 +108,6 @@ export function resolveBorderPath({
   bounds,
 }: ResolveBorderPathOptions): string {
   const shapeName = toExpressiveShape(shape);
-  const rawPath = SHAPE_PATHS[shapeName] ?? SHAPE_PATHS.pill;
+  const rawPath = SHAPE_PATHS[shapeName];
   return scaleNormalizedPath(rawPath, bounds);
 }
