@@ -17,4 +17,8 @@ export default defineConfig({
 
   // The output directory for your css system
   outdir: 'styled-system',
+
+  // Enable React JSX atomic components (Box, Flex, Stack, Grid, etc.)
+  jsxFramework: 'react',
+  jsxFactory: 'panda',
 });

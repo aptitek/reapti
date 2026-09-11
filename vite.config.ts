@@ -1,4 +1,5 @@
 /// <reference types="vitest/config" />
+import mdx from '@mdx-js/rollup';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
@@ -12,7 +13,7 @@ const dirname =
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
-  plugins: [react()],
+  plugins: [mdx(), react()],
   resolve: {
     alias: {
       'styled-system': path.resolve(dirname, './styled-system'),

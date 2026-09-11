@@ -3,7 +3,7 @@ export default {
     const files = filenames.filter((f) => !f.includes('.agents/'));
     return files.length
       ? [
-          `eslint --fix --cache --cache-location node_modules/.cache/eslint/ ${files.join(' ')}`,
+          `eslint --fix --cache --cache-location node_modules/.cache/eslint/ --max-warnings=0 ${files.join(' ')}`,
           `prettier --write --cache ${files.join(' ')}`,
         ]
       : [];
@@ -23,7 +23,12 @@ export default {
   },
   '*.mdx': (filenames) => {
     const files = filenames.filter((f) => !f.includes('.agents/'));
-    return files.length ? [`prettier --write --cache ${files.join(' ')}`] : [];
+    return files.length
+      ? [
+          `node scripts/lint-mdx-purity.mjs ${files.join(' ')}`,
+          `prettier --write --cache ${files.join(' ')}`,
+        ]
+      : [];
   },
   '*.{json,yml,yaml}': (filenames) => {
     const files = filenames.filter((f) => !f.includes('.agents/'));

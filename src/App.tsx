@@ -1,22 +1,22 @@
-import { css } from 'styled-system/css';
+import { Flex } from 'styled-system/jsx';
+import { M3eButton } from '@m3e/react/button';
+import AppContent from './content/en/app.mdx';
+import CtaContent from './content/en/cta.mdx';
 
 export default function App() {
   return (
-    <main
-      className={css({
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '4',
-        p: '8',
-      })}
+    <Flex
+      minHeight="100vh"
+      direction="column"
+      alignItems="center"
+      justifyContent="center"
+      gap="4"
+      p="8"
     >
-      <h1 className={css({ fontSize: '3xl', fontWeight: 'bold' })}>
-        reapti-02
-      </h1>
-      <p className={css({ color: 'gray.600' })}>Ready for development.</p>
-    </main>
+      <AppContent />
+      <M3eButton variant="filled">
+        <CtaContent />
+      </M3eButton>
+    </Flex>
   );
 }

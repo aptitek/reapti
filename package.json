@@ -16,6 +16,7 @@
     "lint:knip": "wireit",
     "lint:typecheck": "wireit",
     "lint:markdown": "wireit",
+    "lint:mdx": "wireit",
     "lint:sonar": "wireit",
     "lint:fix": "wireit",
     "test": "wireit",
@@ -82,13 +83,14 @@
         "lint:eslint",
         "lint:prettier",
         "lint:markdown",
+        "lint:mdx",
         "lint:knip",
         "lint:typecheck",
         "lint:sonar"
       ]
     },
     "lint:eslint": {
-      "command": "eslint --cache --cache-location node_modules/.cache/eslint/ .",
+      "command": "eslint --cache --cache-location node_modules/.cache/eslint/ --max-warnings 0 .",
       "files": [
         "src/**/*",
         "tests/**/*",
@@ -134,6 +136,13 @@
       "files": [
         "**/*.md",
         ".markdownlint-cli2.yaml"
+      ]
+    },
+    "lint:mdx": {
+      "command": "node scripts/lint-mdx-purity.mjs",
+      "files": [
+        "**/*.mdx",
+        "scripts/lint-mdx-purity.mjs"
       ]
     },
     "lint:sonar": {
@@ -213,6 +222,7 @@
   "devDependencies": {
     "@chromatic-com/storybook": "latest",
     "@eslint/js": "^10.0.1",
+    "@mdx-js/rollup": "^3.1.1",
     "@pandacss/dev": "^1.12.1",
     "@playwright/test": "^1.63.0",
     "@sonar/scan": "^5.0.0",
@@ -226,6 +236,7 @@
     "@vitest/browser-playwright": "5.0.0",
     "@vitest/coverage-v8": "5.0.0",
     "eslint": "^10.10.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.4",
     "eslint-plugin-storybook": "^10.6.0",
