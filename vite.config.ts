@@ -21,6 +21,25 @@ export default defineConfig({
   },
   test: {
     passWithNoTests: true,
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json-summary', 'html'],
+      include: ['src/**/*.{ts,tsx}'],
+      exclude: [
+        'src/**/*.d.ts',
+        'src/types/**',
+        'src/content/**',
+        'src/main.tsx',
+        'src/**/types.ts',
+      ],
+      thresholds: {
+        lines: 95,
+        branches: 90,
+        functions: 95,
+        statements: 95,
+        perFile: true,
+      },
+    },
     projects: [
       {
         test: {

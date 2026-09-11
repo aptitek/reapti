@@ -18,11 +18,13 @@
     "lint:markdown": "wireit",
     "lint:mdx": "wireit",
     "lint:sonar": "wireit",
+    "lint:tdd": "wireit",
     "lint:fix": "wireit",
     "test": "wireit",
     "test:unit": "wireit",
     "test:stories": "wireit",
     "test:coverage": "wireit",
+    "test:tdd": "vitest --project=unit --watch",
     "test:e2e": "wireit",
     "format": "prettier --write --cache .",
     "format:check": "prettier --check --cache .",
@@ -86,7 +88,8 @@
         "lint:mdx",
         "lint:knip",
         "lint:typecheck",
-        "lint:sonar"
+        "lint:sonar",
+        "lint:tdd"
       ]
     },
     "lint:eslint": {
@@ -152,6 +155,14 @@
         "src/**/*",
         "tests/**/*",
         "sonar-project.properties"
+      ]
+    },
+    "lint:tdd": {
+      "command": "node scripts/lint-tdd-companions.mjs",
+      "files": [
+        "src/**/*",
+        "tests/**/*",
+        "scripts/lint-tdd-companions.mjs"
       ]
     },
     "lint:fix": {

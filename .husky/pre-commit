@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 
+# Mechanically enforce TDD: require tests when src/ is modified
+node scripts/verify-tdd-staged.mjs
+
 # Surgical staged-file enforcement via lint-staged
 pnpm exec lint-staged
 
