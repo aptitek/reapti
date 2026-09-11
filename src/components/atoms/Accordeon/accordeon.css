@@ -1,0 +1,162 @@
+.accordeon_root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 100%;
+  min-inline-size: 280px;
+  block-size: 100%;
+  min-block-size: 280px;
+  perspective: var(--accordeon-perspective, 1200px);
+  overflow: visible;
+  cursor: pointer;
+  background-color: transparent;
+  color: var(--colors-on-surface);
+  border-radius: var(--radii-medium);
+}
+
+.accordeon_root:focus-visible {
+  outline: 2px solid var(--colors-primary);
+  outline-offset: 2px;
+}
+
+.accordeon_viewport {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  margin-inline: auto;
+  margin-block: auto;
+  transform-style: preserve-3d;
+  transform-origin: center center;
+  border-radius: var(--radii-medium);
+  filter: drop-shadow(0 0 0 transparent);
+  transition:
+    transform 600ms cubic-bezier(0.2, 0, 0, 1),
+    inline-size 600ms cubic-bezier(0.2, 0, 0, 1),
+    block-size 600ms cubic-bezier(0.2, 0, 0, 1),
+    filter 600ms cubic-bezier(0.2, 0, 0, 1);
+  transform: rotateY(0deg);
+}
+
+.accordeon_root[data-folded='true'] .accordeon_viewport {
+  inline-size: 60%;
+  block-size: 92%;
+  transform: rotateY(var(--accordeon-max-angle, 0deg));
+  filter: drop-shadow(1px 0 0 var(--colors-outline-variant))
+    drop-shadow(-1px 0 0 var(--colors-outline-variant))
+    drop-shadow(0 1px 0 var(--colors-outline-variant))
+    drop-shadow(0 -1px 0 var(--colors-outline-variant));
+}
+
+.accordeon_content {
+  inline-size: 100%;
+  block-size: 100%;
+  border-radius: var(--radii-medium);
+  overflow: hidden;
+  clip-path: var(--accordeon-clip-unfolded);
+  transition: clip-path 600ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.accordeon_root[data-folded='true'] .accordeon_content {
+  clip-path: var(--accordeon-clip-folded);
+}
+
+.accordeon_creases {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: row;
+  inline-size: 100%;
+  block-size: 100%;
+  pointer-events: none;
+  opacity: 0;
+  clip-path: var(--accordeon-clip-unfolded);
+  transition:
+    opacity 600ms cubic-bezier(0.2, 0, 0, 1),
+    clip-path 600ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.accordeon_root[data-folded='true'] .accordeon_creases {
+  opacity: 0.65;
+  clip-path: var(--accordeon-clip-folded);
+}
+
+.accordeon_crease_panel {
+  flex: 1;
+  block-size: 100%;
+  position: relative;
+}
+
+.accordeon_crease_panel:last-child {
+  border-inline-end: none;
+}
+
+.accordeon_crease_panel[data-crease-even='true'] {
+  border-inline-end: 1px solid var(--colors-shadow);
+  background:
+    linear-gradient(
+      to bottom right,
+      transparent 30%,
+      var(--colors-shadow) 100%
+    ),
+    linear-gradient(to right, transparent 0%, var(--colors-shadow) 90%);
+}
+
+.accordeon_crease_panel[data-crease-even='false'] {
+  border-inline-end: 1px solid var(--colors-outline-variant);
+  background:
+    linear-gradient(to bottom left, transparent 30%, var(--colors-shadow) 100%),
+    linear-gradient(to left, transparent 0%, var(--colors-shadow) 90%);
+}
+
+.accordeon_elevation {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: -24px;
+  block-size: 32px;
+  display: flex;
+  flex-direction: row;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 600ms cubic-bezier(0.2, 0, 0, 1);
+  z-index: -1;
+}
+
+.accordeon_root[data-folded='true'] .accordeon_elevation {
+  opacity: 0.85;
+}
+
+.accordeon_elevation_panel {
+  flex: 1;
+  block-size: 100%;
+  position: relative;
+  filter: blur(5px);
+}
+
+.accordeon_elevation_panel[data-crease-even='true'] {
+  background:
+    radial-gradient(
+      ellipse 70% 35% at 100% 5%,
+      var(--colors-shadow) 0%,
+      transparent 85%
+    ),
+    radial-gradient(
+      ellipse 95% 85% at 0% 45%,
+      var(--colors-shadow) 0%,
+      transparent 100%
+    );
+}
+
+.accordeon_elevation_panel[data-crease-even='false'] {
+  background:
+    radial-gradient(
+      ellipse 70% 35% at 0% 5%,
+      var(--colors-shadow) 0%,
+      transparent 85%
+    ),
+    radial-gradient(
+      ellipse 95% 85% at 100% 45%,
+      var(--colors-shadow) 0%,
+      transparent 100%
+    );
+}
