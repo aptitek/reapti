@@ -1,0 +1,148 @@
+import { describe, it, expect } from 'vitest';
+import { ESLint } from 'eslint';
+
+const eslint = new ESLint({ overrideConfigFile: 'eslint.config.js' });
+
+describe('CSS Component Overrides', () => {
+  it('rejects direct unscoped overrides of native MD3 components', async () => {
+    const code = `
+m3e-button {
+  color: var(--color);
+}
+m3e-card::part(container) {
+  padding: var(--spacing);
+}
+`;
+    const results = await eslint.lintText(code, { filePath: 'src/bad.css' });
+    const msgs = results[0]?.messages.map((m) => m.message) ?? [];
+    expect(
+      msgs.some((m) =>
+        m.includes('Direct override of native component "<m3e-button>"')
+      )
+    ).toBe(true);
+    expect(
+      msgs.some((m) =>
+        m.includes(
+          'Direct override of component shadow part "::part(container)"'
+        )
+      )
+    ).toBe(true);
+  });
+
+  it('allows native component overrides when explicitly scoped', async () => {
+    const code = `
+.override-btn m3e-button {
+  color: var(--color);
+}
+m3e-button[data-override] {
+  color: var(--color);
+}
+.override-card m3e-card::part(container) {
+  padding: var(--spacing);
+}
+`;
+    const results = await eslint.lintText(code, {
+      filePath: 'src/good-override.css',
+    });
+    const msgs =
+      results[0]?.messages.filter((m) => m.ruleId?.startsWith('css-tokens/')) ??
+      [];
+    expect(msgs).toHaveLength(0);
+  });
+});
+
+describe('CSS Important Flag Overrides', () => {
+  it('rejects !important unless explicitly scoped under override selectors', async () => {
+    const badCode = `\n.normal-rule { color: var(--color) !important; }\n`;
+    const badResults = await eslint.lintText(badCode, {
+      filePath: 'src/bad-important.css',
+    });
+    const badMsgs = badResults[0]?.messages.map((m) => m.message) ?? [];
+    expect(
+      badMsgs.some((m) => m.includes('Anti-pattern "!important" is forbidden'))
+    ).toBe(true);
+
+    const goodCode = `\n.override-alert { color: var(--color) !important; }\n`;
+    const goodResults = await eslint.lintText(goodCode, {
+      filePath: 'src/good-important.css',
+    });
+    const goodMsgs =
+      goodResults[0]?.messages.filter(
+        (m) => m.ruleId === 'css-tokens/no-scoped-important'
+      ) ?? [];
+    expect(goodMsgs).toHaveLength(0);
+  });
+});
+
+describe('CSS Color & Transition Anti-Patterns', () => {
+  it('rejects raw colors and enforces tokens', async () => {
+    const code = `
+.box {
+  color: #ff0055;
+  background-color: rgb(255, 0, 0);
+  border-color: red;
+}
+`;
+    const results = await eslint.lintText(code, { filePath: 'src/colors.css' });
+    const msgs = results[0]?.messages.map((m) => m.message) ?? [];
+    expect(msgs.some((m) => m.includes('Raw color "#ff0055"'))).toBe(true);
+    expect(msgs.some((m) => m.includes('Raw color "rgb(...)"'))).toBe(true);
+    expect(msgs.some((m) => m.includes('Raw color "red"'))).toBe(true);
+  });
+
+  it('rejects transition: all and universal transitions', async () => {
+    const code = `
+.bad-trans {
+  transition: all 200ms ease;
+}
+* {
+  transition: opacity 200ms ease;
+}
+`;
+    const results = await eslint.lintText(code, {
+      filePath: 'src/transitions.css',
+    });
+    const msgs = results[0]?.messages.map((m) => m.message) ?? [];
+    expect(msgs.some((m) => m.includes('Anti-pattern "transition: all"'))).toBe(
+      true
+    );
+    expect(
+      msgs.some((m) =>
+        m.includes('Universal selector "*" cannot have transitions')
+      )
+    ).toBe(true);
+  });
+});
+
+describe('CSS Directives & Production Styles', () => {
+  it('rejects Tailwind CSS directives', async () => {
+    const code = `
+@theme {
+  --color-primary: red;
+}
+.box {
+  @apply flex;
+}
+@import "tailwindcss";
+`;
+    const results = await eslint.lintText(code, {
+      filePath: 'src/tailwind.css',
+    });
+    const msgs = results[0]?.messages.map((m) => m.message) ?? [];
+    expect(msgs.some((m) => m.includes('Tailwind directive "@theme"'))).toBe(
+      true
+    );
+    expect(msgs.some((m) => m.includes('Tailwind directive "@apply"'))).toBe(
+      true
+    );
+    expect(
+      msgs.some((m) => m.includes('Importing Tailwind CSS is forbidden'))
+    ).toBe(true);
+  });
+
+  it('validates that production src/index.css passes cleanly', async () => {
+    const results = await eslint.lintFiles(['src/index.css']);
+    const msgs = results[0]?.messages ?? [];
+    expect(msgs).toHaveLength(0);
+  });
+});

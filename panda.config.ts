@@ -1,4 +1,5 @@
 import { defineConfig } from '@pandacss/dev';
+import { md3Tokens, md3SemanticTokens } from './src/tokens/md3.ts';
 
 export default defineConfig({
   // Whether to use css reset
@@ -10,9 +11,12 @@ export default defineConfig({
   // Files to exclude
   exclude: [],
 
-  // Useful for theme customization
+  // Material Design 3 Theme Customization
   theme: {
-    extend: {},
+    extend: {
+      tokens: md3Tokens,
+      semanticTokens: md3SemanticTokens,
+    },
   },
 
   // The output directory for your css system

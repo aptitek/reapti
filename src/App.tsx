@@ -1,9 +1,13 @@
 import { Flex } from 'styled-system/jsx';
 import { M3eButton } from '@m3e/react/button';
-import AppContent from './content/en/app.mdx';
-import CtaContent from './content/en/cta.mdx';
+import { ContentProvider } from './i18n/ContentProvider.tsx';
+import { useLocale, useContentElement } from './i18n/context.tsx';
 
-export default function App() {
+function MainView() {
+  const { locale } = useLocale();
+  const appContent = useContentElement('app');
+  const ctaContent = useContentElement('cta');
+
   return (
     <Flex
       minHeight="100vh"
@@ -12,11 +16,20 @@ export default function App() {
       justifyContent="center"
       gap="4"
       p="8"
+      bg="surface"
+      color="onSurface"
+      data-locale={locale}
     >
-      <AppContent />
-      <M3eButton variant="filled">
-        <CtaContent />
-      </M3eButton>
+      {appContent}
+      <M3eButton variant="filled">{ctaContent}</M3eButton>
     </Flex>
+  );
+}
+
+export default function App() {
+  return (
+    <ContentProvider>
+      <MainView />
+    </ContentProvider>
   );
 }

@@ -5,5 +5,20 @@ ignores:
   - 'dist'
   - 'storybook-static'
   - '.agents'
+  - 'coverage'
 config:
+  default: true
   MD013: false
+  MD029:
+    style: 'ordered'
+  MD033:
+    allowed_elements: []
+  MD040: true
+  MD046:
+    style: 'fenced'
+  MD048:
+    style: 'backtick'
+  MD055:
+    style: 'consistent'
+  MD056: true
+  MD058: true

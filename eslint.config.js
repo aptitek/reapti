@@ -8,7 +8,9 @@ import tseslint from 'typescript-eslint';
 import { defineConfig, globalIgnores } from 'eslint/config';
 
 import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
+import css from '@eslint/css';
 import { m3TokensPlugin } from './scripts/eslint/m3-tokens-plugin.js';
+import { cssTokensPlugin } from './scripts/eslint/css-tokens-plugin.js';
 import {
   restrictedImportsRule,
   restrictedSyntaxRules,
@@ -80,6 +82,12 @@ export default defineConfig([
     },
   },
   {
+    files: ['src/tokens/**/*.{ts,tsx}'],
+    rules: {
+      'm3-tokens/no-hardcoded-colors': 'off',
+    },
+  },
+  {
     ...jsxA11yPlugin.flatConfigs.recommended,
     files: ['src/**/*.{js,mjs,cjs,jsx,ts,tsx}'],
     rules: {
@@ -105,6 +113,31 @@ export default defineConfig([
       'jsx-a11y/no-noninteractive-element-interactions': 'error',
       'jsx-a11y/mouse-events-have-key-events': 'error',
       'jsx-a11y/label-has-associated-control': 'error',
+    },
+  },
+  {
+    files: ['**/*.css'],
+    language: 'css/css',
+    ...css.configs.recommended,
+    plugins: {
+      ...css.configs.recommended.plugins,
+      'css-tokens': cssTokensPlugin,
+    },
+    rules: {
+      ...css.configs.recommended.rules,
+      'css/no-invalid-properties': ['error', { allowUnknownVariables: true }],
+      'css/prefer-logical-properties': 'error',
+      'css/selector-complexity': [
+        'error',
+        { maxCompounds: 4, maxCombinators: 3 },
+      ],
+      'css/use-baseline': 'error',
+      'css-tokens/no-unscoped-component-override': 'error',
+      'css-tokens/no-scoped-important': 'error',
+      'css-tokens/no-raw-colors': 'error',
+      'css-tokens/no-unperformant-transitions': 'error',
+      'css-tokens/no-raw-font-family': 'error',
+      'css-tokens/no-tailwind-directives': 'error',
     },
   },
   ...storybook.configs['flat/recommended'],

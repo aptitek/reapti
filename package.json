@@ -132,10 +132,11 @@
       ]
     },
     "lint:markdown": {
-      "command": "markdownlint-cli2",
+      "command": "markdownlint-cli2 && node scripts/lint-markdown-structure.mjs",
       "files": [
         "**/*.md",
-        ".markdownlint-cli2.yaml"
+        ".markdownlint-cli2.yaml",
+        "scripts/lint-markdown-structure.mjs"
       ]
     },
     "lint:mdx": {
@@ -221,6 +222,7 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "latest",
+    "@eslint/css": "^2.0.0",
     "@eslint/js": "^10.0.1",
     "@mdx-js/rollup": "^3.1.1",
     "@pandacss/dev": "^1.12.1",
