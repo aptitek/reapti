@@ -1,0 +1,8 @@
+node_modules
+dist
+storybook-static
+coverage
+.wireit
+styled-system
+.agents
+pnpm-lock.yaml

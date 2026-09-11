@@ -1,0 +1,3 @@
+allowBuilds:
+  contextify: false
+  esbuild: true

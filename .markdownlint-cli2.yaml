@@ -1,0 +1,9 @@
+globs:
+  - '**/*.md'
+ignores:
+  - 'node_modules'
+  - 'dist'
+  - 'storybook-static'
+  - '.agents'
+config:
+  MD013: false

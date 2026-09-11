@@ -1,0 +1,19 @@
+{
+  "$schema": "https://unpkg.com/knip@5/overview/configuration-schema.json",
+  "entry": ["src/main.tsx", ".storybook/**/*.{ts,tsx}", "tests/**/*.{ts,tsx}"],
+  "project": ["src/**/*.{ts,tsx}", "tests/**/*.{ts,tsx}"],
+  "ignore": [
+    ".agents/**",
+    "coverage/**",
+    "dist/**",
+    "styled-system/**",
+    "storybook-static/**"
+  ],
+  "ignoreDependencies": [
+    "@m3e/*",
+    "@sonar/scan",
+    "wireit",
+    "markdownlint-cli2",
+    "postcss"
+  ]
+}

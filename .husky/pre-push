@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+# Run all test suites before push (unit, stories, coverage, and e2e)
+pnpm run test

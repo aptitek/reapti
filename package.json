@@ -1,0 +1,246 @@
+{
+  "name": "reapti-02",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "storybook dev -p 6006",
+    "dev:vite": "vite",
+    "storybook": "storybook dev -p 6006",
+    "build": "wireit",
+    "build:lib": "wireit",
+    "build:storybook": "wireit",
+    "lint": "wireit",
+    "lint:eslint": "wireit",
+    "lint:prettier": "wireit",
+    "lint:knip": "wireit",
+    "lint:typecheck": "wireit",
+    "lint:markdown": "wireit",
+    "lint:sonar": "wireit",
+    "lint:fix": "wireit",
+    "test": "wireit",
+    "test:unit": "wireit",
+    "test:stories": "wireit",
+    "test:coverage": "wireit",
+    "test:e2e": "wireit",
+    "format": "prettier --write --cache .",
+    "format:check": "prettier --check --cache .",
+    "codegen:panda": "wireit",
+    "clean": "wireit",
+    "prepare": "panda codegen && husky"
+  },
+  "wireit": {
+    "codegen:panda": {
+      "command": "panda codegen",
+      "files": [
+        "panda.config.ts",
+        "package.json"
+      ],
+      "output": [
+        "styled-system/**"
+      ]
+    },
+    "build": {
+      "dependencies": [
+        "build:lib",
+        "build:storybook"
+      ]
+    },
+    "build:lib": {
+      "command": "vite build",
+      "dependencies": [
+        "codegen:panda"
+      ],
+      "files": [
+        "src/**/*",
+        "vite.config.ts",
+        "tsconfig.json",
+        "tsconfig.app.json",
+        "package.json"
+      ],
+      "output": [
+        "dist/**"
+      ]
+    },
+    "build:storybook": {
+      "command": "storybook build",
+      "dependencies": [
+        "codegen:panda"
+      ],
+      "files": [
+        "src/**/*",
+        ".storybook/**/*",
+        "tsconfig.json",
+        "package.json"
+      ],
+      "output": [
+        "storybook-static/**"
+      ]
+    },
+    "lint": {
+      "dependencies": [
+        "lint:eslint",
+        "lint:prettier",
+        "lint:markdown",
+        "lint:knip",
+        "lint:typecheck",
+        "lint:sonar"
+      ]
+    },
+    "lint:eslint": {
+      "command": "eslint --cache --cache-location node_modules/.cache/eslint/ .",
+      "files": [
+        "src/**/*",
+        "tests/**/*",
+        ".storybook/**/*",
+        "eslint.config.js",
+        "tsconfig.json",
+        "package.json"
+      ]
+    },
+    "lint:prettier": {
+      "command": "prettier --check --cache .",
+      "files": [
+        "src/**/*",
+        "tests/**/*",
+        ".storybook/**/*",
+        "*.{mjs,js,ts,json,md,yml,yaml}",
+        ".prettierrc.mjs",
+        ".prettierignore"
+      ]
+    },
+    "lint:knip": {
+      "command": "knip --cache --cache-location node_modules/.cache/knip/",
+      "files": [
+        "src/**/*",
+        "tests/**/*",
+        ".storybook/**/*",
+        "knip.json",
+        "package.json",
+        "tsconfig.json"
+      ]
+    },
+    "lint:typecheck": {
+      "command": "tsc -p ./tsconfig.app.json --noEmit",
+      "files": [
+        "src/**/*",
+        "tsconfig.json",
+        "tsconfig.app.json",
+        "package.json"
+      ]
+    },
+    "lint:markdown": {
+      "command": "markdownlint-cli2",
+      "files": [
+        "**/*.md",
+        ".markdownlint-cli2.yaml"
+      ]
+    },
+    "lint:sonar": {
+      "command": "node -e \"if (process.env.SONAR_TOKEN || process.env.SONAR_HOST_URL) { require('child_process').spawnSync('sonar-scanner-npm', { stdio: 'inherit', shell: true }); } else { console.log('ℹ️ Sonar scan skipped: SONAR_TOKEN / SONAR_HOST_URL not defined'); }\"",
+      "files": [
+        "src/**/*",
+        "tests/**/*",
+        "sonar-project.properties"
+      ]
+    },
+    "lint:fix": {
+      "command": "eslint . --fix --cache --cache-location node_modules/.cache/eslint/ && markdownlint-cli2 --fix && knip --fix && prettier --write --cache --cache-location node_modules/.cache/prettier/.prettiercache ."
+    },
+    "test": {
+      "dependencies": [
+        "test:unit",
+        "test:coverage",
+        "test:stories",
+        "test:e2e"
+      ]
+    },
+    "test:unit": {
+      "command": "vitest run --project=unit --passWithNoTests",
+      "files": [
+        "src/**/*.{ts,tsx,js,jsx}",
+        "tests/unit/**/*.{ts,tsx,js,jsx}",
+        "vite.config.ts",
+        "tsconfig.json",
+        "package.json"
+      ]
+    },
+    "test:coverage": {
+      "command": "vitest run --coverage --project=unit --passWithNoTests",
+      "files": [
+        "src/**/*.{ts,tsx,js,jsx}",
+        "tests/unit/**/*.{ts,tsx,js,jsx}",
+        "vite.config.ts",
+        "tsconfig.json",
+        "package.json"
+      ],
+      "output": [
+        "coverage/**"
+      ]
+    },
+    "test:stories": {
+      "command": "vitest run --project=storybook --passWithNoTests",
+      "files": [
+        "src/**/*.{ts,tsx,js,jsx,css}",
+        ".storybook/**/*",
+        "vite.config.ts",
+        "tsconfig.json",
+        "package.json"
+      ]
+    },
+    "test:e2e": {
+      "command": "playwright test",
+      "dependencies": [
+        "build:storybook"
+      ],
+      "files": [
+        "tests/e2e/**/*.{ts,js}",
+        "playwright.config.ts",
+        "package.json"
+      ]
+    },
+    "clean": {
+      "command": "rm -rf dist storybook-static coverage test-results .wireit node_modules/.cache styled-system"
+    }
+  },
+  "dependencies": {
+    "@m3e/icons": "^1.0.15",
+    "@m3e/react": "^2.7.11",
+    "@m3e/web": "^2.7.11",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "latest",
+    "@eslint/js": "^10.0.1",
+    "@pandacss/dev": "^1.12.1",
+    "@playwright/test": "^1.63.0",
+    "@sonar/scan": "^5.0.0",
+    "@storybook/addon-mcp": "^10.6.0",
+    "@storybook/addon-vitest": "^10.6.0",
+    "@storybook/react-vite": "^10.6.0",
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@vitejs/plugin-react": "^6.1.0",
+    "@vitest/browser-playwright": "5.0.0",
+    "@vitest/coverage-v8": "5.0.0",
+    "eslint": "^10.10.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.4",
+    "eslint-plugin-storybook": "^10.6.0",
+    "globals": "^17.11.0",
+    "husky": "^9.1.7",
+    "knip": "^6.35.1",
+    "lint-staged": "^17.5.0",
+    "markdownlint-cli2": "^0.23.2",
+    "playwright": "^1.63.0",
+    "prettier": "^3.9.6",
+    "storybook": "^10.6.0",
+    "typescript": "~6.0.2",
+    "typescript-eslint": "^8.67.0",
+    "vite": "^8.2.2",
+    "vitest": "^5.0.0",
+    "wireit": "^0.14.13"
+  }
+}
