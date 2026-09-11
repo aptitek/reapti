@@ -6,18 +6,26 @@ export const A11Y_STRINGS: Record<Locale, Record<A11yKey, string>> = {
   en: {
     appMain: 'Application View',
     ctaAction: 'Verify Architecture Action',
+    zoomIn: 'Zoom in',
+    zoomOut: 'Zoom out',
   },
   fr: {
     appMain: "Vue de l'application",
     ctaAction: "Action de vérification de l'architecture",
+    zoomIn: 'Zoomer',
+    zoomOut: 'Dézoomer',
   },
   de: {
     appMain: 'Anwendungsansicht',
     ctaAction: 'Aktion zur Überprüfung der Architektur',
+    zoomIn: 'Vergrößern',
+    zoomOut: 'Verkleinern',
   },
   es: {
     appMain: 'Vista de la aplicación',
     ctaAction: 'Acción de verificación de arquitectura',
+    zoomIn: 'Acercar',
+    zoomOut: 'Alejar',
   },
 };
 

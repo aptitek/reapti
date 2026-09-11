@@ -133,7 +133,7 @@ describe('Alt Text & i18n Accessibility Enforcement', () => {
 
 describe('Localized Accessibility Strings (i18n)', () => {
   it('provides all accessibility keys across all supported locales', () => {
-    const requiredKeys = ['appMain', 'ctaAction'] as const;
+    const requiredKeys = ['appMain', 'ctaAction', 'zoomIn', 'zoomOut'] as const;
 
     for (const loc of SUPPORTED_LOCALES) {
       for (const key of requiredKeys) {

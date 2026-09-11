@@ -20,7 +20,7 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ['@m3e/react/button'],
+    include: ['@m3e/react/button', '@m3e/react/shape', '@m3e/react/skeleton'],
   },
   server: {
     fs: {

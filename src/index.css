@@ -1,1 +1,113 @@
 @layer reset, base, tokens, recipes, utilities;
+
+@keyframes hold-button-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-6px);
+  }
+  40%,
+  80% {
+    transform: translateX(6px);
+  }
+}
+
+.hold-button-shake {
+  animation: hold-button-shake 300ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+@keyframes map-radar-pulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.85;
+  }
+  70% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+@keyframes map-pin-bounce {
+  0% {
+    transform: translateY(-8px) scale(0.9);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(2px) scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.map-radar-pulse {
+  animation: map-radar-pulse 2s cubic-bezier(0.2, 0, 0, 1) infinite;
+}
+
+.map-pin-bounce {
+  animation: map-pin-bounce 500ms cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+.override-shape-button {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  inline-size: max-content;
+  block-size: max-content;
+  padding: 2px;
+  transition: filter 250ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.override-shape-button m3e-shape {
+  --m3e-shape-container-color: transparent;
+  --m3e-shape-transition: clip-path 350ms cubic-bezier(0.2, 0, 0, 1);
+  display: inline-flex;
+  inline-size: max-content;
+  block-size: max-content;
+  aspect-ratio: auto;
+}
+
+.override-shape-button m3e-button {
+  --m3e-button-outline-thickness: 0px;
+  --m3e-button-shape-round: 0px;
+  --m3e-button-shape-square: 0px;
+  --m3e-button-extra-small-shape-round: 0px;
+  --m3e-button-small-shape-round: 0px;
+  --m3e-button-medium-shape-round: 0px;
+  --m3e-button-large-shape-round: 0px;
+  --m3e-button-extra-large-shape-round: 0px;
+}
+
+.override-shape-button[data-variant='outlined'] {
+  filter: drop-shadow(1px 0 0 var(--colors-outline))
+    drop-shadow(-1px 0 0 var(--colors-outline))
+    drop-shadow(0 1px 0 var(--colors-outline))
+    drop-shadow(0 -1px 0 var(--colors-outline));
+}
+
+.override-shape-button[data-variant='outlined']:hover {
+  filter: drop-shadow(1.5px 0 0 var(--colors-primary))
+    drop-shadow(-1.5px 0 0 var(--colors-primary))
+    drop-shadow(0 1.5px 0 var(--colors-primary))
+    drop-shadow(0 -1.5px 0 var(--colors-primary));
+}
+
+.override-shape-button[data-variant='filled']:hover,
+.override-shape-button[data-variant='tonal']:hover,
+.override-shape-button[data-variant='elevated']:hover {
+  filter: drop-shadow(1.5px 0 0 var(--colors-primary))
+    drop-shadow(-1.5px 0 0 var(--colors-primary))
+    drop-shadow(0 1.5px 0 var(--colors-primary))
+    drop-shadow(0 -1.5px 0 var(--colors-primary));
+}
