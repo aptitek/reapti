@@ -1,0 +1,11 @@
+{
+  "name": "Reapti Material Light",
+  "description": "Lyon Map2Poster theme generated from reapti MD3 design tokens (light)",
+  "bg": "#ffffff",
+  "water": "#cde7ed",
+  "parks": "#dae2ff",
+  "road_motorway": "#006874",
+  "road_primary": "#6f797a",
+  "text": "#191c1d",
+  "accent": "#006874"
+}

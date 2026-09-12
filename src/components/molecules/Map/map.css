@@ -24,13 +24,242 @@
   block-size: 100%;
 }
 
-/* Justification: Loading skeleton overlay matching map bounds */
-.reapti_map_skeleton {
+/* Justification: Surface wrapper for skeleton state */
+.reapti_map_skeleton_surface {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 400px;
+  overflow: hidden;
+}
+
+/* Justification: Lyon vector map background layer for skeleton */
+.reapti_map_skeleton_backdrop {
   position: absolute;
   inset-block-start: var(--spacing-0, 0px);
   inset-inline-start: var(--spacing-0, 0px);
   inline-size: 100%;
   block-size: 100%;
-  border-radius: inherit;
-  z-index: 5;
+  background-image: url('/lyon_skeleton_light.svg');
+  background-size: cover;
+  background-position: center;
+  pointer-events: none;
+}
+
+/* Justification: Dark theme Lyon vector map background for skeleton */
+[data-theme='dark'] .reapti_map_skeleton_backdrop {
+  background-image: url('/lyon_skeleton_dark.svg');
+}
+
+/* Justification: Continuous diagonal shimmer wave across skeleton surface */
+.reapti_map_skeleton_shimmer {
+  position: absolute;
+  inset-block-start: var(--spacing-0, 0px);
+  inset-inline-start: var(--spacing-0, 0px);
+  inline-size: 100%;
+  block-size: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 25%,
+    var(--colors-surface-container-highest) 50%,
+    transparent 75%
+  );
+  background-size: 200% 100%;
+  opacity: 0.55;
+  animation: reapti_map_shimmer 2.2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+/* Justification: Subtle dark theme shimmer wave for skeleton */
+[data-theme='dark'] .reapti_map_skeleton_shimmer {
+  opacity: 0.25;
+}
+
+/* Justification: Pulsing pin radar container at Presqu'île landmark */
+.reapti_map_skeleton_radar {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 45%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* Justification: Expanding radar wave ring for skeleton marker */
+.reapti_map_skeleton_radar_wave {
+  inline-size: 56px;
+  block-size: 56px;
+  border-radius: var(--radii-full, 9999px);
+  background-color: var(--colors-primary);
+  opacity: 0.25;
+  animation: reapti_map_radar 2s infinite cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Justification: Central core dot of pulsing skeleton pin */
+.reapti_map_skeleton_radar_core {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  transform: translate(-50%, -50%);
+  inline-size: 14px;
+  block-size: 14px;
+  border-radius: var(--radii-full, 9999px);
+  background-color: var(--colors-primary);
+  border: var(--border-widths-medium, 2px) solid var(--colors-surface);
+  box-shadow: var(--shadows-elevation2);
+}
+
+/* Justification: Non-OpenGL fallback surface container */
+.reapti_map_fallback_surface {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Justification: Dimmed Lyon vector backdrop behind fallback message */
+.reapti_map_fallback_backdrop {
+  position: absolute;
+  inset-block-start: var(--spacing-0, 0px);
+  inset-inline-start: var(--spacing-0, 0px);
+  inline-size: 100%;
+  block-size: 100%;
+  background-image: url('/lyon_skeleton_light.svg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.4;
+  filter: blur(1px);
+  pointer-events: none;
+}
+
+/* Justification: Dark theme Lyon vector backdrop behind fallback message */
+[data-theme='dark'] .reapti_map_fallback_backdrop {
+  background-image: url('/lyon_skeleton_dark.svg');
+}
+
+/* Justification: Soft tint overlay over fallback map backdrop */
+.reapti_map_fallback_overlay {
+  position: absolute;
+  inset-block-start: var(--spacing-0, 0px);
+  inset-inline-start: var(--spacing-0, 0px);
+  inline-size: 100%;
+  block-size: 100%;
+  background-color: var(--colors-surface);
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+/* Justification: Centered MD3 alert card explaining WebGL requirement */
+.reapti_map_fallback_card {
+  position: relative;
+  z-index: 2;
+  max-inline-size: 480px;
+  margin: var(--spacing-4, 16px);
+  padding: var(--spacing-6, 24px);
+  border-radius: var(--radii-large, 16px);
+  background-color: var(--colors-surface-container-high);
+  border: var(--border-widths-thin, 1px) solid var(--colors-outline-variant);
+  box-shadow: var(--shadows-elevation3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3, 12px);
+  text-align: start;
+}
+
+/* Justification: Fallback card header with icon and title */
+.reapti_map_fallback_header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3, 12px);
+}
+
+/* Justification: Warning icon color and dimensions in fallback card */
+.reapti_map_fallback_icon {
+  color: var(--colors-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Justification: Fallback card primary title text */
+.reapti_map_fallback_title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--colors-on-surface);
+  line-height: 1.3;
+}
+
+/* Justification: Fallback card explanation and instructions text */
+.reapti_map_fallback_message {
+  font-size: 0.875rem;
+  color: var(--colors-on-surface-variant);
+  line-height: 1.5;
+}
+
+/* Justification: Fallback container for pinned locations summary */
+.reapti_map_fallback_locations {
+  margin-block-start: var(--spacing-2, 8px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2, 8px);
+  border-block-start: var(--border-widths-thin, 1px) solid
+    var(--colors-outline-variant);
+  padding-block-start: var(--spacing-3, 12px);
+}
+
+/* Justification: Section header for pinned locations in fallback card */
+.reapti_map_fallback_locations_title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--colors-on-surface-variant);
+}
+
+/* Justification: Flex container wrapping fallback pin chips */
+.reapti_map_fallback_chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2, 8px);
+}
+
+/* Justification: Badge displaying coordinates or label of pinned location */
+.reapti_map_fallback_chip {
+  font-size: 0.75rem;
+  padding-inline: var(--spacing-2, 8px);
+  padding-block: var(--spacing-1, 4px);
+  border-radius: var(--radii-small, 8px);
+  background-color: var(--colors-surface-container-lowest);
+  color: var(--colors-on-surface);
+  border: var(--border-widths-thin, 1px) solid var(--colors-outline-variant);
+}
+
+/* Justification: Shimmer sweep keyframes for skeleton state */
+@keyframes reapti_map_shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Justification: Radar wave expansion and fade keyframes */
+@keyframes reapti_map_radar {
+  0% {
+    transform: scale(0.3);
+    opacity: 0.6;
+  }
+  80% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
 }

@@ -5,15 +5,11 @@ import {
   type FC,
   type RefObject,
 } from 'react';
-import { Box } from 'styled-system/jsx';
+import { Box, Flex } from 'styled-system/jsx';
 import ReactMapGL, { type MapRef } from 'react-map-gl/maplibre';
 import * as maplibregl from 'maplibre-gl';
 import maplibreWorkerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
-import { M3eSkeleton } from '@m3e/react/skeleton';
-
-if (typeof maplibregl.setWorkerUrl === 'function') {
-  maplibregl.setWorkerUrl(maplibreWorkerUrl);
-}
+import { M3eIcon } from '@m3e/react/icon';
 import { MapPin } from '../../atoms/MapPin/MapPin.tsx';
 import type { MapProps, MapPinItem } from './Map.types.ts';
 import {
@@ -23,9 +19,18 @@ import {
   resolveMapPins,
   createMapLoadHandler,
 } from './mapHelpers.ts';
+import {
+  isWebGLSupported,
+  useFallbackStrings,
+  formatFallbackPinLabel,
+} from './mapFallbackHelpers.ts';
 import { useMap3DTransition } from './useMap3DTransition.ts';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import './map.css';
+
+if (typeof maplibregl.setWorkerUrl === 'function') {
+  maplibregl.setWorkerUrl(maplibreWorkerUrl);
+}
 
 export type { MapProps, MapRef };
 
@@ -65,14 +70,85 @@ const MapPinList: FC<{ pins: readonly MapPinItem[] }> = ({ pins }) => {
   );
 };
 
-const MapLoadingSurface: FC<{ containerClass: string; testId: string }> = ({
+const MapSkeleton: FC<{ containerClass: string; testId: string }> = ({
   containerClass,
   testId,
-}) => (
-  <Box className={containerClass} data-testid={testId}>
-    <M3eSkeleton className="reapti_map_skeleton" />
-  </Box>
-);
+}) => {
+  const strings = useFallbackStrings();
+  return (
+    <Box
+      className={containerClass}
+      data-testid={testId}
+      role="region"
+      aria-label={strings.loadingLabel}
+    >
+      <Box className="reapti_map_skeleton_surface">
+        <Box className="reapti_map_skeleton_backdrop" />
+        <Box className="reapti_map_skeleton_shimmer" />
+        <Box className="reapti_map_skeleton_radar">
+          <Box className="reapti_map_skeleton_radar_wave" />
+          <Box className="reapti_map_skeleton_radar_core" />
+        </Box>
+      </Box>
+    </Box>
+  );
+};
+
+interface FallbackProps {
+  containerClass: string;
+  testId: string;
+  pins: readonly MapPinItem[];
+}
+
+const MapFallbackSurface: FC<FallbackProps> = ({
+  containerClass,
+  testId,
+  pins,
+}) => {
+  const strings = useFallbackStrings();
+  return (
+    <Box
+      className={containerClass}
+      data-testid={testId}
+      role="region"
+      aria-label={strings.title}
+    >
+      <Box className="reapti_map_fallback_surface">
+        <Box className="reapti_map_fallback_backdrop" />
+        <Box className="reapti_map_fallback_overlay" />
+        <Box className="reapti_map_fallback_card" role="alert">
+          <Flex className="reapti_map_fallback_header">
+            <Box className="reapti_map_fallback_icon" aria-hidden={true}>
+              <M3eIcon name="warning" variant="rounded" />
+            </Box>
+            <Box className="reapti_map_fallback_title">{strings.title}</Box>
+          </Flex>
+          <Box className="reapti_map_fallback_message">{strings.message}</Box>
+          {pins.length > 0 && (
+            <Box className="reapti_map_fallback_locations">
+              <Box className="reapti_map_fallback_locations_title">
+                {strings.locationsTitle}
+              </Box>
+              <Flex className="reapti_map_fallback_chips">
+                {pins.map((pin, index) => (
+                  <Box
+                    key={
+                      pin.id ??
+                      `fallback_pin_${pin.latitude}_${pin.longitude}_${index}`
+                    }
+                    className="reapti_map_fallback_chip"
+                  >
+                    {formatFallbackPinLabel(pin)}
+                  </Box>
+                ))}
+              </Flex>
+            </Box>
+          )}
+        </Box>
+      </Box>
+    </Box>
+  );
+};
 
 interface ActiveSurfaceProps {
   props: MapProps;
@@ -104,6 +180,7 @@ const MapActiveSurface: FC<ActiveSurfaceProps> = ({ props, localMapRef }) => {
     targetBearing: _tBear,
     dataTestId = 'reapti-map',
     isLoading: _loading,
+    webGLSupported: _wgl,
     className: _cls,
     children,
     initialViewState: _ivs,
@@ -135,10 +212,23 @@ export const Map = forwardRef<MapRef, MapProps>((props, ref) => {
 
   useMap3DTransition(localMapRef, props);
 
-  if (props.isLoading) {
-    const containerClass = resolveMapContainerClass(props.className);
+  const webGLAvailable = props.webGLSupported ?? isWebGLSupported();
+  const containerClass = resolveMapContainerClass(props.className);
+
+  if (!webGLAvailable) {
+    const resolvedPins = resolveMapPins(props);
     return (
-      <MapLoadingSurface
+      <MapFallbackSurface
+        containerClass={containerClass}
+        testId={props.dataTestId ?? 'reapti-map-fallback'}
+        pins={resolvedPins}
+      />
+    );
+  }
+
+  if (props.isLoading) {
+    return (
+      <MapSkeleton
         containerClass={containerClass}
         testId={props.dataTestId ?? 'reapti-map'}
       />

@@ -3,7 +3,15 @@ import type { Locale } from './locales.ts';
 
 export type ContentKey = 'app' | 'cta';
 
-export type A11yKey = 'appMain' | 'ctaAction' | 'zoomIn' | 'zoomOut';
+export type A11yKey =
+  | 'appMain'
+  | 'ctaAction'
+  | 'zoomIn'
+  | 'zoomOut'
+  | 'mapWebGLDisabledTitle'
+  | 'mapWebGLDisabledMessage'
+  | 'mapFallbackLocationsTitle'
+  | 'mapLoadingAriaLabel';
 
 export type MdxComponent = ComponentType<{
   components?: Record<string, unknown>;

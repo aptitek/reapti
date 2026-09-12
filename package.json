@@ -32,7 +32,7 @@
     "codegen:panda": "wireit",
     "codegen:map-styles": "wireit",
     "clean": "wireit",
-    "prepare": "panda codegen && node scripts/generate-map-styles.mjs && husky"
+    "prepare": "panda codegen && node scripts/generate-map-styles.mjs && node scripts/generate-map-poster.mjs && husky"
   },
   "wireit": {
     "codegen:panda": {
@@ -46,14 +46,18 @@
       ]
     },
     "codegen:map-styles": {
-      "command": "node scripts/generate-map-styles.mjs",
+      "command": "node scripts/generate-map-styles.mjs && node scripts/generate-map-poster.mjs",
       "files": [
         "scripts/generate-map-styles.mjs",
+        "scripts/generate-map-poster.mjs",
+        "scripts/assets/lyon_layers.json",
         "src/tokens/md3.ts",
         "src/components/molecules/Map/mapStyleGenerator.ts"
       ],
       "output": [
-        "public/map-style*.json"
+        "public/map-style*.json",
+        "public/lyon*.svg",
+        "public/themes/**"
       ]
     },
     "build": {

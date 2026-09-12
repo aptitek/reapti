@@ -68,4 +68,6 @@ export interface MapProps extends ReactMapGLProps {
   dataTestId?: string;
   /** Loading state displaying MD3 skeleton */
   isLoading?: boolean;
+  /** Force WebGL supported status for testing or manual override (default: runtime detected) */
+  webGLSupported?: boolean;
 }

@@ -17,14 +17,7 @@ vi.mock('react-map-gl/maplibre', () => ({
     mapLib?: unknown;
     [key: string]: unknown;
   }) =>
-    createElement(
-      'div',
-      {
-        'data-testid': 'mock-maplibre',
-        ...rest,
-      },
-      children
-    ),
+    createElement('div', { 'data-testid': 'mock-maplibre', ...rest }, children),
   Marker: ({
     children,
     longitude,
@@ -70,8 +63,29 @@ describe('Map Surface Rendering', () => {
     );
 
     expect(html).toContain('data-testid="loading-map"');
-    expect(html).toContain('m3e-skeleton');
-    expect(html).toContain('reapti_map_skeleton');
+    expect(html).toContain('reapti_map_skeleton_surface');
+    expect(html).toContain('reapti_map_skeleton_backdrop');
+    expect(html).toContain('reapti_map_skeleton_shimmer');
+    expect(html).toContain('reapti_map_skeleton_radar');
+  });
+
+  it('renders non-OpenGL fallback surface when webGLSupported is false', () => {
+    const html = renderToStaticMarkup(
+      createElement(Map, {
+        webGLSupported: false,
+        dataTestId: 'fallback-map',
+        pins: [
+          { latitude: 45.758, longitude: 4.832, label: 'Place Bellecour' },
+          { latitude: 45.772, longitude: 4.855 },
+        ],
+      })
+    );
+
+    expect(html).toContain('data-testid="fallback-map"');
+    expect(html).toContain('reapti_map_fallback_surface');
+    expect(html).toContain('reapti_map_fallback_card');
+    expect(html).toContain('Place Bellecour');
+    expect(html).toContain('45.7720° N, 4.8550° E');
   });
 
   it('renders map with custom dataTestId and className', () => {

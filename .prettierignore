@@ -7,3 +7,7 @@ styled-system
 .agents
 pnpm-lock.yaml
 public/map-style*.json
+public/lyon*.svg
+public/themes/**
+public/*.html
+scripts/assets/**

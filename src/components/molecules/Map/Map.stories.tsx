@@ -128,3 +128,27 @@ export const LoadingState: Story = {
     </Box>
   ),
 };
+
+export const WebGLDisabledFallback: Story = {
+  render: () => (
+    <Box inlineSize="720px" blockSize="480px">
+      <Map
+        webGLSupported={false}
+        pins={[
+          {
+            id: 'lyon-1',
+            latitude: 45.758,
+            longitude: 4.832,
+            label: 'Place Bellecour, Lyon',
+          },
+          {
+            id: 'lyon-2',
+            latitude: 45.772,
+            longitude: 4.855,
+            label: "Parc de la Tête d'Or, Lyon",
+          },
+        ]}
+      />
+    </Box>
+  ),
+};
