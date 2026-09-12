@@ -13,6 +13,13 @@ export const md3Tokens = {
     extraLarge: { value: '28px' },
     full: { value: '9999px' },
   },
+  borderWidths: {
+    none: { value: '0px' },
+    thin: { value: '1px' },
+    medium: { value: '2px' },
+    thick: { value: '3px' },
+    heavy: { value: '4px' },
+  },
   spacing: {
     '0': { value: '0px' },
     '0.5': { value: '2px' },

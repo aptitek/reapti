@@ -38,6 +38,8 @@ describe('MD3 Tokens Specification', () => {
     expect(md3Tokens.spacing['1'].value).toBe('4px');
     expect(md3Tokens.spacing['2'].value).toBe('8px');
     expect(md3Tokens.radii.full.value).toBe('9999px');
+    expect(md3Tokens.borderWidths.thick.value).toBe('3px');
+    expect(md3Tokens.borderWidths.medium.value).toBe('2px');
     expect(md3Tokens.durations.short1.value).toBe('50ms');
     expect(md3Tokens.easings.standard.value).toBeDefined();
   });

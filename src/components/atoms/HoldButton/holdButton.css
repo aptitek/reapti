@@ -1,0 +1,129 @@
+/* Justification: Root wrapper for anchoring the hold button, managing layout flow, and scoping CSS variables. */
+.hold-button_root {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  inline-size: max-content;
+  block-size: max-content;
+  box-sizing: border-box;
+  padding-inline: calc(
+    var(--hold-border-spacing, 4px) + var(--hold-border-width, 3px)
+  );
+  padding-block: calc(
+    var(--hold-border-spacing, 4px) + var(--hold-border-width, 3px)
+  );
+  cursor: pointer;
+  touch-action: manipulation;
+  --hold-duration: 1000ms;
+  --hold-retract-duration: 350ms;
+  --hold-border-width: 3px;
+  --hold-border-spacing: 4px;
+  --hold-border-color: var(--colors-primary);
+}
+
+/* Justification: Tailor border accent for outlined, tonal, and text variants to match brand primary. */
+.hold-button_root[data-variant='outlined'],
+.hold-button_root[data-variant='tonal'],
+.hold-button_root[data-variant='text'] {
+  --hold-border-color: var(--colors-primary);
+}
+
+/* Justification: Dim container and suppress interactions when hold button is disabled. */
+.hold-button_root[data-disabled='true'] {
+  opacity: 0.38;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Justification: Apply shake animation when button is pressed too briefly before hold completion. */
+.hold-button_root[data-shaking='true'] {
+  animation-name: hold-button-shake;
+  animation-duration: 400ms;
+  animation-timing-function: cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+/* Justification: Keyframe animation for horizontal vibration and micro-rotations signaling hold requirement. */
+@keyframes hold-button-shake {
+  0%,
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  15% {
+    transform: translateX(-6px) rotate(-1.5deg);
+  }
+  30% {
+    transform: translateX(5px) rotate(1.2deg);
+  }
+  45% {
+    transform: translateX(-4px) rotate(-0.8deg);
+  }
+  60% {
+    transform: translateX(3px) rotate(0.6deg);
+  }
+  75% {
+    transform: translateX(-1px) rotate(-0.2deg);
+  }
+}
+
+/* Justification: Absolute non-blocking SVG layer aligned perfectly with button dimensions. */
+.hold-button_border-svg {
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 5;
+}
+
+/* Justification: Baseline animated border path with initial 1000 stroke-dash offset and elastic retract. */
+.hold-button_border-path {
+  fill: none;
+  stroke: var(--hold-border-color, var(--colors-primary));
+  stroke-width: var(--hold-border-width, 3px);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  transition-property: stroke-dashoffset;
+  transition-duration: var(--hold-retract-duration, 350ms);
+  transition-timing-function: cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+
+/* Justification: Exponential deceleration animation with initial inertia circling the border path during hold. */
+.hold-button_root[data-holding='true'] .hold-button_border-path {
+  stroke-dashoffset: 0;
+  transition-property: stroke-dashoffset;
+  transition-duration: var(--hold-duration, 1000ms);
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Justification: Full border coverage maintained on hold completion without glow or aura. */
+.hold-button_root[data-completed='true'] .hold-button_border-path {
+  stroke-dashoffset: 0;
+}
+
+/* Justification: Inherit shape morphing and transparent background into native <m3e-shape>. */
+.override-hold-button m3e-shape {
+  --m3e-shape-container-color: transparent;
+  --m3e-shape-transition: clip-path 350ms cubic-bezier(0.2, 0, 0, 1);
+  display: inline-flex;
+  inline-size: max-content;
+  block-size: max-content;
+  aspect-ratio: auto;
+}
+
+/* Justification: Reset native button outline and corners to let M3 expressive clip-path govern silhouette. */
+.override-hold-button m3e-button {
+  --m3e-button-outline-thickness: 0px;
+  --m3e-button-shape-round: 0px;
+  --m3e-button-shape-square: 0px;
+  --m3e-button-extra-small-shape-round: 0px;
+  --m3e-button-small-shape-round: 0px;
+  --m3e-button-medium-shape-round: 0px;
+  --m3e-button-large-shape-round: 0px;
+  --m3e-button-extra-large-shape-round: 0px;
+}
