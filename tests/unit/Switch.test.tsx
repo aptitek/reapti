@@ -1,11 +1,16 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
+import { Box } from 'styled-system/jsx';
 import { Switch } from '../../src/components/atoms/Switch/Switch.tsx';
-import { useSwitchInternalState } from '../../src/components/atoms/Switch/useSwitch.ts';
+import {
+  resolveHandle,
+  resolveBackground,
+  syncSwitchStyles,
+} from '../../src/components/atoms/Switch/switchHelpers.ts';
 
 describe('Switch Atom Basic Rendering', () => {
-  it('renders native m3e-switch inside scoped wrapper', () => {
+  it('renders native m3e-switch inside scoped wrapper with track frame', () => {
     const html = renderToStaticMarkup(
       createElement(Switch, {
         checked: false,
@@ -16,6 +21,7 @@ describe('Switch Atom Basic Rendering', () => {
 
     expect(html).toContain('switch_root');
     expect(html).toContain('override-switch');
+    expect(html).toContain('switch_track_frame');
     expect(html).toContain('m3e-switch');
     expect(html).toContain('data-size="medium"');
     expect(html).toContain('data-testid="test-switch"');
@@ -42,23 +48,172 @@ describe('Switch Atom Basic Rendering', () => {
   });
 });
 
-describe('Switch Atom Configuration', () => {
-  it('passes disabled attribute and icons configuration to wrapper and m3e-switch', () => {
-    const html = renderToStaticMarkup(
+describe('Switch Ghost Icons', () => {
+  it('renders ghost icons on opposite side when checked vs unchecked', () => {
+    const checkedHtml = renderToStaticMarkup(
       createElement(Switch, {
         checked: true,
-        disabled: true,
-        icons: 'both',
-        ariaLabel: 'Disabled switch with icons',
+        ghostIconOn: createElement(Box, { 'data-testid': 'ghost-sun' }),
+        ghostIconOff: createElement(Box, { 'data-testid': 'ghost-moon' }),
       })
     );
+    expect(checkedHtml).toContain('ghost-sun');
+    expect(checkedHtml).not.toContain('ghost-moon');
 
-    expect(html).toContain('data-disabled="true"');
-    expect(html).toContain('data-icons="both"');
-    expect(html).toContain('data-checked="true"');
+    const uncheckedHtml = renderToStaticMarkup(
+      createElement(Switch, {
+        checked: false,
+        ghostIconOn: createElement(Box, { 'data-testid': 'ghost-sun' }),
+        ghostIconOff: createElement(Box, { 'data-testid': 'ghost-moon' }),
+      })
+    );
+    expect(uncheckedHtml).toContain('ghost-moon');
+    expect(uncheckedHtml).not.toContain('ghost-sun');
   });
 
-  it('handles custom className and element id', () => {
+  it('renders arbitrary glyph strings as ghost icons via on/off objects', () => {
+    const checkedHtml = renderToStaticMarkup(
+      createElement(Switch, {
+        checked: true,
+        on: { ghostIcon: 'PM' },
+        off: { ghostIcon: 'AM' },
+      })
+    );
+    expect(checkedHtml).toContain('PM');
+    expect(checkedHtml).not.toContain('AM');
+
+    const uncheckedHtml = renderToStaticMarkup(
+      createElement(Switch, {
+        checked: false,
+        ghostIconOn: 'PM',
+        ghostIconOff: 'AM',
+      })
+    );
+    expect(uncheckedHtml).toContain('AM');
+    expect(uncheckedHtml).not.toContain('PM');
+  });
+});
+
+describe('Switch Peeking Features', () => {
+  it('renders peeking icons for each state via on/off objects and flat props', () => {
+    const checkedHtml = renderToStaticMarkup(
+      createElement(Switch, {
+        checked: true,
+        on: {
+          peekingIcon: createElement(Box, { 'data-testid': 'peeking-plane' }),
+        },
+        off: {
+          peekingIcon: createElement(Box, { 'data-testid': 'peeking-train' }),
+        },
+      })
+    );
+    expect(checkedHtml).toContain('peeking-plane');
+    expect(checkedHtml).not.toContain('peeking-train');
+
+    const uncheckedHtml = renderToStaticMarkup(
+      createElement(Switch, {
+        checked: false,
+        peekingIconOn: createElement(Box, { 'data-testid': 'peeking-plane' }),
+        peekingIconOff: createElement(Box, { 'data-testid': 'peeking-train' }),
+      })
+    );
+    expect(uncheckedHtml).toContain('peeking-train');
+    expect(uncheckedHtml).not.toContain('peeking-plane');
+  });
+});
+
+describe('Switch Layered Background SVG', () => {
+  it('renders static, function, and state-specific background SVGs', () => {
+    const staticHtml = renderToStaticMarkup(
+      createElement(Switch, {
+        checked: true,
+        backgroundSvg: createElement(Box, { 'data-testid': 'bg-svg' }),
+      })
+    );
+    expect(staticHtml).toContain('bg-svg');
+
+    const fnHtml = renderToStaticMarkup(
+      createElement(Switch, {
+        checked: false,
+        backgroundSvg: (c) =>
+          createElement(Box, { 'data-testid': c ? 'bg-day' : 'bg-night' }),
+      })
+    );
+    expect(fnHtml).toContain('bg-night');
+
+    const specificHtml = renderToStaticMarkup(
+      createElement(Switch, {
+        checked: true,
+        on: { backgroundSvg: createElement(Box, { 'data-testid': 'bg-on' }) },
+        off: {
+          backgroundSvg: createElement(Box, { 'data-testid': 'bg-off' }),
+        },
+      })
+    );
+    expect(specificHtml).toContain('bg-on');
+
+    const offSpecificHtml = renderToStaticMarkup(
+      createElement(Switch, {
+        checked: false,
+        backgroundSvgOn: createElement(Box, { 'data-testid': 'bg-on' }),
+        backgroundSvgOff: createElement(Box, { 'data-testid': 'bg-off' }),
+      })
+    );
+    expect(offSpecificHtml).toContain('bg-off');
+  });
+});
+
+describe('Switch Handle Content and Transitions', () => {
+  it('renders resting handle icons for on and off states', () => {
+    const checkedHtml = renderToStaticMarkup(
+      createElement(Switch, {
+        checked: true,
+        on: { handleIcon: createElement(Box, { 'data-testid': 'handle-on' }) },
+        off: {
+          handleIcon: createElement(Box, { 'data-testid': 'handle-off' }),
+        },
+      })
+    );
+    expect(checkedHtml).toContain('handle-on');
+
+    const uncheckedHtml = renderToStaticMarkup(
+      createElement(Switch, {
+        checked: false,
+        handleIconOn: createElement(Box, { 'data-testid': 'handle-on' }),
+        handleIconOff: createElement(Box, { 'data-testid': 'handle-off' }),
+      })
+    );
+    expect(uncheckedHtml).toContain('handle-off');
+  });
+
+  it('resolves handle transition components and directions', () => {
+    const fnResult = resolveHandle(
+      { handleTransitionComponent: (d) => `active-${d}` },
+      false,
+      { isTransitioning: true, direction: 'to-on' }
+    );
+    expect(fnResult).toBe('active-to-on');
+
+    const staticResult = resolveHandle(
+      { handleTransitionComponent: 'spinner' },
+      false,
+      { isTransitioning: true, direction: 'to-off' }
+    );
+    expect(staticResult).toBe('spinner');
+
+    expect(
+      resolveBackground({ backgroundSvg: (c) => (c ? 'day' : 'night') }, true)
+    ).toBe('day');
+  });
+});
+
+describe('Switch Atom Configuration & Style Sync', () => {
+  it('synchronizes switch styles and custom class names', () => {
+    const el = {
+      style: { setProperty: () => {}, removeProperty: () => {} },
+    } as unknown as HTMLElement;
+    syncSwitchStyles(el, { colorOn: 'var(--colors-primary)' });
+
     const html = renderToStaticMarkup(
       createElement(Switch, {
         id: 'settings-switch',
@@ -81,43 +236,5 @@ describe('Switch Atom Configuration', () => {
       })
     );
     expect(html).toContain('data-checked="true"');
-  });
-});
-
-describe('Switch Internal State Hook', () => {
-  it('toggles uncontrolled checked state and fires onChange', () => {
-    let hookApi: ReturnType<typeof useSwitchInternalState> | null = null;
-    const onChange = vi.fn();
-
-    function Probe() {
-      hookApi = useSwitchInternalState(undefined, false, onChange);
-      return null;
-    }
-
-    renderToStaticMarkup(createElement(Probe));
-    expect(hookApi).not.toBeNull();
-    if (!hookApi) return;
-
-    expect(hookApi.isChecked).toBe(false);
-    hookApi.handleChange({ currentTarget: { checked: true } } as never);
-    expect(onChange).toHaveBeenCalledWith(true);
-  });
-
-  it('respects controlled checked state on change', () => {
-    let hookApi: ReturnType<typeof useSwitchInternalState> | null = null;
-    const onChange = vi.fn();
-
-    function Probe() {
-      hookApi = useSwitchInternalState(true, false, onChange);
-      return null;
-    }
-
-    renderToStaticMarkup(createElement(Probe));
-    expect(hookApi).not.toBeNull();
-    if (!hookApi) return;
-
-    expect(hookApi.isChecked).toBe(true);
-    hookApi.handleChange({ currentTarget: { checked: false } } as never);
-    expect(onChange).toHaveBeenCalledWith(false);
   });
 });
