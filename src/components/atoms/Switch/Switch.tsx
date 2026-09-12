@@ -11,6 +11,7 @@ import {
   resolveBackground,
   resolveHandle,
   resolveActiveState,
+  hasHandleIconOff,
 } from './switchHelpers.ts';
 import './switch.css';
 
@@ -84,6 +85,7 @@ export const Switch = forwardRef<M3eSwitchElement, SwitchProps>(
 
     const rootClassName = getRootClassName(props.className);
     const testId = props.dataTestId ?? 'me3-switch';
+    const hasIconOff = hasHandleIconOff(props);
 
     return (
       <Box
@@ -93,6 +95,7 @@ export const Switch = forwardRef<M3eSwitchElement, SwitchProps>(
         data-checked={isChecked}
         data-disabled={props.disabled ?? false}
         data-icons={props.icons ?? 'none'}
+        data-handle-icon-off={hasIconOff}
         data-testid={`${testId}-wrapper`}
       >
         <SwitchSlots

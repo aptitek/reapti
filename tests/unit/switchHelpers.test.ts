@@ -3,6 +3,7 @@ import {
   resolveBackground,
   resolveHandle,
   resolveActiveState,
+  hasHandleIconOff,
   syncSwitchStyles,
 } from '../../src/components/atoms/Switch/switchHelpers.ts';
 import type { SwitchProps } from '../../src/components/atoms/Switch/Switch.types.ts';
@@ -103,5 +104,14 @@ describe('switchHelpers active states', () => {
     expect(() => {
       syncSwitchStyles(element, { on: { color: 'var(--colors-primary)' } });
     }).not.toThrow();
+  });
+
+  it('determines when handle icon is present in off state', () => {
+    expect(hasHandleIconOff({ icons: 'both' })).toBe(true);
+    expect(hasHandleIconOff({ off: { handleIcon: 'moon' } })).toBe(true);
+    expect(hasHandleIconOff({ handleIconOff: 'moon' })).toBe(true);
+    expect(hasHandleIconOff({})).toBe(false);
+    expect(hasHandleIconOff({ off: {} })).toBe(false);
+    expect(hasHandleIconOff({ icons: 'none' })).toBe(false);
   });
 });

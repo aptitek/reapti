@@ -49,6 +49,13 @@ export function resolveActiveState(props: SwitchProps, isChecked: boolean) {
   };
 }
 
+export function hasHandleIconOff(props: SwitchProps): boolean {
+  if (props.icons === 'both') return true;
+  const off = props.off;
+  if (off && off.handleIcon) return true;
+  return Boolean(props.handleIconOff);
+}
+
 export function syncSwitchStyles(
   element: HTMLElement | null,
   props: SwitchProps

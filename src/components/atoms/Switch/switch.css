@@ -16,6 +16,12 @@
   --switch-peeking-rot-off: 0deg;
   --switch-peeking-scale-x-on: 1;
   --switch-peeking-scale-x-off: 1;
+  --switch-peek-start-off: var(--switch-peek-start-off-compact);
+}
+
+/* Justification: Adjust peeking icon resting anchor when handle expands to full size in off state. */
+.switch_root[data-handle-icon-off='true'] {
+  --switch-peek-start-off: var(--switch-peek-start-off-full);
 }
 
 /* Justification: Explicitly scoped override class permitting CSS variable inheritance into native <m3e-switch>. */
@@ -51,6 +57,16 @@
   );
 }
 
+/* Justification: Expand unselected handle to full dimension when an icon is present on the handle in off state. */
+.override-switch[data-handle-icon-off='true'] m3e-switch {
+  --m3e-switch-unselected-handle-width: var(
+    --m3e-switch-with-icon-handle-width
+  );
+  --m3e-switch-unselected-handle-height: var(
+    --m3e-switch-with-icon-handle-height
+  );
+}
+
 /* Justification: Small dimension preset mapping to the compact MD3 density profile using existing tokens. */
 .switch_root[data-size='small'] {
   --m3e-switch-track-width: var(--spacing-11);
@@ -64,8 +80,18 @@
   --m3e-switch-selected-icon-size: var(--spacing-3\.5);
   --m3e-switch-unselected-icon-size: var(--spacing-3\.5);
   --switch-handle-size: var(--spacing-5);
-  --switch-peek-offset: var(--spacing-1);
-  --switch-peek-start-off: var(--spacing-3);
+  --switch-peek-offset: var(--spacing-1\.5);
+  --switch-peek-start-off-full: calc(
+    (var(--m3e-switch-track-height) + var(--m3e-switch-selected-handle-width)) /
+      2 - var(--m3e-switch-selected-icon-size)
+  );
+  --switch-peek-start-off-compact: calc(
+    (
+        var(--m3e-switch-track-height) +
+          var(--m3e-switch-unselected-handle-width)
+      ) /
+      2 - var(--m3e-switch-selected-icon-size)
+  );
   --switch-ghost-inset: var(--spacing-0\.5);
   --switch-ghost-font-size: var(--font-sizes-2xs);
   --switch-handle-travel: calc(
@@ -86,8 +112,18 @@
   --m3e-switch-selected-icon-size: var(--spacing-4);
   --m3e-switch-unselected-icon-size: var(--spacing-4);
   --switch-handle-size: var(--spacing-6);
-  --switch-peek-offset: var(--spacing-1\.5);
-  --switch-peek-start-off: var(--spacing-2);
+  --switch-peek-offset: var(--spacing-2);
+  --switch-peek-start-off-full: calc(
+    (var(--m3e-switch-track-height) + var(--m3e-switch-selected-handle-width)) /
+      2 - var(--m3e-switch-selected-icon-size)
+  );
+  --switch-peek-start-off-compact: calc(
+    (
+        var(--m3e-switch-track-height) +
+          var(--m3e-switch-unselected-handle-width)
+      ) /
+      2 - var(--m3e-switch-selected-icon-size)
+  );
   --switch-ghost-inset: var(--spacing-0\.5);
   --switch-ghost-font-size: var(--font-sizes-xs);
   --switch-handle-travel: calc(
@@ -110,8 +146,18 @@
     var(--spacing-4) + var(--spacing-0\.5)
   );
   --switch-handle-size: var(--spacing-7);
-  --switch-peek-offset: var(--spacing-2);
-  --switch-peek-start-off: var(--spacing-1);
+  --switch-peek-offset: calc(var(--spacing-2) + var(--spacing-1));
+  --switch-peek-start-off-full: calc(
+    (var(--m3e-switch-track-height) + var(--m3e-switch-selected-handle-width)) /
+      2 - var(--m3e-switch-selected-icon-size)
+  );
+  --switch-peek-start-off-compact: calc(
+    (
+        var(--m3e-switch-track-height) +
+          var(--m3e-switch-unselected-handle-width)
+      ) /
+      2 - var(--m3e-switch-selected-icon-size)
+  );
   --switch-ghost-inset: var(--spacing-1);
   --switch-ghost-font-size: var(--font-sizes-sm);
   --switch-handle-travel: calc(
@@ -246,10 +292,7 @@
 /* Justification: Peeking icon placement and transforms when switch is checked (under right handle). */
 .switch_root[data-checked='true'] .switch_peeking_slot {
   inset-inline-start: auto;
-  inset-inline-end: calc(
-    var(--spacing-1) + var(--m3e-switch-selected-handle-width) -
-      var(--m3e-switch-selected-icon-size)
-  );
+  inset-inline-end: var(--switch-peek-start-off-full);
   rotate: var(--switch-peeking-rot-on);
   scale: var(--switch-peeking-scale-x-on) 1;
   color: var(

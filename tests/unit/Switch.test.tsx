@@ -175,6 +175,7 @@ describe('Switch Handle Content and Transitions', () => {
       })
     );
     expect(checkedHtml).toContain('handle-on');
+    expect(checkedHtml).toContain('data-handle-icon-off="true"');
 
     const uncheckedHtml = renderToStaticMarkup(
       createElement(Switch, {
@@ -184,6 +185,7 @@ describe('Switch Handle Content and Transitions', () => {
       })
     );
     expect(uncheckedHtml).toContain('handle-off');
+    expect(uncheckedHtml).toContain('data-handle-icon-off="true"');
   });
 
   it('resolves handle transition components and directions', () => {
