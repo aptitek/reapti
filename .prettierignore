@@ -6,3 +6,4 @@ coverage
 styled-system
 .agents
 pnpm-lock.yaml
+public/map-style*.json

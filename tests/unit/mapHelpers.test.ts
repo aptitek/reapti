@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import {
   DEFAULT_MAP_STYLE,
+  getMapStyleUrl,
   DEFAULT_COORDINATES,
   DEFAULT_3D_CONFIG,
   resolveMapContainerClass,
@@ -16,18 +17,23 @@ import {
 
 describe('Map Helpers Basic Resolution', () => {
   it('provides openfreemap style and 3D defaults', () => {
-    expect(DEFAULT_MAP_STYLE).toBe(
-      'https://tiles.openfreemap.org/styles/liberty'
-    );
-    expect(DEFAULT_COORDINATES.longitude).toBe(2.3522);
-    expect(DEFAULT_COORDINATES.latitude).toBe(48.8566);
-    expect(DEFAULT_COORDINATES.zoom).toBe(14);
-    expect(DEFAULT_COORDINATES.pitch).toBe(0);
-    expect(DEFAULT_COORDINATES.bearing).toBe(0);
-
-    expect(DEFAULT_3D_CONFIG.targetPitch).toBe(55);
-    expect(DEFAULT_3D_CONFIG.targetBearing).toBe(-20);
-    expect(DEFAULT_3D_CONFIG.transitionDelayMs).toBe(2000);
+    expect(DEFAULT_MAP_STYLE).toBe('/map-style.json');
+    expect(getMapStyleUrl('light')).toBe('/map-style-light.json');
+    expect(getMapStyleUrl('dark')).toBe('/map-style-dark.json');
+    expect(getMapStyleUrl()).toBe('/map-style-light.json');
+    expect(DEFAULT_COORDINATES).toEqual({
+      longitude: 2.3522,
+      latitude: 48.8566,
+      zoom: 14,
+      pitch: 0,
+      bearing: 0,
+    });
+    expect(DEFAULT_3D_CONFIG).toEqual({
+      targetPitch: 55,
+      targetBearing: -20,
+      transitionDelayMs: 2000,
+      transitionDurationMs: 2500,
+    });
   });
 
   it('resolves container classes with custom class extensions', () => {

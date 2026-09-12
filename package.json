@@ -30,8 +30,9 @@
     "format": "prettier --write --cache .",
     "format:check": "prettier --check --cache .",
     "codegen:panda": "wireit",
+    "codegen:map-styles": "wireit",
     "clean": "wireit",
-    "prepare": "panda codegen && husky"
+    "prepare": "panda codegen && node scripts/generate-map-styles.mjs && husky"
   },
   "wireit": {
     "codegen:panda": {
@@ -44,6 +45,17 @@
         "styled-system/**"
       ]
     },
+    "codegen:map-styles": {
+      "command": "node scripts/generate-map-styles.mjs",
+      "files": [
+        "scripts/generate-map-styles.mjs",
+        "src/tokens/md3.ts",
+        "src/components/molecules/Map/mapStyleGenerator.ts"
+      ],
+      "output": [
+        "public/map-style*.json"
+      ]
+    },
     "build": {
       "dependencies": [
         "build:lib",
@@ -53,7 +65,8 @@
     "build:lib": {
       "command": "vite build",
       "dependencies": [
-        "codegen:panda"
+        "codegen:panda",
+        "codegen:map-styles"
       ],
       "files": [
         "src/**/*",
@@ -69,7 +82,8 @@
     "build:storybook": {
       "command": "storybook build",
       "dependencies": [
-        "codegen:panda"
+        "codegen:panda",
+        "codegen:map-styles"
       ],
       "files": [
         "src/**/*",

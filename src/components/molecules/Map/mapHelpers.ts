@@ -6,7 +6,11 @@ import {
   type TransitionMapTarget,
 } from './useMap3DTransition.ts';
 
-export const DEFAULT_MAP_STYLE = 'https://tiles.openfreemap.org/styles/liberty';
+export const DEFAULT_MAP_STYLE = '/map-style.json';
+
+export function getMapStyleUrl(mode: 'light' | 'dark' = 'light'): string {
+  return mode === 'dark' ? '/map-style-dark.json' : '/map-style-light.json';
+}
 
 export const DEFAULT_COORDINATES = {
   longitude: 2.3522,
