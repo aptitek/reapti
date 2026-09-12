@@ -1,0 +1,60 @@
+/* Justification: Root wrapper for anchoring the base ME3 switch and managing display flow. */
+.switch_root {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  inline-size: max-content;
+  block-size: max-content;
+}
+
+/* Justification: Explicitly scoped override class permitting CSS variable inheritance into the native <m3e-switch> Web Component. */
+.override-switch m3e-switch {
+  display: inline-block;
+  outline: none;
+}
+
+/* Justification: Small dimension preset mapping to the compact MD3 density profile using existing tokens. */
+.switch_root[data-size='small'] {
+  --m3e-switch-track-width: var(--spacing-11);
+  --m3e-switch-track-height: calc(var(--spacing-6) + var(--spacing-0\.5));
+  --m3e-switch-selected-handle-width: var(--spacing-5);
+  --m3e-switch-selected-handle-height: var(--spacing-5);
+  --m3e-switch-unselected-handle-width: var(--spacing-3\.5);
+  --m3e-switch-unselected-handle-height: var(--spacing-3\.5);
+  --m3e-switch-with-icon-handle-width: var(--spacing-5);
+  --m3e-switch-with-icon-handle-height: var(--spacing-5);
+  --m3e-switch-selected-icon-size: var(--spacing-3\.5);
+  --m3e-switch-unselected-icon-size: var(--spacing-3\.5);
+}
+
+/* Justification: Canonical medium dimension preset fulfilling standard Material Design 3 metrics using existing tokens. */
+.switch_root[data-size='medium'] {
+  --m3e-switch-track-width: calc(var(--spacing-12) + var(--spacing-1));
+  --m3e-switch-track-height: var(--spacing-8);
+  --m3e-switch-selected-handle-width: var(--spacing-6);
+  --m3e-switch-selected-handle-height: var(--spacing-6);
+  --m3e-switch-unselected-handle-width: var(--spacing-4);
+  --m3e-switch-unselected-handle-height: var(--spacing-4);
+  --m3e-switch-with-icon-handle-width: var(--spacing-6);
+  --m3e-switch-with-icon-handle-height: var(--spacing-6);
+  --m3e-switch-selected-icon-size: var(--spacing-4);
+  --m3e-switch-unselected-icon-size: var(--spacing-4);
+}
+
+/* Justification: Expanded large dimension preset providing enhanced touch-target reach using existing tokens. */
+.switch_root[data-size='large'] {
+  --m3e-switch-track-width: var(--spacing-16);
+  --m3e-switch-track-height: calc(var(--spacing-8) + var(--spacing-1\.5));
+  --m3e-switch-selected-handle-width: var(--spacing-7);
+  --m3e-switch-selected-handle-height: var(--spacing-7);
+  --m3e-switch-unselected-handle-width: var(--spacing-5);
+  --m3e-switch-unselected-handle-height: var(--spacing-5);
+  --m3e-switch-with-icon-handle-width: var(--spacing-7);
+  --m3e-switch-with-icon-handle-height: var(--spacing-7);
+  --m3e-switch-selected-icon-size: calc(var(--spacing-4) + var(--spacing-0\.5));
+  --m3e-switch-unselected-icon-size: calc(
+    var(--spacing-4) + var(--spacing-0\.5)
+  );
+}

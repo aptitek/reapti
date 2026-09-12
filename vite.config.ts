@@ -20,7 +20,12 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ['@m3e/react/button', '@m3e/react/shape', '@m3e/react/skeleton'],
+    include: [
+      '@m3e/react/button',
+      '@m3e/react/shape',
+      '@m3e/react/skeleton',
+      '@m3e/react/switch',
+    ],
   },
   server: {
     fs: {
@@ -39,6 +44,7 @@ export default defineConfig({
         'src/content/**',
         'src/main.tsx',
         'src/**/types.ts',
+        'src/**/*.types.ts',
       ],
       thresholds: {
         lines: 95,
