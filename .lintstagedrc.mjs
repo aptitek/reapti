@@ -31,7 +31,9 @@ export default {
       : [];
   },
   '*.{json,yml,yaml}': (filenames) => {
-    const files = filenames.filter((f) => !f.includes('.agents/'));
+    const files = filenames.filter(
+      (f) => !f.includes('.agents/') && !f.includes('map-style')
+    );
     return files.length ? [`prettier --write --cache ${files.join(' ')}`] : [];
   },
 };

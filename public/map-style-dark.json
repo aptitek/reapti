@@ -36,7 +36,11 @@
       "type": "fill",
       "source": "openmaptiles",
       "source-layer": "landcover",
-      "filter": ["==", "class", "wood"],
+      "filter": [
+        "==",
+        "class",
+        "wood"
+      ],
       "paint": {
         "fill-color": "#334a4f",
         "fill-opacity": 0.25
@@ -66,7 +70,11 @@
       "type": "fill",
       "source": "openmaptiles",
       "source-layer": "landuse",
-      "filter": ["==", "class", "residential"],
+      "filter": [
+        "==",
+        "class",
+        "residential"
+      ],
       "paint": {
         "fill-color": "#171b1c",
         "fill-opacity": 0.6
@@ -87,7 +95,11 @@
       "type": "line",
       "source": "openmaptiles",
       "source-layer": "transportation",
-      "filter": ["==", "class", "minor"],
+      "filter": [
+        "==",
+        "class",
+        "minor"
+      ],
       "paint": {
         "line-color": "#25292a",
         "line-width": 1.5
@@ -100,8 +112,16 @@
       "source-layer": "transportation",
       "filter": [
         "match",
-        ["get", "class"],
-        ["primary", "secondary", "tertiary", "trunk"],
+        [
+          "get",
+          "class"
+        ],
+        [
+          "primary",
+          "secondary",
+          "tertiary",
+          "trunk"
+        ],
         true,
         false
       ],
@@ -117,8 +137,16 @@
       "source-layer": "transportation",
       "filter": [
         "match",
-        ["get", "class"],
-        ["primary", "secondary", "tertiary", "trunk"],
+        [
+          "get",
+          "class"
+        ],
+        [
+          "primary",
+          "secondary",
+          "tertiary",
+          "trunk"
+        ],
         true,
         false
       ],
@@ -132,7 +160,11 @@
       "type": "line",
       "source": "openmaptiles",
       "source-layer": "transportation",
-      "filter": ["==", "class", "motorway"],
+      "filter": [
+        "==",
+        "class",
+        "motorway"
+      ],
       "paint": {
         "line-color": "#899294",
         "line-width": 4
@@ -143,7 +175,11 @@
       "type": "line",
       "source": "openmaptiles",
       "source-layer": "transportation",
-      "filter": ["==", "class", "motorway"],
+      "filter": [
+        "==",
+        "class",
+        "motorway"
+      ],
       "paint": {
         "line-color": "#303435",
         "line-width": 2.5
@@ -154,11 +190,18 @@
       "type": "line",
       "source": "openmaptiles",
       "source-layer": "boundary",
-      "filter": ["==", "admin_level", 2],
+      "filter": [
+        "==",
+        "admin_level",
+        2
+      ],
       "paint": {
         "line-color": "#899294",
         "line-width": 1.5,
-        "line-dasharray": [3, 2]
+        "line-dasharray": [
+          3,
+          2
+        ]
       }
     },
     {
@@ -168,7 +211,9 @@
       "source-layer": "water_name",
       "layout": {
         "text-field": "{name}",
-        "text-font": ["Noto Sans Regular"],
+        "text-font": [
+          "Noto Sans Regular"
+        ],
         "text-size": 12
       },
       "paint": {
@@ -184,7 +229,9 @@
       "source-layer": "transportation_name",
       "layout": {
         "text-field": "{name}",
-        "text-font": ["Noto Sans Regular"],
+        "text-font": [
+          "Noto Sans Regular"
+        ],
         "text-size": 11,
         "symbol-placement": "line"
       },
@@ -199,10 +246,16 @@
       "type": "symbol",
       "source": "openmaptiles",
       "source-layer": "place",
-      "filter": ["==", "class", "city"],
+      "filter": [
+        "==",
+        "class",
+        "city"
+      ],
       "layout": {
         "text-field": "{name}",
-        "text-font": ["Noto Sans Bold"],
+        "text-font": [
+          "Noto Sans Bold"
+        ],
         "text-size": 15
       },
       "paint": {
