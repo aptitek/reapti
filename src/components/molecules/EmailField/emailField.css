@@ -1,0 +1,147 @@
+/* Justification: Root wrapper for anchoring email field layout flow and scoping sizing variables. */
+.email-field_root {
+  display: inline-flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  inline-size: max-content;
+  --email-field-width: 280px;
+  --email-field-font-size: 0.875rem;
+}
+
+/* Justification: Sizing variables for compact small density. */
+.email-field_root[data-size='small'] {
+  --email-field-width: 240px;
+  --email-field-font-size: 0.8125rem;
+}
+
+/* Justification: Sizing variables for medium density. */
+.email-field_root[data-size='medium'] {
+  --email-field-width: 280px;
+  --email-field-font-size: 0.875rem;
+}
+
+/* Justification: Expand container to fill parent width when fullWidth flag is enabled. */
+.email-field_root[data-full-width='true'] {
+  inline-size: 100%;
+}
+
+/* Justification: Dim container and suppress interactions when disabled. */
+.email-field_root[data-disabled='true'] {
+  opacity: 0.38;
+  pointer-events: none;
+}
+
+/* Justification: Apply calibrated sizing, min-width stability, and shape token onto the native M3e form field. */
+.override-email-field m3e-form-field {
+  --m3e-form-field-width: var(--email-field-width);
+  inline-size: var(--email-field-width);
+  min-inline-size: var(--email-field-width);
+  --m3e-outlined-form-field-container-shape: var(--radii-small);
+}
+
+/* Justification: Propagate full width to form field container when requested. */
+.override-email-field[data-full-width='true'] m3e-form-field {
+  --m3e-form-field-width: 100%;
+  inline-size: 100%;
+}
+
+/* Justification: Native text input resets for seamless integration inside M3e form field slot. */
+.email-field_input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-family: inherit;
+  font-size: var(--email-field-font-size);
+  color: inherit;
+  font-weight: inherit;
+  inline-size: 100%;
+  min-inline-size: 48px;
+  padding-inline: var(--spacing-0-5);
+  padding-block: 0;
+  margin-inline: 0;
+  margin-block: 0;
+  box-sizing: border-box;
+}
+
+/* Justification: Suffix slot flex layout for grouping divider, domain badge, clear button, and lock icon. */
+.override-email-field .email-field_suffix {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding-inline-end: var(--spacing-1);
+}
+
+/* Justification: Vertical divider separating username input from domain badge. */
+.override-email-field .email-field_divider {
+  display: inline-block;
+  inline-size: 1px;
+  block-size: 1.2rem;
+  background-color: var(--colors-outlineVariant);
+  margin-inline: var(--spacing-0-5);
+  flex-shrink: 0;
+}
+
+/* Justification: Domain badge displaying @ prefix and collapsible domain string. */
+.override-email-field .email-field_domain-badge {
+  display: inline-flex;
+  align-items: center;
+  color: var(--colors-onSurfaceVariant);
+  font-size: var(--email-field-font-size);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding-inline: var(--spacing-0-5);
+  padding-block: var(--spacing-0-5);
+  border-radius: var(--radii-extraSmall);
+  cursor: default;
+  transition-property: color;
+  transition-duration: var(--durations-short3);
+  transition-timing-function: var(--easings-standard);
+}
+
+/* Justification: Highlight domain badge on hover. */
+.override-email-field .email-field_domain-badge:hover {
+  color: var(--colors-primary);
+}
+
+/* Justification: Tokenized animation for collapsible domain string on focus/hover. */
+.override-email-field .email-field_domain-text {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  max-inline-size: 180px;
+  opacity: 1;
+  transition-property: max-inline-size, opacity;
+  transition-duration: var(--durations-medium1);
+  transition-timing-function: var(--easings-emphasized);
+}
+
+/* Justification: Collapsed state when focused to give typing space. */
+.override-email-field[data-focused='true'] .email-field_domain-text {
+  max-inline-size: 0;
+  opacity: 0;
+}
+
+/* Justification: Re-expand domain string on suffix hover even while focused. */
+.override-email-field[data-focused='true']
+  .email-field_suffix:hover
+  .email-field_domain-text {
+  max-inline-size: 180px;
+  opacity: 1;
+}
+
+/* Justification: Compact reset and sizing for the clear action button. */
+.override-email-field .email-field_clear-btn {
+  margin-inline: 0;
+  flex-shrink: 0;
+  color: var(--colors-onSurfaceVariant);
+}
+
+/* Justification: Institutional domain lock icon display. */
+.override-email-field .email-field_lock-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--colors-onSurfaceVariant);
+  opacity: 0.7;
+  flex-shrink: 0;
+}
