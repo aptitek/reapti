@@ -1,0 +1,216 @@
+/* Justification: Root wrapper for anchoring number picker layout flow and scoping custom CSS variables. */
+.number-picker_root {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  box-sizing: border-box;
+  inline-size: max-content;
+  block-size: max-content;
+  --number-picker-width: 160px;
+  --number-picker-range-width: 220px;
+  --number-picker-split-width: 240px;
+  --md-sys-density-scale: -2;
+}
+
+/* Justification: Calibrated sizing variables for small density size. */
+.number-picker_root[data-size='small'] {
+  --number-picker-width: 152px;
+  --number-picker-range-width: 208px;
+  --number-picker-split-width: 232px;
+  --md-sys-density-scale: -2;
+}
+
+/* Justification: Calibrated sizing variables for medium density size. */
+.number-picker_root[data-size='medium'] {
+  --number-picker-width: 172px;
+  --number-picker-range-width: 236px;
+  --number-picker-split-width: 252px;
+  --md-sys-density-scale: -1;
+}
+
+/* Justification: Expand container to fill parent width when fullWidth flag is enabled. */
+.number-picker_root[data-full-width='true'] {
+  inline-size: 100%;
+}
+
+/* Justification: Dim container and suppress pointer interactions when number picker is disabled. */
+.number-picker_root[data-disabled='true'] {
+  opacity: 0.38;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Justification: Apply calibrated sizing, min-width stability, and shape token onto the native M3e form field. */
+.override-number-picker m3e-form-field {
+  --m3e-form-field-width: var(--number-picker-width);
+  inline-size: var(--number-picker-width);
+  min-inline-size: var(--number-picker-width);
+  --m3e-outlined-form-field-container-shape: var(--radii-small);
+}
+
+/* Justification: Allocate calibrated outline container width for unified range mode dual inputs and steppers. */
+.override-number-picker[data-mode='range'] m3e-form-field {
+  --m3e-form-field-width: var(--number-picker-range-width);
+  inline-size: var(--number-picker-range-width);
+  min-inline-size: var(--number-picker-range-width);
+}
+
+/* Justification: Dedicated width for each split boundary form field to fit boundary label comfortably. */
+.override-number-picker[data-variant='split'] m3e-form-field {
+  --m3e-form-field-width: var(--number-picker-split-width);
+  inline-size: var(--number-picker-split-width);
+  min-inline-size: var(--number-picker-split-width);
+}
+
+/* Justification: Propagate full width to form field container when requested. */
+.override-number-picker[data-full-width='true'] m3e-form-field {
+  --m3e-form-field-width: 100%;
+  inline-size: 100%;
+}
+
+/* Justification: Center-align single mode number input with horizontal breathing room and native style resets. */
+.number-picker_single-input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  text-align: center;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  font-weight: inherit;
+  inline-size: 100%;
+  min-inline-size: 40px;
+  padding-inline: var(--spacing-0-5);
+  padding-block: 0;
+  margin-inline: 0;
+  margin-block: 0;
+  box-sizing: border-box;
+  -moz-appearance: textfield;
+}
+
+/* Justification: Hide browser default numeric stepper spinners to preserve custom MD3 buttons. */
+.number-picker_single-input::-webkit-inner-spin-button,
+.number-picker_single-input::-webkit-outer-spin-button,
+.number-picker_sub-input::-webkit-inner-spin-button,
+.number-picker_sub-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Justification: Prefix and suffix slot groups maintain flex alignment and compact spacing for icons and steppers. */
+.override-number-picker .number-picker_slot-group {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-0-5);
+  padding-inline: 0;
+  flex-shrink: 0;
+}
+
+/* Justification: Stepper button zero inline margin eliminates dead space between button and boundary content. */
+.override-number-picker .number-picker_stepper-btn {
+  margin-inline: 0;
+  flex-shrink: 0;
+}
+
+/* Justification: Offset compensation for M3e default prefix slot margin to bring stepper close to input. */
+.override-number-picker .number-picker_stepper-btn[slot='prefix'],
+.override-number-picker .number-picker_slot-group[slot='prefix'] {
+  margin-inline-end: calc(-1 * var(--spacing-1));
+}
+
+/* Justification: Prefix icon placeholder and custom icon spacing to separate from stepper buttons. */
+.override-number-picker .number-picker_prefix-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-inline-end: var(--spacing-0-5);
+  color: var(--colors-onSurfaceVariant);
+  flex-shrink: 0;
+}
+
+/* Justification: Compact flex container holding dual range inputs and central separator inside form field slot. */
+.number-picker_range-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 100%;
+  block-size: 100%;
+  gap: var(--spacing-0-5);
+  padding-inline: 0;
+}
+
+/* Justification: Sub-input wrapper with symmetrical block padding and border for exact vertical alignment. */
+.number-picker_sub-input-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: var(--spacing-0-5);
+  padding-block: var(--spacing-0-5);
+  cursor: text;
+  color: var(--colors-onSurface);
+  border-block-width: var(--border-widths-medium);
+  border-block-style: solid;
+  border-block-color: transparent;
+  transition-property: color, border-block-end-color;
+  transition-duration: var(--durations-short3);
+  transition-timing-function: var(--easings-standard);
+}
+
+/* Justification: Highlight active boundary with primary brand accent color on bottom border. */
+.number-picker_sub-input-wrapper[data-active='true'] {
+  color: var(--colors-primary);
+  border-block-end-color: var(--colors-primary);
+}
+
+/* Justification: Clean inner text input for lower/upper boundary numeric entry with compact sizing. */
+.number-picker_sub-input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  text-align: center;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  font-weight: inherit;
+  inline-size: 44px;
+  min-inline-size: 36px;
+  max-inline-size: 52px;
+  padding-inline: 0;
+  padding-block: 0;
+  margin-inline: 0;
+  margin-block: 0;
+  cursor: text;
+  box-sizing: border-box;
+  -moz-appearance: textfield;
+}
+
+/* Justification: Stylized separator arrow icon between range boundaries with centered flex alignment. */
+.number-picker_separator {
+  color: var(--colors-onSurfaceVariant);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-inline: var(--spacing-0-5);
+  line-height: 1;
+}
+
+/* Justification: Calibrate arrow icon dimension and centered alignment inside separator. */
+.override-number-picker .number-picker_separator m3e-icon {
+  font-size: 18px;
+  inline-size: 18px;
+  block-size: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* Justification: Side-by-side flex layout for split range picker with vertically centered separator arrow. */
+.number-picker_split-container {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
