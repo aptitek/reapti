@@ -1,0 +1,286 @@
+/* Justification: Root wrapper for VerticalNavBar anchoring layout flow and defining custom properties. */
+.vertical-nav-bar_root {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  inline-size: var(
+    --vertical-nav-bar-width,
+    var(--vertical-nav-bar-expanded-width, 240px)
+  );
+  block-size: var(--vertical-nav-bar-height, 100%);
+  min-block-size: 100%;
+  background-color: var(
+    --colors-surface-container,
+    var(--vertical-nav-bar-container-color)
+  );
+  color: var(--colors-on-surface);
+  transition: inline-size var(--durations-medium2) var(--easings-standard);
+  position: relative;
+  overflow: visible;
+  --vertical-nav-bar-compact-width: 80px;
+  --vertical-nav-bar-expanded-width: 240px;
+}
+
+/* Justification: Expanded state geometry expansion. */
+.vertical-nav-bar_root[data-mode='expanded'] {
+  inline-size: var(--vertical-nav-bar-expanded-width, 240px);
+}
+
+/* Justification: Compact state geometry restriction with visible overflow for hover chips. */
+.vertical-nav-bar_root[data-mode='compact'] {
+  inline-size: var(--vertical-nav-bar-compact-width, 80px);
+  overflow: visible;
+}
+
+/* Justification: Scoped wrapper for header slot content ensuring aligned layout. */
+.vertical-nav-bar_root .vertical-nav-bar_header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-block: var(--spacing-4);
+  padding-inline: var(--spacing-2);
+  flex-shrink: 0;
+}
+
+/* Justification: Scoped wrapper for action slot elements such as FABs or quick buttons. */
+.vertical-nav-bar_root .vertical-nav-bar_action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-block: var(--spacing-2);
+  padding-inline: var(--spacing-2);
+  flex-shrink: 0;
+}
+
+/* Justification: Scoped container holding navigation items with visible overflow for chips. */
+.vertical-nav-bar_root .vertical-nav-bar_items {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex: 1 1 auto;
+  overflow: visible;
+  padding-block: var(--spacing-2);
+  padding-inline: var(--spacing-2);
+  gap: var(--spacing-1);
+}
+
+/* Justification: Scoped wrapper for footer slot content anchored at the bottom. */
+.vertical-nav-bar_root .vertical-nav-bar_footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-block: var(--spacing-4);
+  padding-inline: var(--spacing-2);
+  margin-block-start: auto;
+  flex-shrink: 0;
+}
+
+/* Justification: Destination wrapper anchoring item and hover flyout chip. */
+.vertical-nav-bar_root .vertical-nav-bar_entry {
+  position: relative;
+  display: flex;
+  align-items: center;
+  inline-size: 100%;
+}
+
+/* Justification: Default expanded mode horizontal alignment for icon and label side-by-side. */
+.vertical-nav-bar_root[data-mode='expanded'] .vertical-nav-bar_entry {
+  justify-content: flex-start;
+}
+
+.override-vertical-nav-bar[data-mode='expanded'] m3e-nav-item {
+  inline-size: 100%;
+  max-inline-size: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.vertical-nav-bar_root[data-mode='expanded'] .vertical-nav-bar_label {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Justification: Suppress hover chip in expanded mode where label is already displayed. */
+.vertical-nav-bar_root[data-mode='expanded'] .vertical-nav-bar_chip {
+  display: none;
+}
+
+/* Justification: Compact mode hides inline rail labels, displaying icon only. */
+.vertical-nav-bar_root[data-mode='compact'] .vertical-nav-bar_entry {
+  justify-content: center;
+}
+
+.vertical-nav-bar_root[data-mode='compact'] .vertical-nav-bar_label {
+  display: none;
+}
+
+/* Justification: Scoped navigation item stacking in compact mode keeping icon in front of flyout chip. */
+.override-vertical-nav-bar[data-mode='compact'] m3e-nav-item {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Justification: M3 Expressive flyout chip docked seamlessly at the indicator edge and sliding from under the icon. */
+.vertical-nav-bar_root[data-mode='compact'] .vertical-nav-bar_chip {
+  position: absolute;
+  inset-inline-start: calc(50% + 28px);
+  inset-block-start: var(--m3e-vertical-nav-item-active-indicator-margin, 6px);
+  block-size: var(--m3e-vertical-nav-item-active-indicator-height, 32px);
+  box-sizing: border-box;
+  padding-inline-start: var(--spacing-1);
+  padding-inline-end: var(--spacing-4);
+  white-space: nowrap;
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+  border-start-end-radius: var(--radii-full);
+  border-end-end-radius: var(--radii-full);
+  background-color: var(--colors-secondary-container);
+  color: var(--colors-on-secondary-container);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.1px;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  z-index: 1;
+  pointer-events: none;
+  cursor: pointer;
+  transform: translateX(-56px);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    transform var(--durations-short4) var(--easings-emphasizedAccelerate),
+    opacity var(--durations-short2) var(--easings-standard),
+    visibility 0s var(--durations-short4);
+}
+
+/* Justification: Chip text container preventing truncation during expansion. */
+.vertical-nav-bar_root .vertical-nav-bar_caption {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* Justification: M3 Expressive hover and focus-within expansion sliding chip out from under the icon. */
+.vertical-nav-bar_root[data-mode='compact']
+  .vertical-nav-bar_entry:hover
+  .vertical-nav-bar_chip,
+.vertical-nav-bar_root[data-mode='compact']
+  .vertical-nav-bar_entry:focus-within
+  .vertical-nav-bar_chip {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(0);
+  transition:
+    transform var(--durations-medium2) var(--easings-emphasizedDecelerate),
+    opacity var(--durations-short3) var(--easings-standard),
+    visibility 0s 0s;
+}
+
+/* Justification: Flatten right corners of button indicator on hover to fuse seamlessly with flyout chip into [icon]=text=) pill. */
+.override-vertical-nav-bar[data-mode='compact']
+  .vertical-nav-bar_entry:hover
+  m3e-nav-item,
+.override-vertical-nav-bar[data-mode='compact']
+  .vertical-nav-bar_entry:focus-within
+  m3e-nav-item {
+  --m3e-nav-item-shape: 16px 0 0 16px;
+}
+
+/* Justification: RTL orientation mirroring for button indicator shape and chip initial slide offset. */
+[dir='rtl']
+  .override-vertical-nav-bar[data-mode='compact']
+  .vertical-nav-bar_entry:hover
+  m3e-nav-item,
+[dir='rtl']
+  .override-vertical-nav-bar[data-mode='compact']
+  .vertical-nav-bar_entry:focus-within
+  m3e-nav-item,
+.override-vertical-nav-bar[data-mode='compact']:dir(rtl)
+  .vertical-nav-bar_entry:hover
+  m3e-nav-item,
+.override-vertical-nav-bar[data-mode='compact']:dir(rtl)
+  .vertical-nav-bar_entry:focus-within
+  m3e-nav-item {
+  --m3e-nav-item-shape: 0 16px 16px 0;
+}
+
+[dir='rtl'] .vertical-nav-bar_root[data-mode='compact'] .vertical-nav-bar_chip,
+.vertical-nav-bar_root[data-mode='compact']:dir(rtl) .vertical-nav-bar_chip {
+  transform: translateX(56px);
+}
+
+[dir='rtl']
+  .vertical-nav-bar_root[data-mode='compact']
+  .vertical-nav-bar_entry:hover
+  .vertical-nav-bar_chip,
+[dir='rtl']
+  .vertical-nav-bar_root[data-mode='compact']
+  .vertical-nav-bar_entry:focus-within
+  .vertical-nav-bar_chip,
+.vertical-nav-bar_root[data-mode='compact']:dir(rtl)
+  .vertical-nav-bar_entry:hover
+  .vertical-nav-bar_chip,
+.vertical-nav-bar_root[data-mode='compact']:dir(rtl)
+  .vertical-nav-bar_entry:focus-within
+  .vertical-nav-bar_chip {
+  transform: translateX(0);
+}
+
+/* Justification: Harmonize unselected button background on hover with flyout chip for a unified [icon]=text=) element. */
+.vertical-nav-bar_root[data-mode='compact']
+  .vertical-nav-bar_entry:not(:has(m3e-nav-item[selected])):hover::before,
+.vertical-nav-bar_root[data-mode='compact']
+  .vertical-nav-bar_entry:not(
+    :has(m3e-nav-item[selected])
+  ):focus-within::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: calc(50% - 28px);
+  inset-block-start: var(--m3e-vertical-nav-item-active-indicator-margin, 6px);
+  inline-size: 56px;
+  block-size: var(--m3e-vertical-nav-item-active-indicator-height, 32px);
+  border-start-start-radius: var(--radii-full);
+  border-end-start-radius: var(--radii-full);
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+  background-color: var(--colors-secondary-container);
+  z-index: 1;
+  pointer-events: none;
+  transition: opacity var(--durations-short2) var(--easings-standard);
+}
+
+/* Justification: Align unselected icon color with on-secondary-container and suppress gray state-layer clash on hover. */
+.override-vertical-nav-bar[data-mode='compact']
+  .vertical-nav-bar_entry:hover
+  m3e-nav-item:not([selected]),
+.override-vertical-nav-bar[data-mode='compact']
+  .vertical-nav-bar_entry:focus-within
+  m3e-nav-item:not([selected]) {
+  --m3e-nav-item-inactive-icon-color: var(--colors-on-secondary-container);
+  --m3e-nav-item-inactive-hover-state-layer-color: transparent;
+}
+
+/* Justification: Respect user reduced motion accessibility preference. */
+@media (prefers-reduced-motion: reduce) {
+  .vertical-nav-bar_root .vertical-nav-bar_chip,
+  .vertical-nav-bar_root .vertical-nav-bar_entry::before {
+    transition: none;
+  }
+}
+
+/* Justification: Scoped navigation item overrides within the vertical nav bar root. */
+.override-vertical-nav-bar m3e-nav-item {
+  inline-size: 100%;
+  --m3e-nav-item-active-container-color: var(--colors-secondary-container);
+  --m3e-nav-item-active-icon-color: var(--colors-on-secondary-container);
+}

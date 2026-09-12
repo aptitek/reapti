@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { ESLint } from 'eslint';
 import { execSync } from 'node:child_process';
-import { writeFileSync, unlinkSync } from 'node:fs';
+import { writeFileSync, unlinkSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 describe('ESLint Syntax Enforcement', () => {
@@ -78,7 +78,9 @@ describe('Content Purity Enforcement', () => {
         });
       }).toThrow();
     } finally {
-      unlinkSync(tempMdxPath);
+      if (existsSync(tempMdxPath)) {
+        unlinkSync(tempMdxPath);
+      }
     }
   });
 });
