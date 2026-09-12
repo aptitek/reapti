@@ -1,0 +1,214 @@
+/* MapPin MD3 Component Styles */
+
+@keyframes pin_radar_pulse {
+  0% {
+    transform: translateX(-50%) rotateX(65deg) scale(0.6);
+    opacity: 0.85;
+  }
+  70% {
+    transform: translateX(-50%) rotateX(65deg) scale(2.2);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-50%) rotateX(65deg) scale(2.4);
+    opacity: 0;
+  }
+}
+
+@keyframes pin_ground_radar_pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.6);
+    opacity: 0.85;
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(2.2);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2.4);
+    opacity: 0;
+  }
+}
+
+@keyframes pin_bounce_drop {
+  0% {
+    transform: translateY(calc(var(--spacing-3, 12px) * -1)) scale(0.9);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(var(--spacing-0-5, 2px)) scale(1.04);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(var(--spacing-0, 0px)) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Justification: Root MapPin container with 3D map pitch orientation */
+.reapti_pin {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  animation: pin_bounce_drop var(--durations-long1, 450ms)
+    var(--easings-emphasizedDecelerate, ease) forwards;
+}
+
+/* Justification: Billboard element always facing the viewport camera */
+.reapti_pin--billboard {
+  transform-style: flat;
+}
+
+.reapti_pin--interactive {
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.reapti_pin--disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Justification: Contact shadow on 3D ground plane */
+.reapti_pin_shadow {
+  position: absolute;
+  inset-block-end: calc(var(--spacing-0-5, 2px) * -1);
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  inline-size: var(--spacing-4, 16px);
+  block-size: var(--spacing-1-5, 6px);
+  border-radius: var(--radii-full, 9999px);
+  background-color: var(--colors-scrim);
+  opacity: 0.35;
+  filter: blur(2px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Justification: 3D ground radar pulse around anchor */
+.reapti_pin_radar {
+  position: absolute;
+  inset-block-end: calc(var(--spacing-1, 4px) * -1);
+  inset-inline-start: 50%;
+  transform: translateX(-50%) rotateX(65deg);
+  inline-size: var(--spacing-5, 20px);
+  block-size: var(--spacing-5, 20px);
+  border-radius: var(--radii-full, 9999px);
+  background-color: var(--map-pin-color, var(--colors-primary));
+  animation: pin_radar_pulse var(--durations-extra-long4, 2s)
+    var(--easings-standard, ease) infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Justification: Ground-projected surface on map plane with map pitch alignment */
+.reapti_pin_ground_surface {
+  position: relative;
+  inline-size: var(--spacing-8, 32px);
+  block-size: var(--spacing-8, 32px);
+  pointer-events: none;
+}
+
+.reapti_pin_ground_surface .reapti_pin_shadow {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  inset-block-end: auto;
+  transform: translate(-50%, -50%);
+  inline-size: var(--spacing-6, 24px);
+  block-size: var(--spacing-4, 16px);
+  border-radius: var(--radii-full, 9999px);
+  background-color: var(--colors-scrim);
+  opacity: calc(var(--map-pitch-factor, 0) * 0.45);
+  filter: blur(2px);
+  z-index: 1;
+  pointer-events: none;
+  transition: opacity var(--durations-short2, 100ms) ease-out;
+}
+
+.reapti_pin_ground_surface .reapti_pin_radar {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  inset-block-end: auto;
+  transform: translate(-50%, -50%);
+  inline-size: var(--spacing-6, 24px);
+  block-size: var(--spacing-6, 24px);
+  border-radius: var(--radii-full, 9999px);
+  background-color: var(--map-pin-color, var(--colors-primary));
+  animation: pin_ground_radar_pulse var(--durations-extra-long4, 2s)
+    var(--easings-standard, ease) infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Justification: Colored MDI pin icon acting directly as the map marker */
+.reapti_pin_icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  color: var(--map-pin-color, var(--colors-primary));
+  line-height: 1;
+  margin-block-end: calc(var(--spacing-0-5, 2px) * -1);
+  transition:
+    transform var(--durations-short4, 200ms) var(--easings-standard, ease),
+    filter var(--durations-short4, 200ms) var(--easings-standard, ease);
+}
+
+.reapti_pin--interactive .reapti_pin_icon:hover {
+  transform: scale(1.15) translateY(calc(var(--spacing-0-5, 2px) * -1));
+}
+
+/* Justification: Label Chip container positioned directly above pin marker */
+.reapti_pin_chip_container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-block-end: var(--spacing-0-5, 2px);
+  z-index: 3;
+  max-inline-size: 220px;
+  white-space: nowrap;
+  background: transparent;
+  border-radius: var(--radii-full, 9999px);
+}
+
+/* Justification: Scoped MD3 chip customization inside pin without shadow */
+.override-reapti_pin m3e-chip {
+  --m3e-chip-container-shape: var(--radii-full, 9999px);
+  --m3e-elevated-chip-elevation: 0;
+  --m3e-elevated-chip-hover-elevation: 0;
+  --m3e-elevation-level: 0;
+  border-radius: var(--radii-full, 9999px);
+  cursor: pointer;
+  max-inline-size: 200px;
+  overflow: visible;
+  box-shadow: none;
+  filter: none;
+  transition: transform var(--durations-short4, 200ms)
+    var(--easings-standard, ease);
+}
+
+/* Justification: Scoped MD3 icon sizing with pitch-responsive elevation drop shadow */
+.override-reapti_pin m3e-icon {
+  --m3e-icon-size: var(--spacing-10, 40px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(
+    0 calc(2px * (1 - var(--map-pitch-factor, 0)))
+      calc(4px * (1 - var(--map-pitch-factor, 0)))
+      color-mix(
+        in srgb,
+        var(--colors-scrim) calc((1 - var(--map-pitch-factor, 0)) * 40%),
+        transparent
+      )
+  );
+  transition: filter var(--durations-short2, 100ms) ease-out;
+}

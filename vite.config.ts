@@ -22,9 +22,12 @@ export default defineConfig({
   optimizeDeps: {
     include: [
       '@m3e/react/button',
+      '@m3e/react/chips',
       '@m3e/react/shape',
       '@m3e/react/skeleton',
       '@m3e/react/switch',
+      'maplibre-gl',
+      'react-map-gl/maplibre',
     ],
   },
   server: {
