@@ -1,0 +1,171 @@
+/* Root container for SegmentedChip adapting width to content with density tokens. */
+.segmented-chip-root {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  vertical-align: middle;
+  position: relative;
+  inline-size: max-content;
+  max-inline-size: 100%;
+  --m3e-icon-size: var(--spacing-4-5, 18px);
+}
+
+/* Small density variant tokens */
+.segmented-chip-root--small {
+  --_segmented-chip-height: var(--spacing-7, 28px);
+  --_segmented-chip-font-size: var(--font-sizes-xs, 12px);
+  --_segmented-chip-icon-size: var(--spacing-4, 16px);
+  --_segmented-chip-padding-inline: var(--spacing-2, 8px);
+  --_segmented-chip-gap: var(--spacing-1, 4px);
+  --m3e-icon-size: var(--spacing-4, 16px);
+}
+
+/* Medium standard chip density tokens */
+.segmented-chip-root--medium {
+  --_segmented-chip-height: var(--spacing-8, 32px);
+  --_segmented-chip-font-size: var(--font-sizes-sm, 14px);
+  --_segmented-chip-icon-size: var(--spacing-4-5, 18px);
+  --_segmented-chip-padding-inline: var(--spacing-3, 12px);
+  --_segmented-chip-gap: var(--spacing-1-5, 6px);
+  --m3e-icon-size: var(--spacing-4-5, 18px);
+}
+
+/* Large density variant tokens */
+.segmented-chip-root--large {
+  --_segmented-chip-height: var(--spacing-9, 36px);
+  --_segmented-chip-font-size: var(--font-sizes-md, 14px);
+  --_segmented-chip-icon-size: var(--spacing-5, 20px);
+  --_segmented-chip-padding-inline: var(--spacing-4, 16px);
+  --_segmented-chip-gap: var(--spacing-2, 8px);
+  --m3e-icon-size: var(--spacing-5, 20px);
+}
+
+/* Segment item element with content-adaptive width and default no interaction */
+.segmented-chip__segment {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  inline-size: max-content;
+  max-inline-size: 100%;
+  block-size: var(--_segmented-chip-height, 32px);
+  min-block-size: var(--_segmented-chip-height, 32px);
+  padding-inline: var(--_segmented-chip-padding-inline, 12px);
+  padding-block: var(--spacing-0, 0px);
+  column-gap: var(--_segmented-chip-gap, 6px);
+  font-size: var(--_segmented-chip-font-size, 14px);
+  line-height: 1;
+  border-width: var(--border-widths-thin, 1px);
+  border-style: solid;
+  border-color: var(--colors-outline-variant, var(--colors-outline));
+  background-color: var(--colors-surface, transparent);
+  color: var(--colors-on-surface);
+  position: relative;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: default;
+  transition:
+    background-color var(--durations-short4) var(--easings-standard),
+    color var(--durations-short4) var(--easings-standard),
+    border-color var(--durations-short4) var(--easings-standard);
+}
+
+/* Connected segment borders: collapse middle borders */
+.segmented-chip-root .segmented-chip__segment:not(:first-child) {
+  border-inline-start-width: var(--border-widths-none, 0px);
+}
+
+/* Pill ends on outer segments */
+.segmented-chip-root .segmented-chip__segment:first-child {
+  border-start-start-radius: var(--radii-full, 9999px);
+  border-end-start-radius: var(--radii-full, 9999px);
+}
+
+.segmented-chip-root .segmented-chip__segment:last-child {
+  border-start-end-radius: var(--radii-full, 9999px);
+  border-end-end-radius: var(--radii-full, 9999px);
+}
+
+/* Single segment (both first and last) */
+.segmented-chip-root .segmented-chip__segment:only-child {
+  border-start-start-radius: var(--radii-full, 9999px);
+  border-end-start-radius: var(--radii-full, 9999px);
+  border-start-end-radius: var(--radii-full, 9999px);
+  border-end-end-radius: var(--radii-full, 9999px);
+}
+
+/* Elevated variant */
+.segmented-chip-root--elevated .segmented-chip__segment {
+  background-color: var(--colors-surface-container-low, var(--colors-surface));
+  border-color: var(--colors-surface-container, transparent);
+}
+
+/* Interactive states: only applied when explicitly interactive */
+.segmented-chip__segment--interactive {
+  cursor: pointer;
+}
+
+.segmented-chip__segment--interactive:hover {
+  background-color: var(
+    --colors-surface-container-high,
+    var(--colors-surface-container)
+  );
+  color: var(--colors-on-surface);
+}
+
+.segmented-chip__segment--interactive:focus-visible {
+  outline-width: var(--border-widths-medium, 2px);
+  outline-style: solid;
+  outline-color: var(--colors-primary);
+  outline-offset: var(--spacing-0-5, 2px);
+  z-index: 1;
+}
+
+/* Disabled state */
+.segmented-chip__segment--disabled {
+  cursor: not-allowed;
+  opacity: 0.38;
+  pointer-events: none;
+}
+
+/* Leading icon container with explicit icon size inheritance */
+.segmented-chip__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--_segmented-chip-icon-size, 18px);
+  inline-size: var(--_segmented-chip-icon-size, 18px);
+  block-size: var(--_segmented-chip-icon-size, 18px);
+  line-height: 1;
+  flex-shrink: 0;
+  overflow: visible;
+  color: var(--colors-on-surface-variant, currentColor);
+  --m3e-icon-size: var(--_segmented-chip-icon-size, 18px);
+}
+
+/* Segment text label */
+.segmented-chip__label {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 1 auto;
+  inline-size: max-content;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Trailing icon container with explicit icon size inheritance */
+.segmented-chip__trailing-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--_segmented-chip-icon-size, 18px);
+  inline-size: var(--_segmented-chip-icon-size, 18px);
+  block-size: var(--_segmented-chip-icon-size, 18px);
+  line-height: 1;
+  flex-shrink: 0;
+  overflow: visible;
+  color: var(--colors-on-surface-variant, currentColor);
+  --m3e-icon-size: var(--_segmented-chip-icon-size, 18px);
+}
