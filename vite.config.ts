@@ -21,8 +21,14 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: [
+      '@m3e/icons/rounded/pause',
+      '@m3e/icons/rounded/play_arrow',
+      '@m3e/icons/rounded/skip_next',
+      '@m3e/icons/rounded/skip_previous',
       '@m3e/react/button',
       '@m3e/react/chips',
+      '@m3e/react/icon',
+      '@m3e/react/icon-button',
       '@m3e/react/shape',
       '@m3e/react/skeleton',
       '@m3e/react/switch',

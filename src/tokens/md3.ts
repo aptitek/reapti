@@ -66,6 +66,10 @@ export const md3Tokens = {
     standardDecelerate: { value: 'cubic-bezier(0.0, 0.0, 0.2, 1.0)' },
     standardAccelerate: { value: 'cubic-bezier(0.3, 0.0, 1.0, 1.0)' },
   },
+  fonts: {
+    logo: { value: "'Milkshake', cursive, sans-serif" },
+    brand: { value: "'Recursive', sans-serif" },
+  },
 };
 
 const c = (light: string, dark: string) => ({

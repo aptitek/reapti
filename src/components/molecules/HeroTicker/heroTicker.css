@@ -1,0 +1,359 @@
+/* Justification: Root container establishing flex column layout and sizing scope for the ticker. */
+.hero-ticker_root {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  inline-size: 100%;
+  --ticker-accent: var(--colors-primary);
+  --ticker-clip-prog: 100%;
+  --ticker-fade-opacity: 1;
+  --ticker-flourish-offset: 200;
+}
+
+/* Justification: Dynamic semantic accent mapping without inline style violations. */
+.hero-ticker_root[data-accent='secondary'] {
+  --ticker-accent: var(--colors-secondary);
+}
+
+.hero-ticker_root[data-accent='tertiary'] {
+  --ticker-accent: var(--colors-tertiary);
+}
+
+.hero-ticker_root[data-accent='error'] {
+  --ticker-accent: var(--colors-error);
+}
+
+/* Justification: Flex layout alignment variants for left, center, and right. */
+.hero-ticker_root[data-align='center'] {
+  align-items: center;
+}
+
+/* Justification: Left alignment for hero ticker layout. */
+.hero-ticker_root[data-align='left'] {
+  align-items: flex-start;
+}
+
+/* Justification: Right alignment for hero ticker layout. */
+.hero-ticker_root[data-align='right'] {
+  align-items: flex-end;
+}
+
+/* Justification: Typography heading baseline reset for semantic display title with flex wrapping. */
+.hero-ticker_title {
+  margin-inline: 0;
+  margin-block: 0;
+  padding-inline: 0;
+  padding-block: var(--spacing-1);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.22em;
+  color: var(--colors-onSurface);
+  -webkit-user-select: none;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+
+/* Justification: Title alignment modifier for centered layout. */
+.hero-ticker_root[data-align='center'] .hero-ticker_title {
+  justify-content: center;
+  text-align: center;
+}
+
+/* Justification: Title alignment modifier for left aligned layout. */
+.hero-ticker_root[data-align='left'] .hero-ticker_title {
+  justify-content: flex-start;
+  text-align: start;
+}
+
+/* Justification: Title alignment modifier for right aligned layout. */
+.hero-ticker_root[data-align='right'] .hero-ticker_title {
+  justify-content: flex-end;
+  text-align: end;
+}
+
+/* Justification: Large display scale corresponding to MD3 displayLarge. */
+.hero-ticker_title[data-size='large'] {
+  font-size: 3.5625rem;
+  line-height: 4rem;
+}
+
+/* Justification: Medium display scale corresponding to MD3 displayMedium. */
+.hero-ticker_title[data-size='medium'] {
+  font-size: 2.8125rem;
+  line-height: 3.25rem;
+}
+
+/* Justification: Small display scale corresponding to MD3 displaySmall. */
+.hero-ticker_title[data-size='small'] {
+  font-size: 2.25rem;
+  line-height: 2.75rem;
+}
+
+/* Justification: Prefix slogan typography with Recursive brand casual slanted styling. */
+.hero-ticker_prefix {
+  font-family: var(--fonts-brand);
+  font-variation-settings:
+    'CASL' 1,
+    'MONO' 0,
+    'wght' 700,
+    'slnt' -15,
+    'CRSV' 1;
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--colors-onSurface);
+  display: inline;
+  white-space: pre-wrap;
+}
+
+/* Justification: Suffix slogan typography with Recursive brand casual slanted styling. */
+.hero-ticker_suffix {
+  font-family: var(--fonts-brand);
+  font-variation-settings:
+    'CASL' 1,
+    'MONO' 0,
+    'wght' 700,
+    'slnt' -15,
+    'CRSV' 1;
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--colors-onSurface);
+  display: inline;
+  white-space: pre-wrap;
+}
+
+/* Justification: Inline-flex wrapper positioning calligraphy cursive text, quill, and flourish together. */
+.hero-ticker_word-wrapper {
+  display: inline-flex;
+  position: relative;
+  align-items: baseline;
+  white-space: nowrap;
+  vertical-align: baseline;
+  box-sizing: border-box;
+}
+
+/* Justification: Smooth animated inline-size transition allowing surrounding text to slide into place smoothly. */
+.hero-ticker_word-wrapper[data-transition-width='true'] {
+  inline-size: var(--ticker-word-width, auto);
+  transition-property: inline-size;
+  transition-duration: var(--durations-medium4);
+  transition-timing-function: var(--easings-emphasized);
+}
+
+/* Justification: Disable width transitions when user prefers reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-ticker_word-wrapper[data-transition-width='true'] {
+    transition: none;
+  }
+}
+
+/* Justification: Milkshake cursive text element with animated slant clip-path. */
+.hero-ticker_cursive-text {
+  font-family: var(--fonts-logo);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.15em;
+  line-height: 1.05;
+  display: inline-block;
+  white-space: nowrap;
+  flex-shrink: 0;
+  color: var(--ticker-accent);
+  opacity: var(--ticker-fade-opacity, 1);
+  clip-path: polygon(
+    -10% -25%,
+    calc(var(--ticker-clip-prog, 100%) + 24px) -25%,
+    var(--ticker-clip-prog, 100%) 140%,
+    -10% 140%
+  );
+  transform: translateZ(0);
+}
+
+/* Justification: Optional luminance drop-shadow glow aura around cursive letters. */
+.hero-ticker_cursive-text[data-glow='true'] {
+  filter: drop-shadow(0 0 14px var(--ticker-accent));
+}
+
+/* Justification: Display cursive text completely unclipped when drawing is complete. */
+.hero-ticker_cursive-text[data-drawing='false'] {
+  clip-path: none;
+  transition-property: opacity;
+  transition-duration: var(--durations-short4);
+  transition-timing-function: var(--easings-standard);
+}
+
+/* Justification: Quill nib anchor positioned via 2D trajectory coordinates over cursive letters. */
+.hero-ticker_nib {
+  position: absolute;
+  inline-size: 52px;
+  block-size: 52px;
+  inset-inline-start: var(--ticker-nib-left, 0%);
+  inset-block-end: var(--ticker-nib-bottom, 26%);
+  pointer-events: none;
+  z-index: 3;
+  opacity: 1;
+  color: var(--ticker-nib-color, var(--ticker-accent));
+  transform: rotate(var(--ticker-nib-tilt, -8deg));
+  transform-origin: 22.24% 95.25%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 4px 10px var(--colors-shadow));
+}
+
+/* Justification: Smooth transform interpolation during resting pen position. */
+.hero-ticker_nib[data-active='false'] {
+  transition-property: inset-inline-start, inset-block-end, transform;
+  transition-duration: var(--durations-medium1);
+  transition-timing-function: var(--easings-standard);
+}
+
+/* Justification: Smooth tilt angle easing during dynamic handwriting. */
+.hero-ticker_nib[data-active='true'] {
+  transition-property: transform;
+  transition-duration: var(--durations-short2);
+  transition-timing-function: var(--easings-standard);
+}
+
+/* Justification: Fixed SVG graphic sizing for the physical cyber quill feather asset. */
+.hero-ticker_quill-img {
+  inline-size: 52px;
+  block-size: 52px;
+  display: block;
+  -webkit-user-select: none;
+  pointer-events: none;
+}
+
+/* Justification: Luminous wet ink droplet at the quill tip matching the active stroke color. */
+.hero-ticker_ink-droplet {
+  position: absolute;
+  inset-inline-start: 11.6px;
+  inset-block-end: 2.5px;
+  inline-size: 6px;
+  block-size: 6px;
+  border-radius: var(--radii-full);
+  background-color: currentColor;
+  box-shadow: 0 0 8px 2px currentColor;
+  opacity: 0.75;
+  pointer-events: none;
+  translate: -50% 50%;
+  transition-property: inline-size, block-size, opacity;
+  transition-duration: var(--durations-short2);
+  transition-timing-function: var(--easings-standard);
+}
+
+/* Justification: Expanded ink droplet geometry on high-pressure downstrokes. */
+.hero-ticker_ink-droplet[data-downstroke='true'] {
+  inline-size: 8px;
+  block-size: 8px;
+  opacity: 0.95;
+  box-shadow: 0 0 12px 3px currentColor;
+}
+
+/* Justification: Flourish underline canvas positioned below descenders with theme accent. */
+.hero-ticker_flourish {
+  position: absolute;
+  inset-inline-start: -4%;
+  inset-inline-end: -4%;
+  inset-block-end: -22px;
+  block-size: 16px;
+  pointer-events: none;
+  z-index: 1;
+  overflow: visible;
+  color: var(--ticker-accent);
+}
+
+/* Justification: Vector canvas scaling to encompass the word width. */
+.hero-ticker_flourish-canvas {
+  inline-size: 108%;
+  block-size: 100%;
+  overflow: visible;
+  display: block;
+}
+
+/* Justification: Animated stroke-dashoffset transition along flourish vector path. */
+.hero-ticker_flourish-shape {
+  stroke-dasharray: 200;
+  stroke-dashoffset: var(--ticker-flourish-offset, 200);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition-property: stroke-dashoffset;
+  transition-duration: var(--durations-medium1);
+  transition-timing-function: var(--easings-standardDecelerate);
+}
+
+/* Justification: Floating controls bar container with surface glassmorphism and MD3 tokens. */
+.hero-ticker_controls {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding-inline: var(--spacing-1-5);
+  padding-block: var(--spacing-0-5);
+  border-radius: var(--radii-full);
+  background-color: var(--colors-surfaceContainer);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--colors-outlineVariant);
+  margin-block-start: var(--spacing-2);
+}
+
+/* Justification: Phrase navigation dot indicator with accessible target expansion. */
+.hero-ticker_dot {
+  display: inline-block;
+  position: relative;
+  inline-size: 8px;
+  block-size: 8px;
+  border-radius: var(--radii-extraSmall);
+  border: none;
+  padding-inline: 0;
+  padding-block: 0;
+  cursor: pointer;
+  background-color: var(--colors-outline);
+  transition-property: inline-size, background-color;
+  transition-duration: var(--durations-short3);
+  transition-timing-function: var(--easings-standard);
+}
+
+/* Justification: Highlight dot indicator on hover. */
+.hero-ticker_dot:hover {
+  background-color: var(--ticker-accent);
+}
+
+/* Justification: Active elongated dot indicator with accent glow. */
+.hero-ticker_dot[data-active='true'] {
+  inline-size: 20px;
+  background-color: var(--ticker-accent);
+  box-shadow: 0 0 8px var(--ticker-accent);
+}
+
+/* Justification: WCAG 2.5.8 touch target expansion ensuring minimum 24x24px interaction area. */
+.hero-ticker_dot::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  translate: -50% -50%;
+  min-inline-size: 24px;
+  min-block-size: 24px;
+}
+
+/* Justification: Focus indicator for keyboard accessibility on navigation dots. */
+.hero-ticker_dot:focus-visible {
+  outline: 2px solid var(--ticker-accent);
+  outline-offset: 3px;
+}
+
+/* Justification: Visually hidden screen-reader live region preventing fragmented speech. */
+.hero-ticker_sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding-inline: 0;
+  padding-block: 0;
+  margin-block: -1px;
+  margin-inline: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border-width: 0;
+}
