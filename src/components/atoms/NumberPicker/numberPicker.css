@@ -9,7 +9,7 @@
   block-size: max-content;
   --number-picker-width: 160px;
   --number-picker-range-width: 220px;
-  --number-picker-split-width: 240px;
+  --number-picker-split-width: 144px;
   --md-sys-density-scale: -2;
 }
 
@@ -17,7 +17,7 @@
 .number-picker_root[data-size='small'] {
   --number-picker-width: 152px;
   --number-picker-range-width: 208px;
-  --number-picker-split-width: 232px;
+  --number-picker-split-width: 136px;
   --md-sys-density-scale: -2;
 }
 
@@ -25,7 +25,7 @@
 .number-picker_root[data-size='medium'] {
   --number-picker-width: 172px;
   --number-picker-range-width: 236px;
-  --number-picker-split-width: 252px;
+  --number-picker-split-width: 152px;
   --md-sys-density-scale: -1;
 }
 
@@ -56,7 +56,7 @@
   min-inline-size: var(--number-picker-range-width);
 }
 
-/* Justification: Dedicated width for each split boundary form field to fit boundary label comfortably. */
+/* Justification: Dedicated compact width for each split boundary form field fitting From/To labels. */
 .override-number-picker[data-variant='split'] m3e-form-field {
   --m3e-form-field-width: var(--number-picker-split-width);
   inline-size: var(--number-picker-split-width);
@@ -80,7 +80,7 @@
   color: inherit;
   font-weight: inherit;
   inline-size: 100%;
-  min-inline-size: 40px;
+  min-inline-size: 32px;
   padding-inline: var(--spacing-0-5);
   padding-block: 0;
   margin-inline: 0;

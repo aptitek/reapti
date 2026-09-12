@@ -1,24 +1,13 @@
 import { createElement, type ReactNode } from 'react';
 import { Box, type BoxProps } from 'styled-system/jsx';
-import type { NumberPickerProps } from './NumberPicker.types.ts';
+import type {
+  NumberPickerProps,
+  SingleStepOptions,
+  RangeStepBounds,
+  RangeStepOptions,
+} from './NumberPicker.types.ts';
 
-export interface SingleStepOptions {
-  min: number;
-  max: number;
-  step: number;
-  allowAll: boolean;
-}
-
-export interface RangeStepBounds {
-  min: number;
-  max: number;
-  step: number;
-}
-
-export interface RangeStepOptions {
-  bounds: RangeStepBounds;
-  otherVal: number | null;
-}
+export type { SingleStepOptions, RangeStepBounds, RangeStepOptions };
 
 function hasRangeHandlers(props: NumberPickerProps): boolean {
   return Boolean(
@@ -52,9 +41,7 @@ export function computeDecrementedValue(
     return options.min;
   }
   const numeric = Number(current);
-  if (numeric > options.min) {
-    return numeric - options.step;
-  }
+  if (numeric > options.min) return numeric - options.step;
   return options.allowAll ? 'all' : options.min;
 }
 
@@ -66,9 +53,7 @@ export function computeIncrementedValue(
     return options.min + options.step;
   }
   const numeric = Number(current);
-  if (numeric < options.max) {
-    return numeric + options.step;
-  }
+  if (numeric < options.max) return numeric + options.step;
   return numeric;
 }
 
@@ -96,9 +81,7 @@ export function parseNumberInput(text: string): number | null {
 
 export function getDefaultInitialYear(min: number, max: number): number {
   const currentYear = new Date().getFullYear();
-  if (currentYear >= min && currentYear <= max) {
-    return currentYear;
-  }
+  if (currentYear >= min && currentYear <= max) return currentYear;
   return min;
 }
 
@@ -116,7 +99,6 @@ export function computeStepValue(
     }
     return getDefaultInitialYear(bounds.min, bounds.max);
   }
-
   if (direction === 'increment') {
     return current + bounds.step <= bounds.max
       ? current + bounds.step
@@ -130,15 +112,12 @@ export function computeStepValue(
 export function resolveEffectiveRangeValues(props: NumberPickerProps) {
   const effectiveMin = props.minValue ?? props.startYearMin ?? null;
   const effectiveMax = props.maxValue ?? props.startYearMax ?? null;
-  const handleMinChange = props.onMinChange ?? props.onStartYearMinChange;
-  const handleMaxChange = props.onMaxChange ?? props.onStartYearMaxChange;
-  const hasValue = effectiveMin !== null || effectiveMax !== null;
   return {
     effectiveMin,
     effectiveMax,
-    handleMinChange,
-    handleMaxChange,
-    hasValue,
+    handleMinChange: props.onMinChange ?? props.onStartYearMinChange,
+    handleMaxChange: props.onMaxChange ?? props.onStartYearMaxChange,
+    hasValue: effectiveMin !== null || effectiveMax !== null,
   };
 }
 
@@ -232,11 +211,7 @@ export interface SingleStepperHandlers {
 export function resolveSingleStepperHandlers(
   props: NumberPickerProps,
   singleVal: number | string,
-  handlers: {
-    dec: () => void;
-    inc: () => void;
-    input: (val: string) => void;
-  }
+  handlers: { dec: () => void; inc: () => void; input: (val: string) => void }
 ): SingleStepperHandlers {
   if (props.mode === 'range') {
     return {
@@ -252,4 +227,9 @@ export function resolveSingleStepperHandlers(
     onInc: handlers.inc,
     onInput: (e) => handlers.input(e.target.value),
   };
+}
+
+export function getRootClassName(customClassName?: string): string {
+  const base = 'number-picker_root override-number-picker';
+  return customClassName ? `${base} ${customClassName}` : base;
 }

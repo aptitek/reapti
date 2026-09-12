@@ -177,4 +177,22 @@ describe('NumberPicker Atom (Range Mode Split Variant)', () => {
     expect(html).toContain('data-testid="split-test-to-decrement"');
     expect(html).toContain('data-testid="split-test-to-increment"');
   });
+
+  it('supports custom placeholders, labels, and empty boundary values', () => {
+    const html = renderToStaticMarkup(
+      createElement(NumberPicker, {
+        mode: 'range',
+        variant: 'split',
+        label: 'Price Range',
+        placeholderMin: 'Min Price',
+        placeholderMax: 'Max Price',
+        dataTestId: 'split-custom',
+      })
+    );
+
+    expect(html).toContain('placeholder="Min Price"');
+    expect(html).toContain('placeholder="Max Price"');
+    expect(html).toContain('aria-label="Price Range (Min Price)"');
+    expect(html).toContain('aria-label="Price Range (Max Price)"');
+  });
 });

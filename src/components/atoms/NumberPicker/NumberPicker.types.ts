@@ -221,3 +221,30 @@ interface CommonNumberPickerProps {
 export type NumberPickerProps = CommonNumberPickerProps &
   SingleNumberPickerProps &
   RangeNumberPickerProps;
+
+export interface SingleStepOptions {
+  min: number;
+  max: number;
+  step: number;
+  allowAll: boolean;
+}
+
+export interface RangeStepBounds {
+  min: number;
+  max: number;
+  step: number;
+}
+
+export interface RangeStepOptions {
+  bounds: RangeStepBounds;
+  otherVal: number | null;
+}
+
+export interface StepperBtnProps {
+  slot?: 'prefix' | 'suffix';
+  disabled?: boolean;
+  label: string;
+  testId: string;
+  icon: 'add' | 'remove';
+  onClick: () => void;
+}

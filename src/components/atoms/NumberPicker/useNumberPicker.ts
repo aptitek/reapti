@@ -2,68 +2,17 @@ import { useState, useRef, useCallback, useMemo, useId } from 'react';
 import type {
   NumberPickerProps,
   ActiveBoundary,
-} from './NumberPicker.types.ts';
-import type {
-  SingleStepOptions,
   RangeStepBounds,
-} from './numberPickerHelpers.ts';
+} from './NumberPicker.types.ts';
 import {
   checkIsRangeMode,
-  computeDecrementedValue,
-  computeIncrementedValue,
-  parseSingleNumberInput,
   parseNumberInput,
   computeStepValue,
   resolveEffectiveRangeValues,
   DEFAULT_SINGLE_CONFIG,
   DEFAULT_RANGE_BOUNDS,
 } from './numberPickerHelpers.ts';
-
-function useSinglePickerActions(
-  value: number | string | undefined,
-  onChange: ((v: number | string) => void) | undefined,
-  singleConfig: SingleStepOptions
-) {
-  const isControlled = value !== undefined;
-  const [internalValue, setInternalValue] = useState<number | string>(
-    value ?? ''
-  );
-  const effectiveSingleValue = isControlled ? value : internalValue;
-
-  const handleSingleDecrement = useCallback(() => {
-    const next = computeDecrementedValue(
-      effectiveSingleValue || 'all',
-      singleConfig
-    );
-    if (!isControlled) setInternalValue(next);
-    onChange?.(next);
-  }, [onChange, effectiveSingleValue, singleConfig, isControlled]);
-
-  const handleSingleIncrement = useCallback(() => {
-    const next = computeIncrementedValue(
-      effectiveSingleValue || 'all',
-      singleConfig
-    );
-    if (!isControlled) setInternalValue(next);
-    onChange?.(next);
-  }, [onChange, effectiveSingleValue, singleConfig, isControlled]);
-
-  const handleSingleInputChange = useCallback(
-    (raw: string) => {
-      const next = parseSingleNumberInput(raw, singleConfig);
-      if (!isControlled) setInternalValue(next);
-      onChange?.(next);
-    },
-    [onChange, singleConfig, isControlled]
-  );
-
-  return {
-    effectiveSingleValue,
-    handleSingleDecrement,
-    handleSingleIncrement,
-    handleSingleInputChange,
-  };
-}
+import { useSinglePickerActions } from './numberPickerRenderers.ts';
 
 interface RangePickerActionsOptions {
   activeRef: React.RefObject<ActiveBoundary>;
@@ -113,22 +62,19 @@ function useRangePickerActions(options: RangePickerActionsOptions) {
     [activeRef, effectiveMin, effectiveMax, bounds, updateMin, updateMax]
   );
 
-  const handleRangeDecrement = useCallback(
-    () => stepRange('decrement'),
-    [stepRange]
-  );
-  const handleRangeIncrement = useCallback(
-    () => stepRange('increment'),
-    [stepRange]
-  );
-
   return {
     effectiveMin,
     effectiveMax,
     updateMin,
     updateMax,
-    handleRangeDecrement,
-    handleRangeIncrement,
+    handleRangeDecrement: useCallback(
+      () => stepRange('decrement'),
+      [stepRange]
+    ),
+    handleRangeIncrement: useCallback(
+      () => stepRange('increment'),
+      [stepRange]
+    ),
   };
 }
 
@@ -164,15 +110,6 @@ function usePickerFocusAndBoundary() {
     []
   );
 
-  const focusFrom = useCallback(
-    () => setActiveBoundary('from'),
-    [setActiveBoundary]
-  );
-  const focusTo = useCallback(
-    () => setActiveBoundary('to'),
-    [setActiveBoundary]
-  );
-
   return {
     activeBoundary,
     activeBoundaryRef,
@@ -181,8 +118,11 @@ function usePickerFocusAndBoundary() {
     setIsFocused,
     handleContainerFocus,
     handleContainerBlur,
-    focusFrom,
-    focusTo,
+    focusFrom: useCallback(
+      () => setActiveBoundary('from'),
+      [setActiveBoundary]
+    ),
+    focusTo: useCallback(() => setActiveBoundary('to'), [setActiveBoundary]),
   };
 }
 
@@ -190,45 +130,37 @@ function useBoundaryInputHandlers(
   updateMin: (v: number | null) => void,
   updateMax: (v: number | null) => void
 ) {
-  const handleFromInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) =>
-      updateMin(parseNumberInput(e.target.value)),
-    [updateMin]
-  );
-  const handleToInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) =>
-      updateMax(parseNumberInput(e.target.value)),
-    [updateMax]
-  );
-  const handleSplitFromChange = useCallback(
-    (v: number | string) => updateMin(v === '' ? null : Number(v)),
-    [updateMin]
-  );
-  const handleSplitToChange = useCallback(
-    (v: number | string) => updateMax(v === '' ? null : Number(v)),
-    [updateMax]
-  );
-  const handleFromChange = useCallback(
-    (r: string) => updateMin(parseNumberInput(r)),
-    [updateMin]
-  );
-  const handleToChange = useCallback(
-    (r: string) => updateMax(parseNumberInput(r)),
-    [updateMax]
-  );
-  const handleClear = useCallback(() => {
-    updateMin(null);
-    updateMax(null);
-  }, [updateMin, updateMax]);
-
   return {
-    handleFromInputChange,
-    handleToInputChange,
-    handleSplitFromChange,
-    handleSplitToChange,
-    handleFromChange,
-    handleToChange,
-    handleClear,
+    handleFromInputChange: useCallback(
+      (e: React.ChangeEvent<HTMLInputElement>) =>
+        updateMin(parseNumberInput(e.target.value)),
+      [updateMin]
+    ),
+    handleToInputChange: useCallback(
+      (e: React.ChangeEvent<HTMLInputElement>) =>
+        updateMax(parseNumberInput(e.target.value)),
+      [updateMax]
+    ),
+    handleSplitFromChange: useCallback(
+      (v: number | string) => updateMin(v === '' ? null : Number(v)),
+      [updateMin]
+    ),
+    handleSplitToChange: useCallback(
+      (v: number | string) => updateMax(v === '' ? null : Number(v)),
+      [updateMax]
+    ),
+    handleFromChange: useCallback(
+      (r: string) => updateMin(parseNumberInput(r)),
+      [updateMin]
+    ),
+    handleToChange: useCallback(
+      (r: string) => updateMax(parseNumberInput(r)),
+      [updateMax]
+    ),
+    handleClear: useCallback(() => {
+      updateMin(null);
+      updateMax(null);
+    }, [updateMin, updateMax]),
   };
 }
 
