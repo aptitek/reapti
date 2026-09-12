@@ -119,8 +119,24 @@ describe('heroTickerHelpers - Config Resolvers', () => {
     expect(config.accentVar).toBe(THEME_ACCENT_VARS.secondary);
     expect(config.animationMode).toBe('cursive-draw');
     expect(config.flourish).toBe('swoosh');
-    expect(config.drawSpeed).toBe(1200);
+    expect(config.drawSpeed).toBe(2400);
+    expect(config.typeSpeed).toBe(120);
+    expect(config.eraseSpeed).toBe(50);
+    expect(config.pauseDuration).toBe(2600);
     expect(config.testId).toBe('hero-ticker');
+  });
+
+  it('finely tunes drawSpeed and typeSpeed when custom timing props are passed', () => {
+    const config = resolveHeroTickerConfig({
+      drawSpeed: 3500,
+      typeSpeed: 140,
+      eraseSpeed: 60,
+      pauseDuration: 3000,
+    });
+    expect(config.drawSpeed).toBe(3500);
+    expect(config.typeSpeed).toBe(140);
+    expect(config.eraseSpeed).toBe(60);
+    expect(config.pauseDuration).toBe(3000);
   });
 });
 

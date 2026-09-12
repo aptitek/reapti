@@ -18,6 +18,10 @@ export const DEFAULT_HERO_TICKER_PREFIX = 'We craft ';
 export const DEFAULT_HERO_TICKER_SUFFIX = ' that inspire.';
 export const DEFAULT_HERO_TICKER_ANIMATION_MODE: HeroTickerAnimationMode =
   'cursive-draw';
+export const DEFAULT_HERO_TICKER_DRAW_SPEED = 2400;
+export const DEFAULT_HERO_TICKER_TYPE_SPEED = 120;
+export const DEFAULT_HERO_TICKER_ERASE_SPEED = 50;
+export const DEFAULT_HERO_TICKER_PAUSE_DURATION = 2600;
 
 export const THEME_ACCENT_VARS: Record<ThemeAccentRole, string> = {
   primary: 'var(--colors-primary)',
@@ -204,10 +208,10 @@ export function resolveTestId(props: HeroTickerProps): string {
 
 function resolveTimingConfig(props: HeroTickerProps) {
   return {
-    drawSpeed: props.drawSpeed ?? 1200,
-    typeSpeed: props.typeSpeed ?? 75,
-    eraseSpeed: props.eraseSpeed ?? 35,
-    pauseDuration: props.pauseDuration ?? 2400,
+    drawSpeed: props.drawSpeed ?? DEFAULT_HERO_TICKER_DRAW_SPEED,
+    typeSpeed: props.typeSpeed ?? DEFAULT_HERO_TICKER_TYPE_SPEED,
+    eraseSpeed: props.eraseSpeed ?? DEFAULT_HERO_TICKER_ERASE_SPEED,
+    pauseDuration: props.pauseDuration ?? DEFAULT_HERO_TICKER_PAUSE_DURATION,
   };
 }
 

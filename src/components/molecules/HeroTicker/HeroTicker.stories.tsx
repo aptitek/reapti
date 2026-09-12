@@ -1,6 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Box, Flex } from 'styled-system/jsx';
 import { HeroTicker } from './HeroTicker.tsx';
+import {
+  DEFAULT_HERO_TICKER_DRAW_SPEED,
+  DEFAULT_HERO_TICKER_TYPE_SPEED,
+  DEFAULT_HERO_TICKER_ERASE_SPEED,
+  DEFAULT_HERO_TICKER_PAUSE_DURATION,
+} from './heroTickerHelpers.ts';
 
 const meta: Meta<typeof HeroTicker> = {
   title: 'Molecules/HeroTicker',
@@ -25,6 +31,30 @@ const meta: Meta<typeof HeroTicker> = {
     showControls: false,
     showNib: true,
     glow: false,
+    drawSpeed: DEFAULT_HERO_TICKER_DRAW_SPEED,
+    typeSpeed: DEFAULT_HERO_TICKER_TYPE_SPEED,
+    eraseSpeed: DEFAULT_HERO_TICKER_ERASE_SPEED,
+    pauseDuration: DEFAULT_HERO_TICKER_PAUSE_DURATION,
+  },
+  argTypes: {
+    drawSpeed: {
+      control: { type: 'range', min: 400, max: 6000, step: 50 },
+      description:
+        'Total duration in ms to complete one draw cycle in cursive-draw mode.',
+    },
+    typeSpeed: {
+      control: { type: 'range', min: 20, max: 300, step: 5 },
+      description:
+        'Delay in ms per character for cursive-type typewriter mode.',
+    },
+    eraseSpeed: {
+      control: { type: 'range', min: 10, max: 150, step: 5 },
+      description: 'Delay in ms per character erased in typewriter mode.',
+    },
+    pauseDuration: {
+      control: { type: 'range', min: 500, max: 5000, step: 100 },
+      description: 'Pause duration in ms between phrases.',
+    },
   },
   decorators: [
     (Story) => (
@@ -43,9 +73,16 @@ export const Default: Story = {};
 export const CursiveTypewriter: Story = {
   args: {
     animationMode: 'cursive-type',
-    typeSpeed: 70,
-    eraseSpeed: 30,
-    pauseDuration: 1800,
+    typeSpeed: 120,
+    eraseSpeed: 50,
+    pauseDuration: 2600,
+  },
+};
+
+export const FinelyTunedSpeeds: Story = {
+  args: {
+    drawSpeed: 3600,
+    pauseDuration: 3000,
   },
 };
 

@@ -68,16 +68,16 @@ export interface HeroTickerProps {
   /** Visual scale preset. Defaults to 'large'. */
   size?: HeroTickerSize;
 
-  /** Total duration in ms to complete one draw cycle. Defaults to 1200ms. */
+  /** Total duration in ms to complete one draw cycle. Defaults to 2400ms for graceful cursive drawing. */
   drawSpeed?: number;
 
-  /** Character typing delay in ms for typewriter mode. Defaults to 75ms. */
+  /** Character typing delay in ms for typewriter mode. Defaults to 120ms for deliberate keystrokes. */
   typeSpeed?: number;
 
-  /** Character erasing delay in ms for typewriter mode. Defaults to 35ms. */
+  /** Character erasing delay in ms for typewriter mode. Defaults to 50ms. */
   eraseSpeed?: number;
 
-  /** Pause duration in ms between phrases. Defaults to 2400ms. */
+  /** Pause duration in ms between phrases. Defaults to 2600ms. */
   pauseDuration?: number;
 
   /** Whether to pause cycling on hover. Defaults to true. */

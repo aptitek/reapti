@@ -138,7 +138,9 @@ describe('HeroTicker - Alignment & Accents', () => {
     expect(html).toContain('data-glow="true"');
     expect(html).toContain('hero-ticker_flourish');
   });
+});
 
+describe('HeroTicker - Animation Modes & Speeds', () => {
   it('supports different animation modes (cursive-type, fade)', () => {
     const typeHtml = renderToStaticMarkup(
       createElement(HeroTicker, {
@@ -157,5 +159,19 @@ describe('HeroTicker - Alignment & Accents', () => {
     );
     expect(fadeHtml).toContain('hero-ticker_root');
     expect(fadeHtml).toContain('hero-ticker_flourish');
+  });
+
+  it('accepts finely tuned drawSpeed, typeSpeed, and pauseDuration props', () => {
+    const html = renderToStaticMarkup(
+      createElement(HeroTicker, {
+        drawSpeed: 3200,
+        typeSpeed: 150,
+        eraseSpeed: 60,
+        pauseDuration: 3000,
+        phrases: ['Custom timing'],
+      })
+    );
+    expect(html).toContain('hero-ticker_root');
+    expect(html).toContain('Custom timing');
   });
 });
