@@ -1,5 +1,7 @@
 export type HeroTickerSize = 'small' | 'medium' | 'large';
 
+export type HeroTickerThemeMode = 'light' | 'dark' | 'auto';
+
 export type HeroTickerAnimationMode = 'cursive-draw' | 'cursive-type' | 'fade';
 
 export type ThemeAccentRole = 'primary' | 'secondary' | 'tertiary' | 'error';
@@ -61,6 +63,9 @@ export interface HeroTickerProps {
 
   /** Flourish underline decoration style. Defaults to 'swoosh'. */
   flourish?: FlourishStyle;
+
+  /** Theme mode override: 'light', 'dark', or 'auto' (detects system/document mode). Defaults to 'auto'. */
+  mode?: HeroTickerThemeMode;
 
   /** HTML semantic heading tag to render. Defaults to 'h1'. */
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'div';

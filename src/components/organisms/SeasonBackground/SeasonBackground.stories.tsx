@@ -88,3 +88,11 @@ export const WithChildren: Story = {
     </Box>
   ),
 };
+
+export const ExtraSkySpace: Story = {
+  render: () => (
+    <Box inlineSize="100vw" blockSize="100vh">
+      <SeasonBackground season="summer" skySpace="32%" />
+    </Box>
+  ),
+};

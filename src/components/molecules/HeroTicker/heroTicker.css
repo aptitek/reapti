@@ -48,7 +48,7 @@
   flex-wrap: wrap;
   align-items: baseline;
   gap: 0.22em;
-  color: var(--colors-primary);
+  color: var(--colors-on-surface);
   -webkit-user-select: none;
   font-weight: 400;
   letter-spacing: -0.015em;
@@ -102,7 +102,7 @@
   font-style: italic;
   font-weight: 700;
   letter-spacing: -0.015em;
-  color: var(--colors-primary);
+  color: var(--colors-on-surface);
   display: inline;
   white-space: pre-wrap;
 }
@@ -119,7 +119,7 @@
   font-style: italic;
   font-weight: 700;
   letter-spacing: -0.015em;
-  color: var(--colors-primary);
+  color: var(--colors-on-surface);
   display: inline;
   white-space: pre-wrap;
 }
@@ -356,4 +356,84 @@
   clip-path: inset(50%);
   white-space: nowrap;
   border-width: 0;
+}
+
+/* Justification: Luminous quill nib illumination and depth in dark mode. */
+.hero-ticker_root[data-mode='dark'] .hero-ticker_nib,
+[data-theme='dark'] .hero-ticker_root:not([data-mode='light']) .hero-ticker_nib,
+.dark .hero-ticker_root:not([data-mode='light']) .hero-ticker_nib {
+  filter: drop-shadow(0 4px 12px var(--colors-shadow))
+    drop-shadow(0 0 8px var(--ticker-accent));
+}
+
+/* Justification: Luminous wet ink droplet enhanced glow in dark mode. */
+.hero-ticker_root[data-mode='dark'] .hero-ticker_ink-droplet,
+[data-theme='dark']
+  .hero-ticker_root:not([data-mode='light'])
+  .hero-ticker_ink-droplet,
+.dark .hero-ticker_root:not([data-mode='light']) .hero-ticker_ink-droplet {
+  box-shadow: 0 0 10px 3px currentColor;
+}
+
+/* Justification: Dual-layer aura handwriting glow in dark mode. */
+.hero-ticker_root[data-mode='dark'] .hero-ticker_cursive-text[data-glow='true'],
+[data-theme='dark']
+  .hero-ticker_root:not([data-mode='light'])
+  .hero-ticker_cursive-text[data-glow='true'],
+.dark
+  .hero-ticker_root:not([data-mode='light'])
+  .hero-ticker_cursive-text[data-glow='true'] {
+  filter: drop-shadow(0 0 16px var(--ticker-accent))
+    drop-shadow(0 0 6px var(--ticker-accent));
+}
+
+/* Justification: Dark mode floating controls surface elevation. */
+.hero-ticker_root[data-mode='dark'] .hero-ticker_controls,
+[data-theme='dark']
+  .hero-ticker_root:not([data-mode='light'])
+  .hero-ticker_controls,
+.dark .hero-ticker_root:not([data-mode='light']) .hero-ticker_controls {
+  background-color: var(--colors-surface-container);
+  border-color: var(--colors-outline-variant);
+  box-shadow: 0 4px 16px var(--colors-shadow);
+}
+
+/* Justification: Active navigation dot glow in dark mode. */
+.hero-ticker_root[data-mode='dark'] .hero-ticker_dot[data-active='true'],
+[data-theme='dark']
+  .hero-ticker_root:not([data-mode='light'])
+  .hero-ticker_dot[data-active='true'],
+.dark
+  .hero-ticker_root:not([data-mode='light'])
+  .hero-ticker_dot[data-active='true'] {
+  box-shadow: 0 0 10px var(--ticker-accent);
+}
+
+/* Justification: System color scheme preference dark mode adjustments. */
+@media (prefers-color-scheme: dark) {
+  .hero-ticker_root:not([data-mode='light']) .hero-ticker_nib {
+    filter: drop-shadow(0 4px 12px var(--colors-shadow))
+      drop-shadow(0 0 8px var(--ticker-accent));
+  }
+
+  .hero-ticker_root:not([data-mode='light']) .hero-ticker_ink-droplet {
+    box-shadow: 0 0 10px 3px currentColor;
+  }
+
+  .hero-ticker_root:not([data-mode='light'])
+    .hero-ticker_cursive-text[data-glow='true'] {
+    filter: drop-shadow(0 0 16px var(--ticker-accent))
+      drop-shadow(0 0 6px var(--ticker-accent));
+  }
+
+  .hero-ticker_root:not([data-mode='light']) .hero-ticker_controls {
+    background-color: var(--colors-surface-container);
+    border-color: var(--colors-outline-variant);
+    box-shadow: 0 4px 16px var(--colors-shadow);
+  }
+
+  .hero-ticker_root:not([data-mode='light'])
+    .hero-ticker_dot[data-active='true'] {
+    box-shadow: 0 0 10px var(--ticker-accent);
+  }
 }

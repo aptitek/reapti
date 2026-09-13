@@ -1,5 +1,9 @@
 import { useEffect, useRef, type RefObject } from 'react';
-import type { MouseState, WindState } from './SeasonBackground.types.ts';
+import type {
+  MouseState,
+  Point2D,
+  WindState,
+} from './SeasonBackground.types.ts';
 import { LeafParticle } from './SeasonLeafRenderer.ts';
 import {
   createBreezeStreams,
@@ -27,6 +31,7 @@ export interface UseSeasonCanvasOptions {
   mouseStateRef: RefObject<MouseState>;
   windStateRef: RefObject<WindState>;
   seasonProgress?: number;
+  skySpace?: string | number;
 }
 
 interface CanvasAnimationContext {
@@ -45,13 +50,14 @@ function startCanvasAnimation(context: CanvasAnimationContext): () => void {
   const reducedMotion =
     typeof window !== 'undefined' &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let cachedCanopy = getCanopyMetrics(w, h, container);
+  const canopyOpts = { container, skySpace: options.skySpace };
+  let cachedCanopy = getCanopyMetrics(w, h, canopyOpts);
 
   const observer = new ResizeObserver(([entry]) => {
     if (!entry) return;
     w = canvas.width = entry.contentRect.width;
     h = canvas.height = entry.contentRect.height;
-    cachedCanopy = getCanopyMetrics(w, h, container);
+    cachedCanopy = getCanopyMetrics(w, h, canopyOpts);
   });
   observer.observe(container);
 
@@ -59,7 +65,9 @@ function startCanvasAnimation(context: CanvasAnimationContext): () => void {
   let animId = 0;
   function tick() {
     if (options.mouseStateRef.current && options.windStateRef.current) {
-      if (++frame % 60 === 0) cachedCanopy = getCanopyMetrics(w, h, container);
+      if (++frame % 60 === 0) {
+        cachedCanopy = getCanopyMetrics(w, h, canopyOpts);
+      }
       stepCanvasPhysics({
         mouseState: options.mouseStateRef.current,
         windState: options.windStateRef.current,
@@ -89,6 +97,17 @@ function startCanvasAnimation(context: CanvasAnimationContext): () => void {
   };
 }
 
+function initLeafParticles(
+  count: number,
+  viewport: { x: number; y: number },
+  canopyOrigin: Point2D
+): LeafParticle[] {
+  return Array.from(
+    { length: count },
+    () => new LeafParticle(true, viewport, canopyOrigin)
+  );
+}
+
 export function useSeasonCanvas(options: UseSeasonCanvasOptions): void {
   const {
     canvasRef,
@@ -99,6 +118,7 @@ export function useSeasonCanvas(options: UseSeasonCanvasOptions): void {
     mouseStateRef,
     windStateRef,
     seasonProgress,
+    skySpace,
   } = options;
   const leavesRef = useRef<LeafParticle[]>([]);
   const streamsRef = useRef<WindBreezeStream[]>([]);
@@ -112,14 +132,11 @@ export function useSeasonCanvas(options: UseSeasonCanvasOptions): void {
 
     const w = container.clientWidth || 800;
     const h = container.clientHeight || 600;
-    leavesRef.current = Array.from(
-      { length: leafCount },
-      () =>
-        new LeafParticle(
-          true,
-          { x: w, y: h },
-          calculateCanopyOrigin(w, h, container)
-        )
+    const canopyOrigin = calculateCanopyOrigin(w, h, { container, skySpace });
+    leavesRef.current = initLeafParticles(
+      leafCount,
+      { x: w, y: h },
+      canopyOrigin
     );
     streamsRef.current = createBreezeStreams(
       DEFAULT_STREAM_COUNT,
@@ -131,16 +148,7 @@ export function useSeasonCanvas(options: UseSeasonCanvasOptions): void {
       canvas,
       container,
       ctx,
-      options: {
-        canvasRef,
-        containerRef,
-        leafCount,
-        windIntensity,
-        isDarkMode,
-        mouseStateRef,
-        windStateRef,
-        seasonProgress,
-      },
+      options,
       leaves: leavesRef.current,
       streams: streamsRef.current,
     });
@@ -153,5 +161,7 @@ export function useSeasonCanvas(options: UseSeasonCanvasOptions): void {
     mouseStateRef,
     windStateRef,
     seasonProgress,
+    skySpace,
+    options,
   ]);
 }

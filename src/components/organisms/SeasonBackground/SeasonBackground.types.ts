@@ -53,6 +53,25 @@ export interface SeasonBackgroundProps {
   showTree?: boolean;
 
   /**
+   * Custom clearance/space between the top of the container and the tree canopy.
+   * Allows setting extra sky headroom above the tree.
+   * Can be specified as a CSS length/percentage string ('24%', '160px', '12vh')
+   * or a number (e.g. 140 for 140px, or 0.25 for 25%).
+   * @default '16%'
+   */
+  skySpace?: string | number;
+
+  /**
+   * Alias for `skySpace`. Sets the clearance between the container top and the tree canopy.
+   */
+  treeTopSpacing?: string | number;
+
+  /**
+   * Alias for `skySpace`. Sets the clearance between the container top and the tree canopy.
+   */
+  treeTopSpace?: string | number;
+
+  /**
    * Whether to display the layered rolling hills in the background.
    * @default true
    */

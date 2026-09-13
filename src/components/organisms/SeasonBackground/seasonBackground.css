@@ -344,7 +344,7 @@
   position: absolute;
   inset-inline-start: clamp(0%, 2vi, 3%);
   inset-block-end: 0;
-  block-size: min(84%, 820px);
+  block-size: min(calc(100% - var(--season-sky-space, 16%)), 820px);
   max-inline-size: min(52%, 680px);
   aspect-ratio: 500 / 600;
   inline-size: auto;

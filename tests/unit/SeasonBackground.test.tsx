@@ -122,6 +122,42 @@ describe('SeasonBackground - Seasonal & Custom Options', () => {
   });
 });
 
+describe('SeasonBackground - Sky Space & Headroom', () => {
+  it('applies custom skySpace and treeTopSpacing to container element', () => {
+    const mockEl = {
+      style: {
+        setProperty: vi.fn(),
+        removeProperty: vi.fn(),
+      },
+    } as unknown as HTMLDivElement;
+    const ref = { current: mockEl };
+
+    const cleanup1 = runHook(() =>
+      createElement(SeasonBackground, {
+        containerRef: ref,
+        skySpace: '28%',
+      })
+    );
+    expect(mockEl.style.setProperty).toHaveBeenCalledWith(
+      '--season-sky-space',
+      '28%'
+    );
+    cleanup1();
+
+    const cleanup2 = runHook(() =>
+      createElement(SeasonBackground, {
+        containerRef: ref,
+        treeTopSpacing: 160,
+      })
+    );
+    expect(mockEl.style.setProperty).toHaveBeenCalledWith(
+      '--season-sky-space',
+      '160px'
+    );
+    cleanup2();
+  });
+});
+
 describe('useContainerDimensions in SeasonBackground', () => {
   it('handles null container and updates when container element is attached', () => {
     const ref = { current: null as HTMLDivElement | null };

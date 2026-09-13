@@ -22,6 +22,7 @@ import {
   resolveSeasonProgress,
   type ResolvedBackgroundConfig,
 } from './seasonUtils.ts';
+import { resolveSkySpace } from './seasonCanopyMetrics.ts';
 import { useSeasonCanvas } from './useSeasonCanvas.ts';
 import { useSeasonPointer } from './useSeasonPointer.ts';
 import './seasonBackground.css';
@@ -118,6 +119,34 @@ const SeasonBackdropLayers: FC<SeasonBackdropLayersProps> = (props) => {
   );
 };
 
+function useSeasonSkySpace(
+  containerRef: RefObject<HTMLDivElement | null>,
+  skySpace?: string
+) {
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el?.style) return;
+    if (skySpace) {
+      el.style.setProperty('--season-sky-space', skySpace);
+    } else {
+      el.style.removeProperty('--season-sky-space');
+    }
+  }, [containerRef, skySpace]);
+}
+
+function useSeasonBackgroundSetup(
+  props: SeasonBackgroundProps,
+  propContainerRef?: RefObject<HTMLDivElement | null>
+) {
+  const config = resolveBackgroundConfig(props);
+  const resolvedSkySpace = resolveSkySpace(config.skySpace);
+  const refs = useSeasonRefs(config.windIntensity);
+  const containerRef = propContainerRef ?? refs.containerRef;
+  const containerSize = useContainerDimensions(containerRef);
+  useSeasonSkySpace(containerRef, resolvedSkySpace);
+  return { config, refs, containerRef, containerSize };
+}
+
 export const SeasonBackground: FC<SeasonBackgroundProps> = (props) => {
   const {
     children,
@@ -126,16 +155,10 @@ export const SeasonBackground: FC<SeasonBackgroundProps> = (props) => {
     dataTestId = 'season-background',
     containerRef: propContainerRef,
   } = props;
-  const config = resolveBackgroundConfig(props);
   const isDarkMode = resolveIsDark(mode);
-  const {
-    containerRef: internalContainerRef,
-    canvasRef,
-    mouseStateRef,
-    windStateRef,
-  } = useSeasonRefs(config.windIntensity);
-  const containerRef = propContainerRef ?? internalContainerRef;
-  const containerSize = useContainerDimensions(containerRef);
+  const { config, refs, containerRef, containerSize } =
+    useSeasonBackgroundSetup(props, propContainerRef);
+  const { canvasRef, mouseStateRef, windStateRef } = refs;
   const flowerScale = calculateFlowerScale(
     containerSize.width,
     containerSize.height
@@ -160,6 +183,7 @@ export const SeasonBackground: FC<SeasonBackgroundProps> = (props) => {
     mouseStateRef,
     windStateRef,
     seasonProgress,
+    skySpace: config.skySpace,
   });
 
   return (

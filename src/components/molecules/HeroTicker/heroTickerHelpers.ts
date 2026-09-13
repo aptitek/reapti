@@ -2,6 +2,7 @@ import type {
   HeroTickerProps,
   HeroTickerSize,
   HeroTickerAnimationMode,
+  HeroTickerThemeMode,
   ThemeAccentRole,
   FlourishStyle,
 } from './HeroTicker.types.ts';
@@ -184,6 +185,16 @@ export interface ResolvedHeroTickerConfig {
   align: 'center' | 'left' | 'right';
   glow: boolean;
   testId: string;
+  mode: HeroTickerThemeMode;
+}
+
+export function resolveHeroTickerDark(
+  mode: HeroTickerThemeMode = 'auto',
+  isContextDark = false
+): boolean {
+  if (mode === 'dark') return true;
+  if (mode === 'light') return false;
+  return isContextDark;
 }
 
 export function resolvePhrasesList(phrases?: string[]): string[] {
@@ -221,6 +232,7 @@ function resolveBehaviorConfig(props: HeroTickerProps) {
     pauseOnFocus: props.pauseOnFocus ?? true,
     showControls: props.showControls ?? false,
     align: props.align ?? 'center',
+    mode: props.mode ?? 'auto',
   };
 }
 

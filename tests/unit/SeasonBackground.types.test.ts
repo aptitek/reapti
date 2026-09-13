@@ -28,9 +28,15 @@ describe('SeasonBackground Props Contracts', () => {
       leafCount: 30,
       windIntensity: 1.2,
       dataTestId: 'custom-bg',
+      skySpace: '24%',
+      treeTopSpacing: 120,
+      treeTopSpace: 0.2,
     };
     expect(props.mode).toBe('dark');
     expect(props.season).toBe('winter');
+    expect(props.skySpace).toBe('24%');
+    expect(props.treeTopSpacing).toBe(120);
+    expect(props.treeTopSpace).toBe(0.2);
   });
 
   it('supports SolarizedBackgroundProps alias and types', () => {

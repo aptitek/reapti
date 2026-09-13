@@ -58,6 +58,7 @@ export interface ResolvedBackgroundConfig {
   windIntensity: number;
   season?: SeasonBackgroundProps['season'];
   seasonProgress?: number;
+  skySpace?: string | number;
 }
 
 const DEFAULT_BG_CONFIG: ResolvedBackgroundConfig = {
@@ -77,9 +78,11 @@ const DEFAULT_BG_CONFIG: ResolvedBackgroundConfig = {
 export function resolveBackgroundConfig(
   props: SeasonBackgroundProps
 ): ResolvedBackgroundConfig {
+  const skySpace = props.skySpace ?? props.treeTopSpacing ?? props.treeTopSpace;
   return {
     ...DEFAULT_BG_CONFIG,
     ...props,
+    skySpace,
   };
 }
 

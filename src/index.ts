@@ -69,6 +69,7 @@ export type {
   HeroTickerProps,
   HeroTickerSize,
   HeroTickerAnimationMode,
+  HeroTickerThemeMode,
 } from './components/molecules/HeroTicker/HeroTicker.types.ts';
 
 export { Map } from './components/molecules/Map/Map.tsx';

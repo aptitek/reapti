@@ -5,6 +5,8 @@ import {
   getCanopyMetrics,
   calculateCanopyOrigin,
   getCanopyCenter,
+  resolveSkySpace,
+  parseSkySpaceToPixels,
 } from '../../src/components/organisms/SeasonBackground/seasonCanopyMetrics.ts';
 
 describe('seasonCanopyMetrics - Fallbacks & Geometry', () => {
@@ -85,5 +87,34 @@ describe('seasonCanopyMetrics - DOM Evaluation', () => {
     expect(getDomCanopyMetrics(mockTree)).not.toBeNull();
     expect(getCanopyMetrics(800, 600, null).radiusX).toBeGreaterThan(0);
     expect(getCanopyMetrics(800, 600, mockContainer)).toEqual(domMetrics);
+  });
+});
+
+describe('seasonCanopyMetrics - Sky Space & Headroom', () => {
+  it('resolves skySpace to CSS strings correctly', () => {
+    expect(resolveSkySpace(undefined)).toBeUndefined();
+    expect(resolveSkySpace(null as unknown as undefined)).toBeUndefined();
+    expect(resolveSkySpace('')).toBeUndefined();
+    expect(resolveSkySpace(0)).toBe('0px');
+    expect(resolveSkySpace(0.25)).toBe('25%');
+    expect(resolveSkySpace(120)).toBe('120px');
+    expect(resolveSkySpace('30%')).toBe('30%');
+    expect(resolveSkySpace('150px')).toBe('150px');
+  });
+
+  it('parses skySpace to pixel numbers accurately', () => {
+    expect(parseSkySpaceToPixels(undefined, 1000)).toBe(160);
+    expect(parseSkySpaceToPixels(0.2, 1000)).toBe(200);
+    expect(parseSkySpaceToPixels(250, 1000)).toBe(250);
+    expect(parseSkySpaceToPixels('30%', 1000)).toBe(300);
+    expect(parseSkySpaceToPixels('180px', 1000)).toBe(180);
+    expect(parseSkySpaceToPixels('invalid', 1000)).toBe(160);
+  });
+
+  it('adjusts fallback metrics when custom skySpace is provided', () => {
+    const defaultMetrics = getCssFallbackCanopyMetrics(1000, 800);
+    const extraSkyMetrics = getCssFallbackCanopyMetrics(1000, 800, '40%');
+    expect(extraSkyMetrics.center.y).toBeGreaterThan(defaultMetrics.center.y);
+    expect(extraSkyMetrics.radiusX).toBeLessThan(defaultMetrics.radiusX);
   });
 });

@@ -181,3 +181,43 @@ describe('HeroTicker - Animation Modes & Speeds', () => {
     expect(html).toContain('Custom timing');
   });
 });
+
+describe('HeroTicker - Theme Mode & Color Semantics', () => {
+  it('renders in dark mode with data-mode="dark" and dark class', () => {
+    const darkHtml = renderToStaticMarkup(
+      createElement(HeroTicker, { mode: 'dark', phrases: ['Cyber night'] })
+    );
+    expect(darkHtml).toContain('data-mode="dark"');
+    expect(darkHtml).toContain('dark');
+  });
+
+  it('renders in light mode with data-mode="light" and light class', () => {
+    const lightHtml = renderToStaticMarkup(
+      createElement(HeroTicker, { mode: 'light', phrases: ['Sunny morning'] })
+    );
+    expect(lightHtml).toContain('data-mode="light"');
+    expect(lightHtml).toContain('light');
+  });
+
+  it('defaults to auto mode cleanly without errors', () => {
+    const autoHtml = renderToStaticMarkup(
+      createElement(HeroTicker, { phrases: ['Auto mode'] })
+    );
+    expect(autoHtml).toContain('hero-ticker_root');
+    expect(autoHtml).toContain('data-mode="light"');
+  });
+
+  it('verifies variable cursive text and normal text container separation', () => {
+    const html = renderToStaticMarkup(
+      createElement(HeroTicker, {
+        prefix: 'We design ',
+        phrases: ['bold experiences'],
+        suffix: ' daily.',
+      })
+    );
+    expect(html).toContain('hero-ticker_title');
+    expect(html).toContain('hero-ticker_prefix');
+    expect(html).toContain('hero-ticker_cursive-text');
+    expect(html).toContain('hero-ticker_suffix');
+  });
+});

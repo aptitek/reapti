@@ -35,8 +35,14 @@ const meta: Meta<typeof HeroTicker> = {
     typeSpeed: DEFAULT_HERO_TICKER_TYPE_SPEED,
     eraseSpeed: DEFAULT_HERO_TICKER_ERASE_SPEED,
     pauseDuration: DEFAULT_HERO_TICKER_PAUSE_DURATION,
+    mode: 'auto',
   },
   argTypes: {
+    mode: {
+      control: { type: 'radio' },
+      options: ['light', 'dark', 'auto'],
+      description: 'Theme mode override or automatic preference detection.',
+    },
     drawSpeed: {
       control: { type: 'range', min: 400, max: 6000, step: 50 },
       description:
@@ -174,4 +180,32 @@ export const WithGlow: Story = {
   args: {
     glow: true,
   },
+};
+
+export const DarkMode: Story = {
+  args: {
+    mode: 'dark',
+    glow: true,
+    showControls: true,
+    phrases: [
+      'luminous cyber quill',
+      'neon calligraphy',
+      'ethereal interfaces',
+    ],
+  },
+  decorators: [
+    (Story) => (
+      <Box
+        p="8"
+        minInlineSize="680px"
+        display="flex"
+        justifyContent="center"
+        className="dark"
+        bg="surface"
+        color="onSurface"
+      >
+        <Story />
+      </Box>
+    ),
+  ],
 };

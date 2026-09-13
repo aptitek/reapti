@@ -19,6 +19,7 @@ import {
 } from './useHeroTickerAnimation.ts';
 import { HeroTickerDisplay } from './HeroTickerDisplay.tsx';
 import { HeroTickerControls } from './HeroTickerControls.tsx';
+import { useHeroTickerTheme } from './useHeroTickerTheme.ts';
 
 interface AnimationProgressParams {
   config: ResolvedHeroTickerConfig;
@@ -126,6 +127,7 @@ export const HeroTicker = forwardRef<HTMLDivElement, HeroTickerProps>(
     const config = resolveHeroTickerConfig(props);
     const state = useTickerState(config.phrases, props.onPhraseChange);
     const prefersReducedMotion = usePrefersReducedMotion();
+    const isDark = useHeroTickerTheme(config.mode);
     const [isFocused, setIsFocused] = useState(false);
 
     const derived = useHeroTickerDerived({
@@ -139,7 +141,9 @@ export const HeroTicker = forwardRef<HTMLDivElement, HeroTickerProps>(
       setIsFocused
     );
 
-    const rootClass = `hero-ticker_root ${props.className ?? ''}`.trim();
+    const themeClass = isDark ? 'dark' : 'light';
+    const rootClass =
+      `hero-ticker_root ${themeClass} ${props.className ?? ''}`.trim();
 
     return (
       <Box
@@ -147,6 +151,7 @@ export const HeroTicker = forwardRef<HTMLDivElement, HeroTickerProps>(
         data-testid={config.testId}
         data-align={config.align}
         data-accent={config.accentColor}
+        data-mode={isDark ? 'dark' : 'light'}
         className={rootClass}
         {...handlers}
       >

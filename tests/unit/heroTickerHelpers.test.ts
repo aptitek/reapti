@@ -21,6 +21,7 @@ import {
   incrementChars,
   decrementChars,
   calculateCurrentProgress,
+  resolveHeroTickerDark,
 } from '../../src/components/molecules/HeroTicker/heroTickerHelpers.ts';
 
 describe('heroTickerHelpers - Defaults and States', () => {
@@ -253,5 +254,18 @@ describe('heroTickerHelpers - Animation & Flourish Math', () => {
         phraseLength: 10,
       })
     ).toBe(100);
+  });
+});
+
+describe('heroTickerHelpers - Theme Mode Resolution', () => {
+  it('resolves dark and light theme overrides correctly', () => {
+    expect(resolveHeroTickerDark('dark', false)).toBe(true);
+    expect(resolveHeroTickerDark('dark', true)).toBe(true);
+    expect(resolveHeroTickerDark('light', true)).toBe(false);
+    expect(resolveHeroTickerDark('light', false)).toBe(false);
+    expect(resolveHeroTickerDark('auto', true)).toBe(true);
+    expect(resolveHeroTickerDark('auto', false)).toBe(false);
+    expect(resolveHeroTickerDark(undefined, true)).toBe(true);
+    expect(resolveHeroTickerDark(undefined, false)).toBe(false);
   });
 });
