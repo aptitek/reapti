@@ -45,7 +45,7 @@ export const md3Theme: ThemeTokens = {
       scrim: 'rgba(0, 43, 54, 0.60)',
       inverseSurface: '#073642',
       inverseOnSurface: '#fdf6e3',
-      inversePrimary: '#9ec43b',
+      inversePrimary: '#859900',
       surfaceTint: '#859900',
     },
     elevation: {
@@ -62,15 +62,15 @@ export const md3Theme: ThemeTokens = {
   },
   dark: {
     colors: {
-      primary: '#9ec43b',
+      primary: '#859900',
       onPrimary: '#002b36',
       primaryContainer: '#24420e',
       onPrimaryContainer: '#d8f085',
-      secondary: '#e25c9e',
+      secondary: '#d33682',
       onSecondary: '#002b36',
       secondaryContainer: '#4e1232',
       onSecondaryContainer: '#ffb6d8',
-      tertiary: '#4ba3e3',
+      tertiary: '#268bd2',
       onTertiary: '#002b36',
       tertiaryContainer: '#0e3550',
       onTertiaryContainer: '#c5e5fd',
@@ -98,7 +98,7 @@ export const md3Theme: ThemeTokens = {
       inverseSurface: '#eee8d5',
       inverseOnSurface: '#073642',
       inversePrimary: '#859900',
-      surfaceTint: '#9ec43b',
+      surfaceTint: '#859900',
     },
     elevation: {
       level0: 'none',

@@ -11,7 +11,7 @@ describe('md3Theme', () => {
   it('contains valid light and dark mode colors calibrated to Solarized', () => {
     expect(md3Theme.light.colors.primary).toBe('#859900');
     expect(md3Theme.light.colors.onSurface).toBe('#073642');
-    expect(md3Theme.dark.colors.primary).toBe('#9ec43b');
+    expect(md3Theme.dark.colors.primary).toBe('#859900');
     expect(md3Theme.dark.colors.onSurface).toBe('#fdf6e3');
   });
 

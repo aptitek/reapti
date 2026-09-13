@@ -11,7 +11,7 @@ describe('solarizedTheme', () => {
   it('contains valid light and dark mode colors', () => {
     expect(solarizedTheme.light.colors.primary).toBe('#859900');
     expect(solarizedTheme.light.colors.onSurface).toBe('#073642');
-    expect(solarizedTheme.dark.colors.primary).toBe('#9ec43b');
+    expect(solarizedTheme.dark.colors.primary).toBe('#859900');
     expect(solarizedTheme.dark.colors.onSurface).toBe('#fdf6e3');
   });
 

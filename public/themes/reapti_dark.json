@@ -4,8 +4,8 @@
   "bg": "#002028",
   "water": "#4e1232",
   "parks": "#0e3550",
-  "road_motorway": "#9ec43b",
+  "road_motorway": "#859900",
   "road_primary": "rgba(147, 161, 161, 0.25)",
   "text": "#fdf6e3",
-  "accent": "#9ec43b"
+  "accent": "#859900"
 }
