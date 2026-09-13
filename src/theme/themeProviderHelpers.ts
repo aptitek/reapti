@@ -12,10 +12,8 @@ export function resolveNextThemeMode(prev: ThemeMode): ThemeMode {
 
 function applyColorProperties(target: HTMLElement, colors: ColorRamp): void {
   for (const [key, value] of Object.entries(colors)) {
-    if (typeof value === 'string') {
-      const kebab = key.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`);
-      target.style.setProperty(`--theme-${kebab}`, value);
-    }
+    const kebab = key.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`);
+    target.style.setProperty(`--theme-${kebab}`, value);
   }
 }
 
@@ -38,12 +36,8 @@ export function applyThemeVariables(
   const modeTokens = theme[mode];
   if (!modeTokens || !target.style) return;
 
-  if (modeTokens.colors) {
-    applyColorProperties(target, modeTokens.colors);
-  }
-  if (modeTokens.elevation) {
-    applyElevationProperties(target, modeTokens.elevation);
-  }
+  applyColorProperties(target, modeTokens.colors);
+  applyElevationProperties(target, modeTokens.elevation);
 }
 
 export function syncDocumentTheme(
