@@ -48,7 +48,7 @@
   flex-wrap: wrap;
   align-items: baseline;
   gap: 0.22em;
-  color: var(--colors-onSurface);
+  color: var(--colors-primary);
   -webkit-user-select: none;
   font-weight: 400;
   letter-spacing: -0.015em;
@@ -102,7 +102,7 @@
   font-style: italic;
   font-weight: 700;
   letter-spacing: -0.015em;
-  color: var(--colors-onSurface);
+  color: var(--colors-primary);
   display: inline;
   white-space: pre-wrap;
 }
@@ -119,7 +119,7 @@
   font-style: italic;
   font-weight: 700;
   letter-spacing: -0.015em;
-  color: var(--colors-onSurface);
+  color: var(--colors-primary);
   display: inline;
   white-space: pre-wrap;
 }
@@ -291,9 +291,9 @@
   padding-inline: var(--spacing-1-5);
   padding-block: var(--spacing-0-5);
   border-radius: var(--radii-full);
-  background-color: var(--colors-surfaceContainer);
+  background-color: var(--colors-surface-container);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--colors-outlineVariant);
+  border: 1px solid var(--colors-outline-variant);
   margin-block-start: var(--spacing-2);
 }
 

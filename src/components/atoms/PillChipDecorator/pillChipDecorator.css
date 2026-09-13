@@ -1,0 +1,142 @@
+/* Justification: Anchor container wrapper establishing positioning context for the side extending pill chip. */
+.pill-chip_decorator {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* Justification: Pill chip extending on the side docked seamlessly at the edge of the decorated element. */
+.pill-chip_decorator_chip {
+  position: absolute;
+  inset-inline-start: 100%;
+  inset-block-start: 50%;
+  transform: translateY(-50%) translateX(-24px);
+  block-size: var(--pill-chip-height, var(--spacing-8, 32px));
+  box-sizing: border-box;
+  padding-inline-start: var(--spacing-2, 8px);
+  padding-inline-end: var(--spacing-4, 16px);
+  white-space: nowrap;
+  border-start-start-radius: var(--border-radii-none, 0px);
+  border-end-start-radius: var(--border-radii-none, 0px);
+  border-start-end-radius: var(--radii-full, 9999px);
+  border-end-end-radius: var(--radii-full, 9999px);
+  background-color: var(--colors-secondary-container);
+  color: var(--colors-on-secondary-container);
+  font-size: var(--font-sizes-sm, 14px);
+  font-weight: var(--font-weights-medium, 500);
+  line-height: var(--line-heights-sm, 20px);
+  letter-spacing: 0.1px;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2, 8px);
+  z-index: 1;
+  pointer-events: none;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    transform var(--durations-short4) var(--easings-emphasizedAccelerate),
+    opacity var(--durations-short2) var(--easings-standard),
+    visibility 0s var(--durations-short4);
+}
+
+/* Justification: Caption wrapper ensuring label text does not wrap or truncate during animation. */
+.pill-chip_caption {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* Justification: Slide pill chip out from behind the anchor element on hover or focus-within. */
+.pill-chip_decorator:hover .pill-chip_decorator_chip,
+.pill-chip_decorator:focus-within .pill-chip_decorator_chip,
+.pill-chip_decorator[data-open='true'] .pill-chip_decorator_chip {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(-50%) translateX(0);
+  transition:
+    transform var(--durations-medium2) var(--easings-emphasizedDecelerate),
+    opacity var(--durations-short3) var(--easings-standard),
+    visibility 0s 0s;
+}
+
+/* Justification: Placement on the start side (left in LTR, right in RTL). */
+.pill-chip_decorator[data-placement='start'] .pill-chip_decorator_chip {
+  inset-inline-start: auto;
+  inset-inline-end: 100%;
+  transform: translateY(-50%) translateX(24px);
+  border-start-start-radius: var(--radii-full, 9999px);
+  border-end-start-radius: var(--radii-full, 9999px);
+  border-start-end-radius: var(--border-radii-none, 0px);
+  border-end-end-radius: var(--border-radii-none, 0px);
+  padding-inline-start: var(--spacing-4, 16px);
+  padding-inline-end: var(--spacing-2, 8px);
+}
+
+.pill-chip_decorator[data-placement='start']:hover .pill-chip_decorator_chip,
+.pill-chip_decorator[data-placement='start']:focus-within
+  .pill-chip_decorator_chip,
+.pill-chip_decorator[data-placement='start'][data-open='true']
+  .pill-chip_decorator_chip {
+  transform: translateY(-50%) translateX(0);
+}
+
+/* Justification: RTL support mirroring default slide offsets. */
+[dir='rtl']
+  .pill-chip_decorator[data-placement='end']
+  .pill-chip_decorator_chip,
+.pill-chip_decorator[data-placement='end']:dir(rtl) .pill-chip_decorator_chip {
+  transform: translateY(-50%) translateX(24px);
+}
+
+[dir='rtl']
+  .pill-chip_decorator[data-placement='end']:hover
+  .pill-chip_decorator_chip,
+[dir='rtl']
+  .pill-chip_decorator[data-placement='end']:focus-within
+  .pill-chip_decorator_chip,
+[dir='rtl']
+  .pill-chip_decorator[data-placement='end'][data-open='true']
+  .pill-chip_decorator_chip,
+.pill-chip_decorator[data-placement='end']:dir(rtl):hover
+  .pill-chip_decorator_chip,
+.pill-chip_decorator[data-placement='end']:dir(rtl):focus-within
+  .pill-chip_decorator_chip,
+.pill-chip_decorator[data-placement='end']:dir(rtl)[data-open='true']
+  .pill-chip_decorator_chip {
+  transform: translateY(-50%) translateX(0);
+}
+
+[dir='rtl']
+  .pill-chip_decorator[data-placement='start']
+  .pill-chip_decorator_chip,
+.pill-chip_decorator[data-placement='start']:dir(rtl)
+  .pill-chip_decorator_chip {
+  transform: translateY(-50%) translateX(-24px);
+}
+
+[dir='rtl']
+  .pill-chip_decorator[data-placement='start']:hover
+  .pill-chip_decorator_chip,
+[dir='rtl']
+  .pill-chip_decorator[data-placement='start']:focus-within
+  .pill-chip_decorator_chip,
+[dir='rtl']
+  .pill-chip_decorator[data-placement='start'][data-open='true']
+  .pill-chip_decorator_chip,
+.pill-chip_decorator[data-placement='start']:dir(rtl):hover
+  .pill-chip_decorator_chip,
+.pill-chip_decorator[data-placement='start']:dir(rtl):focus-within
+  .pill-chip_decorator_chip,
+.pill-chip_decorator[data-placement='start']:dir(rtl)[data-open='true']
+  .pill-chip_decorator_chip {
+  transform: translateY(-50%) translateX(0);
+}
+
+/* Justification: Respect user motion preferences by disabling animated transforms. */
+@media (prefers-reduced-motion: reduce) {
+  .pill-chip_decorator_chip {
+    transition: none;
+  }
+}

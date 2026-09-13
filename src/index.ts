@@ -27,6 +27,16 @@ export type {
   RangeNumberPickerProps,
 } from './components/atoms/NumberPicker/NumberPicker.types.ts';
 
+export {
+  PillChip,
+  PillChipDecorator,
+} from './components/atoms/PillChipDecorator/PillChipDecorator.tsx';
+export type {
+  PillChipProps,
+  PillChipDecoratorProps,
+  PillChipPlacement,
+} from './components/atoms/PillChipDecorator/PillChipDecorator.types.ts';
+
 export { SegmentedChip } from './components/atoms/SegmentedChip/SegmentedChip.tsx';
 export { SegmentedChipElement } from './components/atoms/SegmentedChip/SegmentedChipElement.ts';
 export type {

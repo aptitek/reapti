@@ -127,3 +127,27 @@
   --m3e-button-large-shape-round: 0px;
   --m3e-button-extra-large-shape-round: 0px;
 }
+
+/* Justification: Outlined variant outline following theme outline tokens around expressive clip-path silhouette. */
+.override-hold-button[data-variant='outlined'] m3e-shape {
+  filter: drop-shadow(1px 0 0 var(--colors-outline))
+    drop-shadow(-1px 0 0 var(--colors-outline))
+    drop-shadow(0 1px 0 var(--colors-outline))
+    drop-shadow(0 -1px 0 var(--colors-outline));
+  transition: filter var(--durations-short4) var(--easings-standard);
+}
+
+/* Justification: Hover and focus-within state for outlined button shape contour matching theme primary. */
+.override-hold-button[data-variant='outlined']:hover m3e-shape,
+.override-hold-button[data-variant='outlined']:focus-within m3e-shape {
+  filter: drop-shadow(1.5px 0 0 var(--colors-primary))
+    drop-shadow(-1.5px 0 0 var(--colors-primary))
+    drop-shadow(0 1.5px 0 var(--colors-primary))
+    drop-shadow(0 -1.5px 0 var(--colors-primary));
+}
+
+/* Justification: Ensure outlined button label and icon colors follow theme primary. */
+.override-hold-button m3e-button[variant='outlined'] {
+  --m3e-button-label-text-color: var(--colors-primary);
+  --m3e-button-icon-color: var(--colors-primary);
+}

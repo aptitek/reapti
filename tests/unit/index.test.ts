@@ -6,6 +6,8 @@ import {
   MapPin,
   MeshAccordeon,
   NumberPicker,
+  PillChip,
+  PillChipDecorator,
   SegmentedChip,
   SegmentedChipElement,
   Switch,
@@ -44,6 +46,8 @@ describe('Library Entry Point Exports', () => {
     expect(MapPin).toBeDefined();
     expect(MeshAccordeon).toBeDefined();
     expect(NumberPicker).toBeDefined();
+    expect(PillChip).toBeDefined();
+    expect(PillChipDecorator).toBeDefined();
     expect(SegmentedChip).toBeDefined();
     expect(SegmentedChipElement).toBeDefined();
     expect(Switch).toBeDefined();

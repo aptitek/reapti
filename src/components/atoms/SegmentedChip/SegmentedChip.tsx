@@ -156,23 +156,34 @@ export const ChipSegmentsList: FC<{
   if (!items || items.length === 0) return null;
   return (
     <>
-      {items.map((item) => (
-        <ChipSegment
-          key={item.id}
-          id={item.id}
-          label={item.label}
-          icon={item.icon}
-          trailingIcon={item.trailingIcon}
-          interaction={item.interaction}
-          disabled={disabled || item.disabled}
-          onClick={() => onItemClick(item)}
-          href={item.href}
-          target={item.target}
-          tooltip={item.tooltip}
-          ariaLabel={item.ariaLabel}
-          dataTestId={`${testId}-item-${item.id}`}
-        />
-      ))}
+      {items.map((item) => {
+        const interaction = resolveSegmentInteraction(
+          item.interaction,
+          item.href,
+          item.onClick
+        );
+        const hasClickAction =
+          interaction === 'button' || Boolean(item.onClick);
+        const onClick = hasClickAction ? () => onItemClick(item) : undefined;
+
+        return (
+          <ChipSegment
+            key={item.id}
+            id={item.id}
+            label={item.label}
+            icon={item.icon}
+            trailingIcon={item.trailingIcon}
+            interaction={interaction}
+            disabled={disabled || item.disabled}
+            onClick={onClick}
+            href={item.href}
+            target={item.target}
+            tooltip={item.tooltip}
+            ariaLabel={item.ariaLabel}
+            dataTestId={`${testId}-item-${item.id}`}
+          />
+        );
+      })}
     </>
   );
 };

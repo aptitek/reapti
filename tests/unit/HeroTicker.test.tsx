@@ -122,6 +122,12 @@ describe('HeroTicker - Alignment & Accents', () => {
       createElement(HeroTicker, { accentVar: 'var(--custom-accent)' })
     );
     expect(customHtml).toContain('hero-ticker_root');
+
+    const defaultHtml = renderToStaticMarkup(
+      createElement(HeroTicker, { phrases: ['Primary Theme Test'] })
+    );
+    expect(defaultHtml).toContain('data-accent="primary"');
+    expect(defaultHtml).toContain('hero-ticker_title');
   });
 
   it('supports custom className, glow, and ref object forwarding', () => {

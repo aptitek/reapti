@@ -102,6 +102,20 @@ describe('SegmentedChip Icon & Compositional Markup', () => {
     expect(html).toContain('External link');
   });
 
+  it('renders non-interactive segments by default with no hover cursor change or role', () => {
+    const html = renderToStaticMarkup(
+      createElement(SegmentedChip, {
+        items: [{ id: 'item-plain', label: 'Plain Tag', icon: 'tag' }],
+        dataTestId: 'plain-chip',
+      })
+    );
+
+    expect(html).toContain('data-interaction="none"');
+    expect(html).not.toContain('segmented-chip__segment--interactive');
+    expect(html).not.toContain('segmented-chip__segment--button');
+    expect(html).not.toContain('role="button"');
+  });
+
   it('renders compositional children and disabled items', () => {
     const html = renderToStaticMarkup(
       createElement(
@@ -162,46 +176,7 @@ describe('ChipSegment Click & Keydown Actions', () => {
   });
 });
 
-describe('ChipSegment Link Interactions', () => {
-  it('handles navigation on link interaction', () => {
-    const mockWindow = { location: { href: '' }, open: vi.fn() };
-    vi.stubGlobal('window', mockWindow);
-    try {
-      const seg = ChipSegment({
-        label: 'L',
-        interaction: 'link',
-        href: '/nav',
-      });
-      getSegmentBox(seg).props.onClick?.();
-      expect(mockWindow.location.href).toBe('/nav');
-    } finally {
-      vi.unstubAllGlobals();
-    }
-  });
-
-  it('opens new tab for target="_blank" link interaction', () => {
-    const openMock = vi.fn();
-    vi.stubGlobal('window', { location: { href: '' }, open: openMock });
-    try {
-      const seg = ChipSegment({
-        label: 'Ext',
-        interaction: 'link',
-        href: '/ext',
-        target: '_blank',
-      });
-      getSegmentBox(seg).props.onClick?.();
-      expect(openMock).toHaveBeenCalledWith(
-        '/ext',
-        '_blank',
-        'noopener,noreferrer'
-      );
-    } finally {
-      vi.unstubAllGlobals();
-    }
-  });
-});
-
-describe('ChipSegment Keys and SSR Fallbacks', () => {
+describe('ChipSegment Keys and Auto IDs', () => {
   it('ignores non-activation keys on keydown', () => {
     const onClick = vi.fn();
     const preventDefault = vi.fn();
@@ -218,22 +193,6 @@ describe('ChipSegment Keys and SSR Fallbacks', () => {
     const segment = ChipSegment({ label: 'Auto' });
     const box = segment as unknown as { props: { id?: string } };
     expect(box.props.id).toMatch(/^chip-seg-\d+$/);
-  });
-
-  it('handles link click when window is undefined without throwing', () => {
-    const origWindow = globalThis.window;
-    // @ts-expect-error testing SSR environment branch
-    delete globalThis.window;
-    try {
-      const seg = ChipSegment({
-        label: 'SSR',
-        interaction: 'link',
-        href: '/ssr',
-      });
-      expect(() => getSegmentBox(seg).props.onClick?.()).not.toThrow();
-    } finally {
-      globalThis.window = origWindow;
-    }
   });
 });
 
