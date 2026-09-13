@@ -1,0 +1,409 @@
+/* Fancy Switch Suite High-Fidelity Styles */
+
+@keyframes fancy_spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fancy_pin_bounce {
+  0% {
+    transform: translateY(-8px) scale(0.6);
+    opacity: 0;
+  }
+  65% {
+    transform: translateY(1px) scale(1.15);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fancy_ripple_expand {
+  0% {
+    opacity: 0.85;
+    transform: scale(0.4);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.2);
+  }
+}
+
+.fancy_sun_glyph {
+  color: var(--fancy-switch-sun-light);
+  filter: drop-shadow(0 0 4px var(--fancy-switch-sun-glow));
+  display: block;
+}
+
+.fancy_sun_spinning {
+  animation: fancy_spin 18s linear infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center;
+}
+
+.fancy_zenith_handle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.fancy_moon_glyph {
+  color: var(--fancy-switch-moon-main);
+  filter: drop-shadow(0 0 4px var(--fancy-switch-moon-glow));
+  display: block;
+}
+
+.fancy_celestial_arc {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  pointer-events: none;
+  z-index: 1;
+  color: var(--fancy-switch-arc-stroke);
+  opacity: 0.85;
+}
+
+/* Justification: Flag puck inside handle slot scaled proportionally to handle size across all presets. */
+.fancy_flag_puck {
+  display: block;
+  flex-shrink: 0;
+  inline-size: calc(var(--switch-handle-size) - var(--spacing-1));
+  block-size: calc(var(--switch-handle-size) - var(--spacing-1));
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  box-shadow: var(--fancy-switch-flag-shadow);
+}
+
+/* Justification: Base airplane container providing central pivot for flight rotation, white color, and shadow. */
+.fancy_flight_airplane {
+  display: block;
+  color: var(--fancy-switch-thumb-text);
+  filter: drop-shadow(0 1px 2px var(--colors-shadow));
+  transform-origin: center;
+  transition: transform var(--durations-medium2) var(--easings-emphasized);
+}
+
+/* Justification: Airplane rotated +90deg (pointing right/East) when flying or peeking from UK towards France. */
+.fancy_flight_airplane[data-french='false'] {
+  transform: rotate(90deg);
+}
+
+/* Justification: Airplane rotated -90deg (pointing left/West) when flying or peeking from France towards UK. */
+.fancy_flight_airplane[data-french='true'] {
+  transform: rotate(-90deg);
+}
+
+.fancy_country_zone {
+  position: absolute;
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.fancy_country_zone_left {
+  inset-inline-start: var(--spacing-xs);
+}
+
+.fancy_country_zone_right {
+  inset-inline-end: var(--spacing-xs);
+}
+
+.fancy_country_silhouette {
+  fill: var(--fancy-switch-country-fill);
+  stroke: var(--fancy-switch-country-stroke);
+  stroke-width: 0.9px;
+  fill-opacity: 0.35;
+  transition:
+    fill-opacity var(--motion-normal) var(--motion-ease),
+    stroke var(--motion-normal) var(--motion-ease);
+}
+
+.fancy_country_silhouette[data-active='true'] {
+  fill: var(--colors-primary);
+  stroke: var(--fancy-switch-arc-stroke);
+  fill-opacity: 0.65;
+  stroke-width: 1.2px;
+}
+
+/* Justification: Typography for 12/24 digits optical centering with responsive handle font sizing. */
+.fancy_clock_digit_text {
+  font-family: var(--fonts-brand);
+  font-size: var(--switch-handle-font-size, var(--font-sizes-sm, 14px));
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--fancy-switch-thumb-text);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 100%;
+  block-size: 100%;
+  transform: translateY(-0.5px);
+}
+
+/* Justification: Digit socket for inactive 12/24 clock indicator matching handle typography and optical centering. */
+.fancy_digital_slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--fonts-brand);
+  font-size: var(--switch-handle-font-size, var(--font-sizes-sm));
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--fancy-switch-clock-slot-color);
+  background-color: var(--fancy-switch-clock-slot-bg);
+  border: 1px solid var(--fancy-switch-clock-slot-border);
+  border-radius: var(--radii-full);
+  inline-size: 100%;
+  block-size: 100%;
+  box-sizing: border-box;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0.85;
+  transform: translateY(-0.5px);
+  transition:
+    opacity var(--durations-short4) var(--easings-standard),
+    color var(--durations-short4) var(--easings-standard);
+}
+
+/* Justification: Hover illumination for inactive 12/24 clock digit socket. */
+.switch_root:hover .fancy_digital_slot {
+  opacity: 1;
+  color: var(--fancy-switch-arc-stroke);
+}
+
+.fancy_analog_transit {
+  animation: fancy_spin 1s ease-in-out infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.fancy_pin_drop {
+  animation: fancy_pin_bounce 0.38s ease-out forwards;
+  color: var(--fancy-switch-pin-green);
+  filter: drop-shadow(0 1px 2px var(--colors-shadow));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fancy_laptop_home {
+  color: var(--fancy-switch-laptop-blue);
+  filter: drop-shadow(0 1px 2px var(--colors-shadow));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fancy_pedestrian_mirror[data-mirrored='true'] {
+  transform: scaleX(-1);
+}
+
+.fancy_holo_wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fancy-switch-holo-cyan);
+  opacity: 0.75;
+  transition:
+    color var(--motion-normal) var(--motion-ease),
+    opacity var(--motion-normal) var(--motion-ease),
+    transform var(--motion-normal) var(--motion-ease);
+}
+
+.fancy_holo_wrapper[data-active='true'] {
+  color: var(--fancy-switch-holo-cyan);
+  opacity: 0.95;
+  filter: drop-shadow(0 0 4px var(--fancy-switch-holo-glow));
+}
+
+.switch_root:hover .fancy_holo_wrapper {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Justification: Clean flat door portal icon without 3D perspective distortion. */
+.fancy_door_perspective {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Justification: Clean door graphic styling for badge access switch without 3D rotate or glow filter. */
+.fancy_door_swing {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fancy-switch-door-closed);
+  transition: opacity var(--durations-short4) var(--easings-standard);
+}
+
+/* Justification: Door open state styling matching theme color. */
+.fancy_door_swing[data-open='true'] {
+  color: var(--fancy-switch-access-unlocked);
+}
+
+/* Justification: Peeking access companion icon styling with crisp silhouette and no aura glow. */
+.fancy_badge_companion {
+  color: var(--fancy-switch-access-badge);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fancy_badge_ripple_wave {
+  position: absolute;
+  inset-block-start: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: var(--radius-full);
+  pointer-events: none;
+  z-index: 2;
+  animation: fancy_ripple_expand 0.5s ease-out forwards;
+}
+
+/* Base track frame and handle styling for all fancy bimodal switches */
+.switch_root.switch_bimodal[data-checked='false'] .switch_track_frame,
+.switch_root.switch_bimodal[data-checked='true'] .switch_track_frame {
+  background-color: var(--fancy-switch-track-bg);
+  border: 2px solid var(--fancy-switch-track-border);
+  box-shadow: var(--fancy-switch-shadow-inset);
+  box-sizing: border-box;
+}
+
+.switch_root.switch_bimodal[data-checked='false'] .switch_handle_slot,
+.switch_root.switch_bimodal[data-checked='true'] .switch_handle_slot {
+  color: var(--fancy-switch-thumb-text);
+  border-radius: var(--radii-full);
+}
+
+.switch_handle_slot .fancy_pin_drop,
+.switch_handle_slot .fancy_laptop_home,
+.switch_handle_slot .fancy_sun_glyph {
+  color: var(--fancy-switch-thumb-text);
+}
+
+/* Justification: Celeste zenith horizon rising animation for the opposite-side peeking icon */
+.fancy_switch_zenith .switch_ghost_slot {
+  opacity: 0;
+  transition:
+    transform var(--durations-medium2, 0.3s)
+      var(--easings-emphasized, cubic-bezier(0.2, 0, 0, 1)),
+    opacity var(--durations-short4, 0.2s) var(--easings-standard, ease);
+}
+
+/* Justification: Moon peeking on left horizon follows / trajectory (lower-left up to zenith line) */
+.fancy_switch_zenith[data-checked='true'] .switch_ghost_slot {
+  transform: translate(-6px, 6px) scale(0.75);
+}
+
+.fancy_switch_zenith[data-checked='true']:hover .switch_ghost_slot {
+  opacity: 0.95;
+  transform: translate(0px, -2px) scale(1);
+}
+
+/* Justification: Sun peeking on right horizon follows \ trajectory (lower-right up to zenith line) */
+.fancy_switch_zenith[data-checked='false'] .switch_ghost_slot {
+  transform: translate(6px, 6px) scale(0.75);
+}
+
+.fancy_switch_zenith[data-checked='false']:hover .switch_ghost_slot {
+  opacity: 0.95;
+  transform: translate(0px, -2px) scale(1);
+}
+
+/* Justification: Elevation shadow applied to the 12/24 clock handle puck. */
+.fancy_switch_clock .switch_handle_slot {
+  box-shadow: var(--fancy-switch-clock-shadow);
+}
+
+/* Justification: Inactive ghost socket for clock switch presenting symmetrical opposite format digit (12 or 24). */
+.fancy_switch_clock .switch_ghost_slot {
+  position: absolute;
+  inset-block: 0;
+  margin-block: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--switch-handle-size);
+  block-size: var(--switch-handle-size);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Justification: When unchecked (12h selected on left), inactive 24 format socket is positioned on the right. */
+.fancy_switch_clock[data-checked='false'] .switch_ghost_slot {
+  inset-inline-end: var(--switch-handle-start);
+  inset-inline-start: auto;
+}
+
+/* Justification: When checked (24h selected on right), inactive 12 format socket is positioned on the left. */
+.fancy_switch_clock[data-checked='true'] .switch_ghost_slot {
+  inset-inline-start: var(--switch-handle-start);
+  inset-inline-end: auto;
+}
+
+/* Justification: Green glow shadow for checked in-person attendance pin handle. */
+.fancy_switch_attendance[data-checked='true'] .switch_handle_slot {
+  box-shadow: var(--fancy-switch-pin-shadow);
+}
+
+/* Justification: Locked badge access handle shadow. */
+.fancy_switch_badge[data-checked='false'] .switch_handle_slot {
+  box-shadow: var(--fancy-switch-lock-shadow);
+}
+
+/* Justification: Unlocked badge access handle shadow. */
+.fancy_switch_badge[data-checked='true'] .switch_handle_slot {
+  box-shadow: var(--fancy-switch-unlock-shadow);
+}
+
+/* Justification: Border shadow applied to the national flag puck handle. */
+.fancy_switch_meridian .switch_handle_slot {
+  box-shadow: var(--fancy-switch-flag-shadow);
+}
+
+/* Justification: Celestial glyph SVGs scaled dynamically to the selected icon token size. */
+.fancy_zenith_handle svg {
+  inline-size: var(--m3e-switch-selected-icon-size);
+  block-size: var(--m3e-switch-selected-icon-size);
+}
+
+/* Justification: Attendance pin and laptop icons scaled dynamically to the handle geometry. */
+.fancy_switch_attendance .switch_handle_slot svg {
+  inline-size: calc(var(--m3e-switch-selected-icon-size) + 2px);
+  block-size: calc(var(--m3e-switch-selected-icon-size) + 2px);
+}
+
+/* Justification: Badge padlock icons scaled dynamically to the handle geometry. */
+.fancy_switch_badge .switch_handle_slot svg {
+  inline-size: calc(var(--m3e-switch-selected-icon-size) + 2px);
+  block-size: calc(var(--m3e-switch-selected-icon-size) + 2px);
+}
+
+/* Justification: Door glyphs in badge access ghost slot scaled to match handle icon geometry. */
+.fancy_switch_badge .switch_ghost_slot svg {
+  inline-size: var(--m3e-switch-selected-icon-size);
+  block-size: var(--m3e-switch-selected-icon-size);
+}

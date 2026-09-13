@@ -8,28 +8,72 @@
   inline-size: max-content;
   block-size: max-content;
   cursor: pointer;
+
+  /* Theme color defaults */
   --switch-track-color-on: var(--colors-primary);
   --switch-track-color-off: var(--colors-surface-container-highest);
   --switch-handle-color-on: var(--colors-on-primary);
   --switch-handle-color-off: var(--colors-outline);
+  --switch-ghost-color-on: var(--switch-handle-color-on);
+  --switch-ghost-color-off: var(--switch-handle-color-off);
+  --switch-peeking-color-on: var(--switch-handle-color-on);
+  --switch-peeking-color-off: var(--switch-handle-color-off);
+
+  /* Peeking icon transforms */
   --switch-peeking-rot-on: 0deg;
   --switch-peeking-rot-off: 0deg;
   --switch-peeking-scale-x-on: 1;
   --switch-peeking-scale-x-off: 1;
-  --switch-peek-start-off: var(--switch-peek-start-off-compact);
+  --switch-peek-start-off: calc(
+    (var(--m3e-switch-track-height) + var(--switch-handle-size)) / 2 -
+      var(--m3e-switch-selected-icon-size)
+  );
+  --switch-ghost-inset: var(--spacing-0\.5);
+
+  /* Track outline and handle resting position */
+  --m3e-switch-track-outline-width: 2px;
+  --switch-handle-start: var(--spacing-1);
+
+  /* Factorised dimension derivations (shared uniformly across all sizes) */
+  --m3e-switch-selected-handle-width: var(--switch-handle-size);
+  --m3e-switch-selected-handle-height: var(--switch-handle-size);
+  --m3e-switch-unselected-handle-width: var(--switch-handle-size);
+  --m3e-switch-unselected-handle-height: var(--switch-handle-size);
+  --m3e-switch-with-icon-handle-width: var(--switch-handle-size);
+  --m3e-switch-with-icon-handle-height: var(--switch-handle-size);
+  --m3e-switch-pressed-handle-width: var(--switch-handle-size);
+  --m3e-switch-pressed-handle-height: var(--switch-handle-size);
+  --m3e-switch-unselected-icon-size: var(--m3e-switch-selected-icon-size);
+  --switch-handle-travel: calc(
+    var(--m3e-switch-track-width) - var(--switch-handle-size) -
+      calc(var(--switch-handle-start) * 2)
+  );
 }
 
-/* Justification: Adjust peeking icon resting anchor when handle expands to full size in off state. */
-.switch_root[data-handle-icon-off='true'] {
-  --switch-peek-start-off: var(--switch-peek-start-off-full);
+/* Justification: Directional peek translation token factorised for hover animation. */
+.switch_root[data-checked='false'] {
+  --switch-peek-translate: var(--switch-peek-offset);
 }
 
-/* Justification: Explicitly scoped override class permitting CSS variable inheritance into native <m3e-switch>. */
+.switch_root[data-checked='true'] {
+  --switch-peek-translate: calc(-1 * var(--switch-peek-offset));
+}
+
+/* Justification: Scoped override class configuring CSS variables and locking handle state colors into native <m3e-switch>. */
 .override-switch m3e-switch {
   display: inline-block;
   outline: none;
   cursor: pointer;
   z-index: 4;
+  --m3e-switch-track-outline-width: 2px;
+  --m3e-switch-selected-handle-width: var(--switch-handle-size);
+  --m3e-switch-selected-handle-height: var(--switch-handle-size);
+  --m3e-switch-unselected-handle-width: var(--switch-handle-size);
+  --m3e-switch-unselected-handle-height: var(--switch-handle-size);
+  --m3e-switch-with-icon-handle-width: var(--switch-handle-size);
+  --m3e-switch-with-icon-handle-height: var(--switch-handle-size);
+  --m3e-switch-pressed-handle-width: var(--switch-handle-size);
+  --m3e-switch-pressed-handle-height: var(--switch-handle-size);
   --m3e-switch-selected-track-color: transparent;
   --m3e-switch-unselected-track-color: transparent;
   --m3e-switch-selected-hover-track-color: transparent;
@@ -39,130 +83,54 @@
   --m3e-switch-selected-pressed-track-color: transparent;
   --m3e-switch-unselected-pressed-track-color: transparent;
   --m3e-switch-track-outline-color: transparent;
-  --m3e-switch-selected-handle-color: var(
-    --switch-handle-color-on,
-    var(--colors-on-primary)
-  );
-  --m3e-switch-unselected-handle-color: var(
-    --switch-handle-color-off,
-    var(--colors-outline)
-  );
-  --m3e-switch-selected-hover-handle-color: var(
-    --switch-handle-color-on,
-    var(--colors-on-primary)
-  );
-  --m3e-switch-unselected-hover-handle-color: var(
-    --switch-handle-color-off,
-    var(--colors-outline)
-  );
-}
-
-/* Justification: Expand unselected handle to full dimension when an icon is present on the handle in off state. */
-.override-switch[data-handle-icon-off='true'] m3e-switch {
-  --m3e-switch-unselected-handle-width: var(
-    --m3e-switch-with-icon-handle-width
-  );
-  --m3e-switch-unselected-handle-height: var(
-    --m3e-switch-with-icon-handle-height
-  );
+  --m3e-switch-selected-handle-color: var(--switch-handle-color-on);
+  --m3e-switch-unselected-handle-color: var(--switch-handle-color-off);
+  --m3e-switch-selected-hover-handle-color: var(--switch-handle-color-on);
+  --m3e-switch-unselected-hover-handle-color: var(--switch-handle-color-off);
+  --m3e-switch-selected-pressed-handle-color: var(--switch-handle-color-on);
+  --m3e-switch-unselected-pressed-handle-color: var(--switch-handle-color-off);
+  --m3e-switch-selected-focus-handle-color: var(--switch-handle-color-on);
+  --m3e-switch-unselected-focus-handle-color: var(--switch-handle-color-off);
+  --m3e-switch-selected-hover-state-layer-opacity: 0;
+  --m3e-switch-unselected-hover-state-layer-opacity: 0;
+  --m3e-switch-selected-focus-state-layer-opacity: 0;
+  --m3e-switch-unselected-focus-state-layer-opacity: 0;
+  --m3e-switch-selected-pressed-state-layer-opacity: 0;
+  --m3e-switch-unselected-pressed-state-layer-opacity: 0;
 }
 
 /* Justification: Small dimension preset mapping to the compact MD3 density profile using existing tokens. */
 .switch_root[data-size='small'] {
   --m3e-switch-track-width: var(--spacing-11);
   --m3e-switch-track-height: calc(var(--spacing-6) + var(--spacing-0\.5));
-  --m3e-switch-selected-handle-width: var(--spacing-5);
-  --m3e-switch-selected-handle-height: var(--spacing-5);
-  --m3e-switch-unselected-handle-width: var(--spacing-4);
-  --m3e-switch-unselected-handle-height: var(--spacing-4);
-  --m3e-switch-with-icon-handle-width: var(--spacing-5);
-  --m3e-switch-with-icon-handle-height: var(--spacing-5);
-  --m3e-switch-selected-icon-size: var(--spacing-3\.5);
-  --m3e-switch-unselected-icon-size: var(--spacing-3\.5);
   --switch-handle-size: var(--spacing-5);
+  --m3e-switch-selected-icon-size: var(--spacing-3\.5);
   --switch-peek-offset: var(--spacing-1\.5);
-  --switch-peek-start-off-full: calc(
-    (var(--m3e-switch-track-height) + var(--m3e-switch-selected-handle-width)) /
-      2 - var(--m3e-switch-selected-icon-size)
-  );
-  --switch-peek-start-off-compact: calc(
-    (
-        var(--m3e-switch-track-height) +
-          var(--m3e-switch-unselected-handle-width)
-      ) /
-      2 - var(--m3e-switch-selected-icon-size)
-  );
-  --switch-ghost-inset: var(--spacing-0\.5);
   --switch-ghost-font-size: var(--font-sizes-2xs);
-  --switch-handle-travel: calc(
-    var(--spacing-11) - var(--spacing-5) - var(--spacing-2)
-  );
+  --switch-handle-font-size: var(--font-sizes-xs);
 }
 
 /* Justification: Canonical medium dimension preset fulfilling standard Material Design 3 metrics using existing tokens. */
 .switch_root[data-size='medium'] {
   --m3e-switch-track-width: calc(var(--spacing-12) + var(--spacing-1));
   --m3e-switch-track-height: var(--spacing-8);
-  --m3e-switch-selected-handle-width: var(--spacing-6);
-  --m3e-switch-selected-handle-height: var(--spacing-6);
-  --m3e-switch-unselected-handle-width: var(--spacing-4);
-  --m3e-switch-unselected-handle-height: var(--spacing-4);
-  --m3e-switch-with-icon-handle-width: var(--spacing-6);
-  --m3e-switch-with-icon-handle-height: var(--spacing-6);
-  --m3e-switch-selected-icon-size: var(--spacing-4);
-  --m3e-switch-unselected-icon-size: var(--spacing-4);
   --switch-handle-size: var(--spacing-6);
+  --m3e-switch-selected-icon-size: var(--spacing-4);
   --switch-peek-offset: var(--spacing-2);
-  --switch-peek-start-off-full: calc(
-    (var(--m3e-switch-track-height) + var(--m3e-switch-selected-handle-width)) /
-      2 - var(--m3e-switch-selected-icon-size)
-  );
-  --switch-peek-start-off-compact: calc(
-    (
-        var(--m3e-switch-track-height) +
-          var(--m3e-switch-unselected-handle-width)
-      ) /
-      2 - var(--m3e-switch-selected-icon-size)
-  );
-  --switch-ghost-inset: var(--spacing-0\.5);
   --switch-ghost-font-size: var(--font-sizes-xs);
-  --switch-handle-travel: calc(
-    var(--spacing-12) + var(--spacing-1) - var(--spacing-6) - var(--spacing-2)
-  );
+  --switch-handle-font-size: var(--font-sizes-sm);
 }
 
 /* Justification: Expanded large dimension preset providing enhanced touch-target reach using existing tokens. */
 .switch_root[data-size='large'] {
   --m3e-switch-track-width: var(--spacing-16);
   --m3e-switch-track-height: calc(var(--spacing-8) + var(--spacing-1\.5));
-  --m3e-switch-selected-handle-width: var(--spacing-7);
-  --m3e-switch-selected-handle-height: var(--spacing-7);
-  --m3e-switch-unselected-handle-width: var(--spacing-5);
-  --m3e-switch-unselected-handle-height: var(--spacing-5);
-  --m3e-switch-with-icon-handle-width: var(--spacing-7);
-  --m3e-switch-with-icon-handle-height: var(--spacing-7);
-  --m3e-switch-selected-icon-size: calc(var(--spacing-4) + var(--spacing-0\.5));
-  --m3e-switch-unselected-icon-size: calc(
-    var(--spacing-4) + var(--spacing-0\.5)
-  );
   --switch-handle-size: var(--spacing-7);
+  --m3e-switch-selected-icon-size: calc(var(--spacing-4) + var(--spacing-0\.5));
   --switch-peek-offset: calc(var(--spacing-2) + var(--spacing-1));
-  --switch-peek-start-off-full: calc(
-    (var(--m3e-switch-track-height) + var(--m3e-switch-selected-handle-width)) /
-      2 - var(--m3e-switch-selected-icon-size)
-  );
-  --switch-peek-start-off-compact: calc(
-    (
-        var(--m3e-switch-track-height) +
-          var(--m3e-switch-unselected-handle-width)
-      ) /
-      2 - var(--m3e-switch-selected-icon-size)
-  );
   --switch-ghost-inset: var(--spacing-1);
   --switch-ghost-font-size: var(--font-sizes-sm);
-  --switch-handle-travel: calc(
-    var(--spacing-16) - var(--spacing-7) - var(--spacing-2)
-  );
+  --switch-handle-font-size: var(--font-sizes-md);
 }
 
 /* Justification: Layer 0 Base track frame establishing geometry and background fill for custom layers. */
@@ -211,22 +179,16 @@
 
 /* Justification: Unchecked ghost icon placement on the opposite side of the slider (end side). */
 .switch_root[data-checked='false'] .switch_ghost_slot {
-  inset-inline-end: var(--switch-ghost-inset, var(--spacing-1));
+  inset-inline-end: var(--switch-ghost-inset);
   inset-inline-start: auto;
-  color: var(
-    --switch-ghost-color-off,
-    var(--switch-handle-color-off, var(--colors-outline))
-  );
+  color: var(--switch-ghost-color-off);
 }
 
 /* Justification: Checked ghost icon placement on the opposite side of the slider (start side). */
 .switch_root[data-checked='true'] .switch_ghost_slot {
-  inset-inline-start: var(--switch-ghost-inset, var(--spacing-1));
+  inset-inline-start: var(--switch-ghost-inset);
   inset-inline-end: auto;
-  color: var(
-    --switch-ghost-color-on,
-    var(--switch-handle-color-on, var(--colors-on-primary))
-  );
+  color: var(--switch-ghost-color-on);
 }
 
 /* Justification: Prominent hover illumination for the ghost icon on opposite slider side. */
@@ -272,43 +234,28 @@
     opacity var(--durations-short4) var(--easings-standard);
 }
 
-/* Justification: Peeking icon visibility on hover rendered above native hover background. */
+/* Justification: Factorised hover rule sliding peeking icon in direction of handle travel. */
 .switch_root:hover .switch_peeking_slot {
   opacity: 1;
+  translate: var(--switch-peek-translate) 0px;
 }
 
 /* Justification: Peeking icon placement and transforms when switch is unchecked (under left handle). */
 .switch_root[data-checked='false'] .switch_peeking_slot {
-  inset-inline-start: var(--switch-peek-start-off, var(--spacing-1));
+  inset-inline-start: var(--switch-peek-start-off);
   inset-inline-end: auto;
   rotate: var(--switch-peeking-rot-off);
   scale: var(--switch-peeking-scale-x-off) 1;
-  color: var(
-    --switch-peeking-color-off,
-    var(--switch-handle-color-off, var(--colors-outline))
-  );
+  color: var(--switch-peeking-color-off);
 }
 
 /* Justification: Peeking icon placement and transforms when switch is checked (under right handle). */
 .switch_root[data-checked='true'] .switch_peeking_slot {
   inset-inline-start: auto;
-  inset-inline-end: var(--switch-peek-start-off-full);
+  inset-inline-end: var(--switch-peek-start-off);
   rotate: var(--switch-peeking-rot-on);
   scale: var(--switch-peeking-scale-x-on) 1;
-  color: var(
-    --switch-peeking-color-on,
-    var(--switch-handle-color-on, var(--colors-on-primary))
-  );
-}
-
-/* Justification: Peeking icon animation sliding outwards from under the handle on hover (unchecked). */
-.switch_root[data-checked='false']:hover .switch_peeking_slot {
-  translate: var(--switch-peek-offset) 0px;
-}
-
-/* Justification: Peeking icon animation sliding outwards from under the handle on hover (checked). */
-.switch_root[data-checked='true']:hover .switch_peeking_slot {
-  translate: calc(-1 * var(--switch-peek-offset)) 0px;
+  color: var(--switch-peeking-color-on);
 }
 
 /* Justification: Layer 5 Handle slot overlay tracking handle motion and presenting transition or resting content. */
@@ -323,18 +270,24 @@
   pointer-events: none;
   inline-size: var(--switch-handle-size);
   block-size: var(--switch-handle-size);
-  inset-inline-start: var(--spacing-1);
+  inset-inline-start: var(--switch-handle-start);
   translate: 0px 0px;
   transition: translate var(--durations-medium2) var(--easings-emphasized);
 }
 
+/* Justification: SVG icons inside the handle slot must be block display and non-shrinking for strict optical centering. */
+.switch_handle_slot svg {
+  display: block;
+  flex-shrink: 0;
+}
+
 /* Justification: Unchecked handle slot content color mapping to track contrast. */
 .switch_root[data-checked='false'] .switch_handle_slot {
-  color: var(--switch-track-color-off, var(--colors-surface-container-highest));
+  color: var(--switch-track-color-off);
 }
 
 /* Justification: Checked handle slot content color mapping and travel translation. */
 .switch_root[data-checked='true'] .switch_handle_slot {
   translate: var(--switch-handle-travel) 0px;
-  color: var(--switch-track-color-on, var(--colors-primary));
+  color: var(--switch-track-color-on);
 }

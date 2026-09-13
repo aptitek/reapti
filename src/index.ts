@@ -50,6 +50,31 @@ export { Switch } from './components/atoms/Switch/Switch.tsx';
 export type { SwitchProps } from './components/atoms/Switch/Switch.types.ts';
 
 // Molecules
+export {
+  FancySwitch,
+  ZenithSwitch,
+  ThemeSwitch,
+  MeridianSwitch,
+  LanguageSwitch,
+  ClockFormatSwitch,
+  AttendanceSwitch,
+  BadgeAccessSwitch,
+} from './components/molecules/FancySwitch/FancySwitch.tsx';
+export type {
+  FancySwitchProps,
+  ZenithSwitchProps,
+  ThemeSwitchProps,
+  MeridianSwitchProps,
+  LanguageSwitchProps,
+  ClockFormatSwitchProps,
+  AttendanceSwitchProps,
+  BadgeAccessSwitchProps,
+  ClockFormat,
+  AttendanceMode,
+  AccessStatus,
+  FancySwitchRenderState,
+} from './components/molecules/FancySwitch/FancySwitch.types.ts';
+
 export { EmailField } from './components/molecules/EmailField/EmailField.tsx';
 export type {
   EmailFieldProps,

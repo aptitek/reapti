@@ -47,7 +47,11 @@ export default defineConfig({
   },
   server: {
     fs: {
-      allow: [dirname, path.resolve(dirname, 'node_modules')],
+      allow: [
+        dirname,
+        path.resolve(dirname, 'node_modules'),
+        path.resolve(dirname, '../..'),
+      ],
     },
   },
   build: {

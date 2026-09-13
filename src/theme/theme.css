@@ -20,6 +20,7 @@
   /* Typography */
   --font-title: 'Milkshake', cursive, sans-serif;
   --font-body: 'Recursive', system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --font-variation-body: 'CASL' 1, 'CRSV' 0.5;
   --font-size-base: 16px;
   --font-size-min: 12px;
@@ -231,6 +232,63 @@
   --colors-inverse-primary: var(--theme-inverse-primary);
   --fonts-logo: var(--font-title);
   --fonts-brand: var(--font-body);
+  --fonts-mono: var(--font-mono);
+
+  /* Fancy Switch Colors */
+  --fancy-switch-uk-blue: #012169;
+  --fancy-switch-uk-white: #ffffff;
+  --fancy-switch-uk-red: #c8102e;
+  --fancy-switch-fr-blue: #002654;
+  --fancy-switch-fr-white: #ffffff;
+  --fancy-switch-fr-red: #ed2939;
+  --fancy-switch-sun-main: #ff8f00;
+  --fancy-switch-sun-light: #ffd54f;
+  --fancy-switch-sun-glow: rgba(255, 160, 0, 0.6);
+  --fancy-switch-moon-main: #90caf9;
+  --fancy-switch-moon-glow: rgba(144, 202, 249, 0.6);
+  --fancy-switch-pin-green: #2e7d32;
+  --fancy-switch-laptop-blue: #0288d1;
+  --fancy-switch-access-locked: #212121;
+  --fancy-switch-access-unlocked: #10b981;
+  --fancy-switch-access-badge: #fbbf24;
+
+  /* Fancy Switch Suite High-Fidelity Solarized Tokens */
+  --fancy-switch-track-bg: #0d5162;
+  --fancy-switch-track-border: rgba(42, 161, 152, 0.5);
+  --fancy-switch-panel-bg: #073642;
+  --fancy-switch-panel-border: rgba(88, 110, 117, 0.35);
+  --fancy-switch-panel-text: #93a1a1;
+  --fancy-switch-panel-text-secondary: #657b83;
+  --fancy-switch-panel-divider: rgba(88, 110, 117, 0.25);
+  --fancy-switch-arc-stroke: rgba(106, 212, 232, 0.8);
+  --fancy-switch-thumb-text: #ffffff;
+  --fancy-switch-sun-thumb: #f59e0b;
+  --fancy-switch-sun-shadow:
+    0 0 14px rgba(245, 158, 11, 0.85), 0 2px 5px rgba(0, 0, 0, 0.3);
+  --fancy-switch-moon-thumb: #268bd2;
+  --fancy-switch-moon-shadow:
+    0 0 12px rgba(38, 139, 210, 0.8), 0 2px 5px rgba(0, 0, 0, 0.3);
+  --fancy-switch-clock-thumb: #0284c7;
+  --fancy-switch-clock-shadow:
+    0 0 10px rgba(2, 132, 199, 0.6), 0 2px 4px rgba(0, 0, 0, 0.3);
+  --fancy-switch-pin-thumb: #22c55e;
+  --fancy-switch-pin-shadow:
+    0 0 12px rgba(34, 197, 94, 0.8), 0 2px 5px rgba(0, 0, 0, 0.3);
+  --fancy-switch-lock-thumb: #334155;
+  --fancy-switch-lock-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  --fancy-switch-unlock-thumb: #10b981;
+  --fancy-switch-unlock-shadow:
+    0 0 12px rgba(16, 185, 129, 0.8), 0 2px 5px rgba(0, 0, 0, 0.3);
+  --fancy-switch-clock-slot-bg: rgba(0, 33, 41, 0.8);
+  --fancy-switch-clock-slot-border: rgba(42, 161, 152, 0.6);
+  --fancy-switch-clock-slot-color: #2aa198;
+  --fancy-switch-country-fill: rgba(42, 161, 152, 0.35);
+  --fancy-switch-country-stroke: rgba(106, 212, 232, 0.75);
+  --fancy-switch-holo-cyan: #38bdf8;
+  --fancy-switch-holo-glow: rgba(2, 132, 199, 0.6);
+  --fancy-switch-door-closed: rgba(106, 212, 232, 0.8);
+  --fancy-switch-shadow-inset: inset 0 1px 3px rgba(0, 0, 0, 0.35);
+  --fancy-switch-flag-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 }
 
 :root[data-theme='light'] {
