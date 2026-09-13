@@ -31,8 +31,9 @@
     "format:check": "prettier --check --cache .",
     "codegen:panda": "wireit",
     "codegen:map-styles": "wireit",
+    "codegen:pdf": "wireit",
     "clean": "wireit",
-    "prepare": "panda codegen && node scripts/generate-map-styles.mjs && node scripts/generate-map-poster.mjs && husky"
+    "prepare": "panda codegen && node scripts/generate-map-styles.mjs && node scripts/generate-map-poster.mjs && node scripts/generate-pdf.mjs && husky"
   },
   "wireit": {
     "codegen:panda": {
@@ -60,6 +61,18 @@
         "public/themes/**"
       ]
     },
+    "codegen:pdf": {
+      "command": "node scripts/generate-pdf.mjs",
+      "files": [
+        "scripts/generate-pdf.mjs",
+        "src/components/organisms/PrintPage/**/*",
+        "src/content/**/*.mdx",
+        "src/App.tsx"
+      ],
+      "output": [
+        "public/documents/*.pdf"
+      ]
+    },
     "build": {
       "dependencies": [
         "build:lib",
@@ -70,7 +83,8 @@
       "command": "vite build",
       "dependencies": [
         "codegen:panda",
-        "codegen:map-styles"
+        "codegen:map-styles",
+        "codegen:pdf"
       ],
       "files": [
         "src/**/*",

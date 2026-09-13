@@ -1,0 +1,41 @@
+# Reapti Architecture Dossier
+
+## Architectural Manifesto & System Overview
+
+This document outlines the design foundations and specifications for the Reapti scientific design system. Powered by Material Design 3 Expressive and compile-time Panda CSS, each component enforces high performance, mathematical harmony, and strict accessibility.
+
+### Key Tenets
+
+- High-agency interface engineering with predictable tokens.
+- Zero layout thrashing through composable atomic primitives.
+- Deterministic typography scales and calibrated contrast ratios.
+- Full offline-first static asset generation.
+
+---
+
+# Design Tokens & Page Layout
+
+## Standard ISO 216 Dimensions
+
+The A4 page layout strictly honors standard ISO 216 proportions of 210 millimeters by 297 millimeters, yielding an exact aspect ratio of 1 to the square root of 2.
+
+### Visual Ergonomics
+
+- Elevated M3e cards provide spatial depth and focus.
+- Adaptive typography ensures legibility across digital viewports and high-DPI physical printouts.
+- Responsive scaling accommodates vertical continuous reading, horizontal carousels, and 3D page flip interactions.
+
+---
+
+# Automated Static Pipeline
+
+## Playwright Headless PDF Generation
+
+To guarantee fidelity across environments, PDF documents are generated during the build pipeline using headless Chromium driven by Playwright.
+
+### Pipeline Highlights
+
+- Zero runtime server dependencies for document downloads.
+- Automatic removal of interactive controls and floating action buttons during print rendering.
+- Bit-identical rendering between web previews and printed documents.
+- Direct static file serving through optimized content distribution.

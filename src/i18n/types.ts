@@ -11,7 +11,15 @@ export type A11yKey =
   | 'mapWebGLDisabledTitle'
   | 'mapWebGLDisabledMessage'
   | 'mapFallbackLocationsTitle'
-  | 'mapLoadingAriaLabel';
+  | 'mapLoadingAriaLabel'
+  | 'printPageMain'
+  | 'downloadPdfAriaLabel'
+  | 'viewModeVertical'
+  | 'viewModeHorizontal'
+  | 'viewModeFlip'
+  | 'nextPage'
+  | 'previousPage'
+  | 'pageIndicator';
 
 export type MdxComponent = ComponentType<{
   components?: Record<string, unknown>;

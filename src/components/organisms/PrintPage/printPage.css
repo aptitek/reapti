@@ -1,0 +1,471 @@
+/**
+ * PrintPage Component Styles
+ * Enforces logical properties, MD3 tokens, A4 aspect ratio, and print fidelity.
+ */
+
+.printpage_root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  inline-size: 100%;
+  min-block-size: 100vb;
+  box-sizing: border-box;
+  position: relative;
+  background-color: var(--colors-surface);
+  color: var(--colors-on-surface);
+}
+
+/* Base A4 proportions (210mm x 297mm ≈ 1 : 1.4142) */
+.printpage_card_wrapper {
+  inline-size: min(100%, 210mm);
+  aspect-ratio: 210 / 297;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin-inline: auto;
+}
+
+.printpage_card {
+  inline-size: 100%;
+  block-size: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  border-radius: var(--radii-medium);
+}
+
+.printpage_card_content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding-inline: var(--spacing-6);
+  padding-block: var(--spacing-6);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Vertical Continuous Scroll View */
+.printpage_viewport_vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  inline-size: 100%;
+  gap: var(--spacing-8);
+  padding-block: var(--spacing-6);
+}
+
+/* Horizontal Scroll-Snap View */
+.printpage_viewport_horizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  inline-size: 100%;
+  overflow: auto hidden;
+  scroll-snap-type: x mandatory;
+  gap: var(--spacing-8);
+  padding-block: var(--spacing-6);
+  padding-inline: var(--spacing-8);
+  box-sizing: border-box;
+}
+
+.printpage_horizontal_item {
+  scroll-snap-align: center;
+  flex-shrink: 0;
+}
+
+/* 3D Page Flip Viewport */
+.printpage_viewport_flip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  inline-size: 100%;
+  padding-block: var(--spacing-6);
+  box-sizing: border-box;
+}
+
+.printpage_flip_stage {
+  position: relative;
+  inline-size: min(100%, 210mm);
+  aspect-ratio: 210 / 297;
+  perspective: 2500px;
+  perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
+  display: flex;
+  justify-content: center;
+}
+
+/* Spine crease on the binding edge */
+.printpage_spine_crease {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  inline-size: var(--spacing-6);
+  pointer-events: none;
+  z-index: 5;
+  border-start-start-radius: var(--radii-medium);
+  border-end-start-radius: var(--radii-medium);
+  background: linear-gradient(90deg, var(--colors-scrim) 0%, transparent 100%);
+  opacity: 0.15;
+}
+
+/* Stacked paper edge thickness simulation on the fore-edge */
+.printpage_book_edge_stack {
+  position: absolute;
+  inset-block: var(--spacing-1);
+  inset-inline-end: calc(-1 * var(--spacing-2));
+  inline-size: var(--spacing-2);
+  border-start-end-radius: var(--radii-extra-small);
+  border-end-end-radius: var(--radii-extra-small);
+  background: repeating-linear-gradient(
+    90deg,
+    var(--colors-surface-container-highest) 0px,
+    var(--colors-outline-variant) 1px,
+    var(--colors-surface-container-high) 2px
+  );
+  border-inline-end: 1px solid var(--colors-outline-variant);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Floating side navigation chevrons */
+.printpage_side_nav {
+  position: absolute;
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+  z-index: 30;
+  background-color: var(--colors-surface-container-high);
+  border-radius: var(--radii-full);
+  box-shadow: var(--shadows-elevation2);
+  transition:
+    transform var(--motion-duration-short2) var(--motion-easing-standard),
+    background-color var(--motion-duration-short2) var(--motion-easing-standard),
+    box-shadow var(--motion-duration-short2) var(--motion-easing-standard);
+  opacity: 0.85;
+}
+
+.printpage_side_nav:hover:not([aria-disabled='true']) {
+  opacity: 1;
+  box-shadow: var(--shadows-elevation3);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.printpage_side_nav[data-disabled='true'] {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.printpage_side_nav_prev {
+  inset-inline-start: calc(-1 * var(--spacing-8));
+}
+
+.printpage_side_nav_next {
+  inset-inline-end: calc(-1 * var(--spacing-8));
+}
+
+@media (max-width: 768px) {
+  .printpage_side_nav_prev {
+    inset-inline-start: var(--spacing-1);
+  }
+
+  .printpage_side_nav_next {
+    inset-inline-end: var(--spacing-1);
+  }
+}
+
+/* Base sheet always sits flat on the reading surface */
+.printpage_flip_base_sheet {
+  inline-size: 100%;
+  block-size: 100%;
+  position: relative;
+  border-radius: var(--radii-medium);
+}
+
+/* Soft ambient shadow cast on base sheet while turning leaf is in flight */
+.printpage_cast_shadow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: var(--radii-medium);
+  background: linear-gradient(
+    90deg,
+    var(--colors-shadow) 0%,
+    var(--colors-scrim) 30%,
+    transparent 70%
+  );
+  animation: printpage_cast_pulse 650ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes printpage_cast_pulse {
+  0% {
+    opacity: 0;
+  }
+  35% {
+    opacity: 0.65;
+  }
+  70% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Turning leaf that rotates and curls with physical paper deformation */
+.printpage_flip_leaf {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  pointer-events: none;
+  transform-style: preserve-3d;
+  transform-origin: left center;
+  will-change: transform, opacity;
+  z-index: 20;
+}
+
+.printpage_flip_leaf_inner {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  transform-style: preserve-3d;
+}
+
+/* Avoid compounding card elevation inside the turning leaf */
+.printpage_flip_leaf .printpage_card {
+  box-shadow: none;
+}
+
+/* Double-sided leaf faces */
+.printpage_leaf_front {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  backface-visibility: hidden;
+  transform: rotateY(0deg);
+}
+
+.printpage_leaf_back {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+  border-radius: var(--radii-medium);
+  overflow: hidden;
+}
+
+.printpage_leaf_back_sheet {
+  inline-size: 100%;
+  block-size: 100%;
+  background-color: var(--colors-surface-container-lowest);
+  border: 1px solid var(--colors-outline-variant);
+  border-radius: var(--radii-medium);
+  box-sizing: border-box;
+  box-shadow: none;
+}
+
+.printpage_leaf_back_shadow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: var(--radii-medium);
+  background: linear-gradient(
+    270deg,
+    var(--colors-scrim) 0%,
+    transparent 40%,
+    var(--colors-shadow) 100%
+  );
+  opacity: 0.25;
+}
+
+/* Forward Page Turn with Natural Cylindrical Curvature */
+.printpage_flip_next {
+  animation: printpage_flip_next_anim 650ms cubic-bezier(0.25, 1, 0.5, 1)
+    forwards;
+}
+
+@keyframes printpage_flip_next_anim {
+  0% {
+    transform: rotateY(0deg) rotateZ(0deg) skewY(0deg) translateZ(0px);
+    box-shadow: none;
+  }
+  25% {
+    transform: rotateY(-40deg) rotateZ(-3deg) skewY(-3.5deg) translateZ(90px)
+      scale(0.97);
+    box-shadow: var(--shadows-elevation2);
+  }
+  50% {
+    transform: rotateY(-90deg) rotateZ(-4.5deg) skewY(-5deg) translateZ(140px)
+      scale(0.94);
+    box-shadow: var(--shadows-elevation3);
+  }
+  75% {
+    transform: rotateY(-145deg) rotateZ(-2deg) skewY(-2.5deg) translateZ(70px)
+      scale(0.97);
+    box-shadow: var(--shadows-elevation2);
+  }
+  100% {
+    transform: rotateY(-180deg) rotateZ(0deg) skewY(0deg) translateZ(0px)
+      scale(1);
+    box-shadow: none;
+    opacity: 0;
+  }
+}
+
+/* Backward Page Turn with Natural Cylindrical Curvature */
+.printpage_flip_prev {
+  animation: printpage_flip_prev_anim 650ms cubic-bezier(0.25, 1, 0.5, 1)
+    forwards;
+}
+
+@keyframes printpage_flip_prev_anim {
+  0% {
+    transform: rotateY(-180deg) rotateZ(0deg) skewY(0deg) translateZ(0px);
+    box-shadow: none;
+    opacity: 0;
+  }
+  25% {
+    transform: rotateY(-145deg) rotateZ(2deg) skewY(2.5deg) translateZ(70px)
+      scale(0.97);
+    box-shadow: var(--shadows-elevation2);
+    opacity: 1;
+  }
+  50% {
+    transform: rotateY(-90deg) rotateZ(4.5deg) skewY(5deg) translateZ(140px)
+      scale(0.94);
+    box-shadow: var(--shadows-elevation3);
+    opacity: 1;
+  }
+  75% {
+    transform: rotateY(-40deg) rotateZ(3deg) skewY(3.5deg) translateZ(90px)
+      scale(0.97);
+    box-shadow: var(--shadows-elevation2);
+    opacity: 1;
+  }
+  100% {
+    transform: rotateY(0deg) rotateZ(0deg) skewY(0deg) translateZ(0px) scale(1);
+    box-shadow: none;
+    opacity: 1;
+  }
+}
+
+/* Curvature Lighting & Specular Ridge (Creates the 3D cylindrical paper illusion) */
+.printpage_curl_lighting {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: var(--radii-medium);
+  background: linear-gradient(
+    90deg,
+    var(--colors-shadow) 0%,
+    transparent 20%,
+    var(--colors-surface-tint) 45%,
+    var(--colors-scrim) 75%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: printpage_curl_lighting_anim 650ms cubic-bezier(0.25, 1, 0.5, 1)
+    forwards;
+  mix-blend-mode: multiply;
+}
+
+@keyframes printpage_curl_lighting_anim {
+  0% {
+    opacity: 0;
+    background-position: 100% 0;
+  }
+  30% {
+    opacity: 0.85;
+    background-position: 65% 0;
+  }
+  70% {
+    opacity: 0.9;
+    background-position: 35% 0;
+  }
+  100% {
+    opacity: 0;
+    background-position: 0% 0;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .printpage_flip_next,
+  .printpage_flip_prev,
+  .printpage_curl_lighting,
+  .printpage_cast_shadow {
+    animation: none;
+  }
+}
+
+/* Print Navigation and Controls Toolbar */
+.printpage_controls_bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  inline-size: min(100%, 210mm);
+  padding-block: var(--spacing-3);
+  padding-inline: var(--spacing-4);
+  background-color: var(--colors-surface-container);
+  border-radius: var(--radii-large);
+  margin-block-end: var(--spacing-4);
+  box-sizing: border-box;
+}
+
+/* Floating Action Button Placement */
+.printpage_fab_wrapper {
+  position: fixed;
+  inset-block-end: var(--spacing-8);
+  inset-inline-end: var(--spacing-8);
+  z-index: 50;
+  display: flex;
+}
+
+/* Page Card Header & Footer Numbering */
+.printpage_header_slot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: var(--spacing-6);
+  padding-block-start: var(--spacing-4);
+  padding-block-end: var(--spacing-2);
+  color: var(--colors-on-surface-variant);
+  border-block-end: var(--border-widths-thin) solid
+    var(--colors-outline-variant);
+}
+
+.printpage_footer_slot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: var(--spacing-6);
+  padding-block-start: var(--spacing-2);
+  padding-block-end: var(--spacing-4);
+  color: var(--colors-on-surface-variant);
+  border-block-start: var(--border-widths-thin) solid
+    var(--colors-outline-variant);
+}
+
+/* Native Print & Playwright PDF Mode Enforcement */
+@media print {
+  /* eslint-disable-next-line css/use-baseline */
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  .printpage_noprint {
+    display: none;
+  }
+
+  .printpage_card_wrapper {
+    inline-size: 210mm;
+    block-size: 297mm;
+    break-after: page;
+    box-shadow: none;
+  }
+}
