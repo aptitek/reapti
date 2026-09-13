@@ -142,7 +142,7 @@ describe('seasonBackgroundHelpers - SVG Transforms', () => {
     const summerGrass = renderGrassSvgString(mockGrassSvg, 1.0, false);
     expect(summerGrass).not.toContain('id="springFloorFlowers"');
 
-    expect(STAR_POSITIONS).toHaveLength(19);
+    expect(STAR_POSITIONS).toHaveLength(24);
     expect(STAR_POSITIONS[0]?.id).toBe('star-01');
   });
 });

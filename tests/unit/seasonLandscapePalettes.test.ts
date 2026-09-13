@@ -6,6 +6,7 @@ import {
   GRASS_SEASON_PALETTES,
   HILLS_NIGHT_SEASON_PALETTES,
   HILLS_SEASON_PALETTES,
+  STAR_POSITIONS,
   calculateFlowerScale,
 } from '../../src/components/organisms/SeasonBackground/seasonLandscapePalettes.ts';
 
@@ -64,5 +65,23 @@ describe('calculateFlowerScale - Dimensions & Constraints', () => {
     const extremeTall = calculateFlowerScale(200, 5000);
     expect(extremeTall.scaleY).toBeGreaterThanOrEqual(0.05);
     expect(extremeTall.scaleY).toBeLessThanOrEqual(5);
+  });
+});
+
+describe('STAR_POSITIONS - Constellation & Sparkles', () => {
+  it('exposes a rich starfield with individual twinkle and glint parameters', () => {
+    expect(STAR_POSITIONS.length).toBeGreaterThanOrEqual(20);
+
+    const sparkleStars = STAR_POSITIONS.filter((star) => star.isSparkle);
+    expect(sparkleStars.length).toBeGreaterThanOrEqual(4);
+
+    for (const star of STAR_POSITIONS) {
+      expect(star.id).toBeDefined();
+      expect(star.left).toContain('%');
+      expect(star.top).toContain('%');
+      expect(star.size).toBeGreaterThan(0);
+      expect(star.opacity).toBeGreaterThan(0);
+      expect([0, 1, 2]).toContain(star.phase);
+    }
   });
 });

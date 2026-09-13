@@ -44,30 +44,27 @@
   }
 }
 
-@keyframes solarizedAuroraWave {
-  0% {
-    transform: translateY(0) scaleY(1) rotate(0deg);
-    filter: blur(55px) hue-rotate(0deg);
+@keyframes starTwinklePulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(0.85);
   }
   50% {
-    transform: translateY(-24px) scaleY(1.18) rotate(1.5deg);
-    filter: blur(65px) hue-rotate(25deg);
-  }
-  100% {
-    transform: translateY(0) scaleY(1) rotate(0deg);
-    filter: blur(55px) hue-rotate(0deg);
+    opacity: 1;
+    transform: scale(1.18);
   }
 }
 
-@keyframes solarizedAuroraDrift {
-  0% {
-    transform: translateX(-8%) scaleX(1);
+@keyframes starGlintFlare {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: translate(-50%, -50%) scale(0.6) rotate(0deg);
   }
   50% {
-    transform: translateX(8%) scaleX(1.12);
-  }
-  100% {
-    transform: translateX(-8%) scaleX(1);
+    opacity: 0.95;
+    transform: translate(-50%, -50%) scale(1.2) rotate(45deg);
   }
 }
 
@@ -226,71 +223,92 @@
   position: absolute;
   border-radius: var(--radii-full, 9999px);
   background-color: var(--color-solarized-base2, #eee8d5);
+  box-shadow: 0 0 3px
+    color-mix(in srgb, var(--color-solarized-base2) 40%, transparent);
+  will-change: opacity, transform;
+}
+
+.season_star_phase_0 {
+  animation: starTwinklePulse 2.8s ease-in-out infinite;
+  animation-delay: 0.2s;
+}
+
+.season_star_phase_1 {
+  animation: starTwinklePulse 3.8s ease-in-out infinite;
+  animation-delay: 1.4s;
+}
+
+.season_star_phase_2 {
+  animation: starTwinklePulse 4.6s ease-in-out infinite;
+  animation-delay: 2.6s;
+}
+
+.season_star_sparkle {
+  background-color: var(--color-solarized-base3, #fdf6e3);
+  box-shadow: 0 0 6px
+    color-mix(in srgb, var(--color-solarized-base3) 85%, transparent);
+}
+
+.season_star_glint {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  inline-size: 16px;
+  block-size: 16px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  animation: starGlintFlare 4.2s ease-in-out infinite;
+}
+
+.season_star_phase_1 .season_star_glint {
+  animation-delay: 1.4s;
+  animation-duration: 5.2s;
+}
+
+.season_star_phase_2 .season_star_glint {
+  animation-delay: 2.6s;
+  animation-duration: 6s;
+}
+
+.season_star_glint::before,
+.season_star_glint::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  background-color: var(--color-solarized-base3, #fdf6e3);
+  border-radius: var(--radii-full, 9999px);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 4px var(--color-solarized-cyan, #2aa198);
+}
+
+.season_star_glint::before {
+  inline-size: 14px;
+  block-size: 1.5px;
+}
+
+.season_star_glint::after {
+  inline-size: 1.5px;
+  block-size: 14px;
 }
 
 .season_aurora_wrapper {
   position: absolute;
-  inset-block-start: 0;
-  inset-inline-start: -10%;
-  inline-size: 120%;
-  block-size: 55%;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
   pointer-events: none;
   z-index: 2;
   overflow: hidden;
-  opacity: 0.78;
   mix-blend-mode: screen;
 }
 
-.season_aurora_primary {
+.season_aurora_canvas {
   position: absolute;
-  inset-block-start: 5%;
-  inset-inline-start: 5%;
-  inline-size: 90%;
-  block-size: 220px;
-  border-radius: 50%;
-  background: radial-gradient(
-    ellipse at 50% 50%,
-    var(--color-solarized-cyan, #2aa198) 0%,
-    var(--color-solarized-blue, #268bd2) 45%,
-    transparent 75%
-  );
-  filter: blur(60px);
-  animation: solarizedAuroraWave 14s ease-in-out infinite;
-}
-
-.season_aurora_secondary {
-  position: absolute;
-  inset-block-start: 15%;
-  inset-inline-start: 15%;
-  inline-size: 75%;
-  block-size: 180px;
-  border-radius: 50%;
-  background: radial-gradient(
-    ellipse at 50% 50%,
-    var(--color-solarized-violet, #6c71c4) 0%,
-    var(--color-solarized-magenta, #d33682) 40%,
-    transparent 70%
-  );
-  filter: blur(65px);
-  animation: solarizedAuroraDrift 18s ease-in-out infinite;
-}
-
-.season_aurora_tertiary {
-  position: absolute;
-  inset-block-start: 8%;
-  inset-inline-end: 10%;
-  inline-size: 60%;
-  block-size: 160px;
-  border-radius: 50%;
-  background: radial-gradient(
-    ellipse at 50% 50%,
-    var(--color-solarized-green, #859900) 0%,
-    var(--color-solarized-cyan, #2aa198) 50%,
-    transparent 70%
-  );
-  filter: blur(50px);
-  opacity: 0.65;
-  animation: solarizedAuroraWave 11s ease-in-out infinite reverse;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  display: block;
 }
 
 .season_clouds {

@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { useEffect, useRef, type FC } from 'react';
 import { Box } from 'styled-system/jsx';
 import type { Point2D } from './SeasonBackground.types.ts';
 import {
@@ -8,6 +8,7 @@ import {
   STAR_POSITIONS,
   type FlowerScaleFactors,
 } from './seasonBackgroundHelpers.ts';
+import { attachAuroraLifecycle } from './seasonAuroraRenderer.ts';
 import cloudsSvgRaw from './assets/clouds.svg?raw';
 import crescentMoonSvgRaw from './assets/crescent-moon.svg?raw';
 import godraysSvgRaw from './assets/godrays.svg?raw';
@@ -18,13 +19,25 @@ import treeSvgRaw from './assets/tree.svg?raw';
 export const AtmosphereLayer: FC<{
   showAurora: boolean;
   isDarkMode: boolean;
-}> = ({ showAurora, isDarkMode }) => {
+  canvasRef?: React.RefObject<HTMLCanvasElement | null>;
+}> = ({ showAurora, isDarkMode, canvasRef: canvasRefProp }) => {
+  const internalRef = useRef<HTMLCanvasElement | null>(null);
+  const canvasRef = canvasRefProp ?? internalRef;
+
+  useEffect(() => {
+    if (!isDarkMode || !showAurora || !canvasRef.current) return;
+    return attachAuroraLifecycle(canvasRef.current);
+  }, [isDarkMode, showAurora, canvasRef]);
+
   if (!isDarkMode || !showAurora) return null;
+
   return (
     <Box className="season_aurora_wrapper" aria-hidden="true">
-      <Box className="season_aurora_primary" />
-      <Box className="season_aurora_secondary" />
-      <Box className="season_aurora_tertiary" />
+      <Box
+        as="canvas"
+        ref={canvasRef as never}
+        className="season_aurora_canvas"
+      />
     </Box>
   );
 };
@@ -66,13 +79,15 @@ export const CelestialLayer: FC<{
           {STAR_POSITIONS.map((star) => (
             <Box
               key={star.id}
-              className="season_star_dot"
+              className={`season_star_dot season_star_phase_${star.phase}${star.isSparkle ? ' season_star_sparkle' : ''}`}
               left={star.left}
               top={star.top}
               width={`${star.size}px`}
               height={`${star.size}px`}
               opacity={star.opacity}
-            />
+            >
+              {star.isSparkle && <Box className="season_star_glint" />}
+            </Box>
           ))}
         </Box>
       )}

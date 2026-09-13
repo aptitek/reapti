@@ -166,27 +166,55 @@ export const GRASS_NIGHT_SEASON_PALETTES = [
   },
 ];
 
-export const STAR_POSITIONS = [
-  { id: 'star-01', left: '8%', top: '12%', size: 2.2, opacity: 0.8 },
-  { id: 'star-02', left: '14%', top: '28%', size: 1.6, opacity: 0.6 },
-  { id: 'star-03', left: '22%', top: '8%', size: 2.4, opacity: 0.85 },
-  { id: 'star-04', left: '28%', top: '34%', size: 1.4, opacity: 0.5 },
-  { id: 'star-05', left: '35%', top: '18%', size: 2.0, opacity: 0.7 },
-  { id: 'star-06', left: '42%', top: '6%', size: 2.5, opacity: 0.9 },
-  { id: 'star-07', left: '48%', top: '26%', size: 1.5, opacity: 0.6 },
-  { id: 'star-08', left: '55%', top: '14%', size: 2.2, opacity: 0.8 },
-  { id: 'star-09', left: '62%', top: '38%', size: 1.8, opacity: 0.65 },
-  { id: 'star-10', left: '68%', top: '9%', size: 2.6, opacity: 0.85 },
-  { id: 'star-11', left: '75%', top: '22%', size: 1.6, opacity: 0.7 },
-  { id: 'star-12', left: '82%', top: '7%', size: 2.4, opacity: 0.9 },
-  { id: 'star-13', left: '88%', top: '32%', size: 1.5, opacity: 0.55 },
-  { id: 'star-14', left: '94%', top: '16%', size: 2.0, opacity: 0.75 },
-  { id: 'star-15', left: '11%', top: '45%', size: 1.4, opacity: 0.5 },
-  { id: 'star-16', left: '26%', top: '48%', size: 2.1, opacity: 0.7 },
-  { id: 'star-17', left: '52%', top: '44%', size: 1.7, opacity: 0.6 },
-  { id: 'star-18', left: '72%', top: '46%', size: 2.2, opacity: 0.75 },
-  { id: 'star-19', left: '86%', top: '42%', size: 1.8, opacity: 0.65 },
-];
+export interface StarPosition {
+  id: string;
+  left: string;
+  top: string;
+  size: number;
+  opacity: number;
+  phase: number;
+  isSparkle?: boolean;
+}
+
+const RAW_STARS: [string, string, string, number, number, number, boolean?][] =
+  [
+    ['star-01', '8%', '12%', 2.2, 0.8, 0],
+    ['star-02', '14%', '28%', 1.6, 0.6, 1],
+    ['star-03', '22%', '8%', 2.8, 0.95, 2, true],
+    ['star-04', '28%', '34%', 1.4, 0.5, 0],
+    ['star-05', '35%', '18%', 2.0, 0.7, 1],
+    ['star-06', '42%', '6%', 3.0, 1.0, 2, true],
+    ['star-07', '48%', '26%', 1.5, 0.6, 0],
+    ['star-08', '55%', '14%', 2.2, 0.8, 1],
+    ['star-09', '62%', '38%', 1.8, 0.65, 2],
+    ['star-10', '68%', '9%', 3.1, 0.95, 0, true],
+    ['star-11', '75%', '22%', 1.6, 0.7, 1],
+    ['star-12', '82%', '7%', 2.8, 0.9, 2, true],
+    ['star-13', '88%', '32%', 1.5, 0.55, 0],
+    ['star-14', '94%', '16%', 2.0, 0.75, 1],
+    ['star-15', '11%', '45%', 1.4, 0.5, 2],
+    ['star-16', '26%', '48%', 2.1, 0.7, 0],
+    ['star-17', '52%', '44%', 1.7, 0.6, 1],
+    ['star-18', '72%', '46%', 2.2, 0.75, 2],
+    ['star-19', '86%', '42%', 1.8, 0.65, 0],
+    ['star-20', '4%', '36%', 1.5, 0.55, 1],
+    ['star-21', '38%', '41%', 2.7, 0.9, 2, true],
+    ['star-22', '60%', '24%', 1.5, 0.6, 0],
+    ['star-23', '79%', '37%', 1.9, 0.7, 1],
+    ['star-24', '92%', '46%', 2.6, 0.85, 2, true],
+  ];
+
+export const STAR_POSITIONS: StarPosition[] = RAW_STARS.map(
+  ([id, left, top, size, opacity, phase, isSparkle]) => ({
+    id,
+    left,
+    top,
+    size,
+    opacity,
+    phase,
+    ...(isSparkle ? { isSparkle } : {}),
+  })
+);
 
 export interface FlowerScaleFactors {
   scaleX: number;
