@@ -50,6 +50,36 @@ export default defineConfig({
       allow: [dirname, path.resolve(dirname, 'node_modules')],
     },
   },
+  build: {
+    lib: {
+      entry: path.resolve(dirname, 'src/index.ts'),
+      name: 'Reapti',
+      formats: ['es'],
+      fileName: () => 'index.js',
+      cssFileName: 'style',
+    },
+    rollupOptions: {
+      external: [
+        'react',
+        'react-dom',
+        'react/jsx-runtime',
+        'react/jsx-dev-runtime',
+        /^@m3e\//,
+        /^lit/,
+        /^@lit\//,
+        'maplibre-gl',
+        'react-map-gl',
+        'react-map-gl/maplibre',
+        'ogl',
+      ],
+      output: {
+        globals: {
+          react: 'React',
+          'react-dom': 'ReactDOM',
+        },
+      },
+    },
+  },
   test: {
     passWithNoTests: true,
     coverage: {

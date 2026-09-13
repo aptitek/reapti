@@ -1,73 +1,90 @@
-# React + TypeScript + Vite
+# reapti-02
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A high-performance Material Design 3 React component library powered by Panda CSS.
 
-Currently, two official plugins are available:
+## Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Install the package via `pnpm`:
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```bash
+pnpm add reapti-02
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Ensure peer dependencies (`react` and `react-dom` >= 18.0.0 or 19.x) are installed in your project:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```bash
+pnpm add react react-dom
 ```
+
+## Setup & Styles
+
+Import the compiled library stylesheet once at the root of your application (e.g., in `main.tsx` or `App.tsx`):
+
+```tsx
+import 'reapti-02/style.css';
+```
+
+## Component Usage
+
+All components and their corresponding TypeScript types can be imported directly from `reapti-02`:
+
+```tsx
+import {
+  HeroTicker,
+  Accordeon,
+  HoldButton,
+  NumberPicker,
+  SegmentedChip,
+  FlipCard,
+  Map,
+  PrintPage,
+  SeasonBackground,
+  ContentProvider,
+} from 'reapti-02';
+
+export function ExampleView() {
+  return (
+    <ContentProvider>
+      <HeroTicker
+        prefix="Discover"
+        phrases={['Responsive Design', 'Fluid Animation', 'Material 3']}
+        suffix="today."
+      />
+      <HoldButton durationMs={1500} onTrigger={() => console.log('Confirmed!')}>
+        Hold to Confirm
+      </HoldButton>
+      <NumberPicker mode="single" min={0} max={100} />
+    </ContentProvider>
+  );
+}
+```
+
+## Available Components
+
+### Atoms
+
+- `Accordeon`: 3D accordion fold component with configurable folds and angle.
+- `HoldButton`: Action button requiring deliberate hold gesture with progress animation.
+- `HoloDecorator`: Holographic iridescent visual treatment decorator.
+- `MapPin`: Interactive pin marker with radar ping and elevation shadow.
+- `MeshAccordeon`: Soft mesh-deformed 3D accordion folding container.
+- `NumberPicker`: Precision stepper control supporting single values and ranges.
+- `SegmentedChip`: Material 3 segmented chip group with single/multi-selection.
+- `Switch`: Material 3 expressive switch with icons and state morphing.
+
+### Molecules
+
+- `EmailField`: Validating email input field with domain suggestions and lock indicator.
+- `FlipCard`: 3D perspective card with front/back flip animations and lighting sheen.
+- `HeroTicker`: Animated cursive calligraphy headline with quill trajectory flourishes.
+- `Map`: MapLibre GL 3D vector map with interactive pins and theme switching.
+- `VerticalNavBar`: Responsive vertical navigation rail with compact and expanded modes.
+
+### Organisms
+
+- `PrintPage`: Publication layout organism supporting multi-page dossier and 3D page flip.
+- `SeasonBackground`: Dynamic atmospheric landscape with seasonal foliage, weather, and physics.
+
+### Providers
+
+- `ContentProvider`: Multi-language i18n content context provider.

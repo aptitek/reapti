@@ -39,3 +39,6 @@ styled-system-studio
 
 .wireit
 coverage
+public/documents/*.pdf
+*.pdf
+*.tgz

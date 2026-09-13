@@ -5,7 +5,7 @@ export type RangePickerVariant = 'unified' | 'split';
 export type ActiveBoundary = 'from' | 'to';
 export type NumberPickerSize = 'small' | 'medium';
 
-interface SingleNumberPickerProps {
+export interface SingleNumberPickerProps {
   /**
    * Numeric or string value for single mode.
    * @default "all"
@@ -58,7 +58,7 @@ interface SingleNumberPickerProps {
   allowAll?: boolean;
 }
 
-interface RangeNumberPickerProps {
+export interface RangeNumberPickerProps {
   /**
    * Lower boundary value for range mode.
    */
@@ -123,7 +123,7 @@ interface RangeNumberPickerProps {
   onStartYearMaxChange?: (year: number | null) => void;
 }
 
-interface CommonNumberPickerProps {
+export interface CommonNumberPickerProps {
   /**
    * DOM id for input element.
    */

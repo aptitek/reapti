@@ -1,6 +1,11 @@
 {
   "$schema": "https://unpkg.com/knip@5/overview/configuration-schema.json",
-  "entry": ["src/main.tsx", ".storybook/**/*.{ts,tsx}", "tests/**/*.{ts,tsx}"],
+  "entry": [
+    "src/index.ts",
+    "src/main.tsx",
+    ".storybook/**/*.{ts,tsx}",
+    "tests/**/*.{ts,tsx}"
+  ],
   "project": ["src/**/*.{ts,tsx}", "tests/**/*.{ts,tsx}"],
   "ignore": [
     ".agents/**",
