@@ -87,6 +87,13 @@ export type {
   NavBarMode,
 } from './components/molecules/VerticalNavBar/VerticalNavBar.types.ts';
 
+export { VerticalAppBar } from './components/molecules/VerticalAppBar/VerticalAppBar.tsx';
+export { VerticalAppBarElement } from './components/molecules/VerticalAppBar/VerticalAppBarElement.ts';
+export type {
+  VerticalAppBarProps,
+  VerticalAppBarSide,
+} from './components/molecules/VerticalAppBar/VerticalAppBar.types.ts';
+
 // Organisms
 export { PrintPage } from './components/organisms/PrintPage/PrintPage.tsx';
 export { PrintPageControls } from './components/organisms/PrintPage/PrintPageControls.tsx';

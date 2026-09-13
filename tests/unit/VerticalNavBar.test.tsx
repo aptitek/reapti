@@ -162,3 +162,40 @@ describe('VerticalNavBar Compact Selection', () => {
     expect(onSelect).toHaveBeenCalledWith(1, sampleItems[1]);
   });
 });
+
+describe('VerticalNavBar Item Props and Accessibility Branches', () => {
+  it('handles customIcon, badge, default testId, and ariaLabel variants', () => {
+    const customItems: VerticalNavBarItemConfig[] = [
+      {
+        id: 'brand',
+        label: createElement('span', null, 'Brand Label'),
+        ariaLabel: 'Brand Aria',
+        customIcon: createElement(Box, { 'data-testid': 'custom-svg-icon' }),
+        disabled: true,
+        href: '/custom-url',
+        target: '_blank',
+      },
+      {
+        id: 'no-icon',
+        label: createElement('span', null, 'No Icon Node'),
+      },
+      {
+        id: 'number-badge',
+        label: 'Badge Item',
+        icon: 'star',
+        badge: 42,
+      },
+    ];
+
+    const html = renderToStaticMarkup(
+      createElement(VerticalNavBar, {
+        items: customItems,
+      })
+    );
+
+    expect(html).toContain('aria-label="Brand Aria"');
+    expect(html).toContain('data-testid="custom-svg-icon"');
+    expect(html).toContain('data-testid="vertical-nav-bar"');
+    expect(html).toContain('42');
+  });
+});

@@ -1,0 +1,105 @@
+/* Justification: Root wrapper for VerticalAppBar establishing layout geometry, stacking context, and tokens. */
+.vertical-app-bar_root {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  inline-size: auto;
+  block-size: 100vb;
+  min-block-size: 100%;
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 50;
+  overflow: visible;
+  background-color: var(--m3e-app-bar-container-color, var(--colors-surface));
+  color: var(--colors-on-surface);
+  transition:
+    background-color var(--durations-short4) var(--easings-standard),
+    box-shadow var(--durations-short4) var(--easings-standard),
+    border-color var(--durations-short4) var(--easings-standard);
+}
+
+/* Justification: Compact rail mode geometry establishing narrow column footprint. */
+.vertical-app-bar_root.vertical-app-bar_compact,
+.vertical-app-bar_root[data-mode='compact'] {
+  inline-size: var(--vertical-nav-bar-compact-width, 80px);
+}
+
+/* Justification: Expanded rail mode geometry establishing standard drawer column footprint. */
+.vertical-app-bar_root.vertical-app-bar_expanded,
+.vertical-app-bar_root[data-mode='expanded'] {
+  inline-size: var(--vertical-nav-bar-expanded-width, 240px);
+}
+
+/* Justification: Left docking border and layout positioning for LTR interfaces. */
+.vertical-app-bar_left {
+  inset-inline-start: 0;
+  inset-inline-end: auto;
+  border-inline-end: 1px solid var(--colors-outline-variant);
+}
+
+/* Justification: Right docking border and layout positioning for side drawers or RTL interfaces. */
+.vertical-app-bar_right {
+  inset-inline-start: auto;
+  inset-inline-end: 0;
+  border-inline-start: 1px solid var(--colors-outline-variant);
+}
+
+/* Justification: Elevation and surface container tint applied when the bar reacts to scroll. */
+.vertical-app-bar_root.vertical-app-bar_elevated,
+.vertical-app-bar_root.on-scroll,
+.vertical-app-bar_root[data-scrolled='true'] {
+  background-color: var(
+    --m3e-app-bar-container-color-on-scroll,
+    var(--colors-surface-container)
+  );
+  box-shadow: var(
+    --m3e-app-bar-container-elevation-on-scroll,
+    var(--shadows-elevation1)
+  );
+}
+
+/* Justification: Scoped wrapper for the top header slot holding the brand mark. */
+.vertical-app-bar_header_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-block: var(--spacing-4);
+  padding-inline: var(--spacing-2);
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+/* Justification: Flexible middle area with visible overflow allowing flyout chips to extend to the right without scrollbars. */
+.vertical-app-bar_content_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  flex: 1 1 auto;
+  overflow: visible;
+}
+
+@supports (scrollbar-width: none) {
+  .vertical-app-bar_content_wrapper {
+    scrollbar-width: none;
+  }
+}
+
+/* Justification: Suppress WebKit scrollbars on vertical app bar content wrapper. */
+.vertical-app-bar_content_wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+/* Justification: Scoped wrapper for the bottom footer section containing actions and switches. */
+.vertical-app-bar_footer_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-block: var(--spacing-4);
+  padding-inline: var(--spacing-2);
+  margin-block-start: auto;
+  flex-shrink: 0;
+  overflow: visible;
+}

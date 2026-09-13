@@ -21,6 +21,17 @@
   --vertical-nav-bar-expanded-width: 240px;
 }
 
+@supports (scrollbar-width: none) {
+  .vertical-nav-bar_root {
+    scrollbar-width: none;
+  }
+}
+
+/* Justification: Suppress WebKit scrollbars on vertical navigation bar root. */
+.vertical-nav-bar_root::-webkit-scrollbar {
+  display: none;
+}
+
 /* Justification: Expanded state geometry expansion. */
 .vertical-nav-bar_root[data-mode='expanded'] {
   inline-size: var(--vertical-nav-bar-expanded-width, 240px);
@@ -84,6 +95,24 @@
   display: flex;
   align-items: center;
   inline-size: 100%;
+}
+
+/* Justification: Elevate active compact nav entry on hover above adjacent destinations. */
+.vertical-nav-bar_root[data-mode='compact'] .vertical-nav-bar_entry:hover,
+.vertical-nav-bar_root[data-mode='compact']
+  .vertical-nav-bar_entry:focus-within {
+  z-index: 10;
+}
+
+/* Justification: Centering container for custom icon slots (e.g. SVG avatars or brand icons) within nav item indicator. */
+.vertical-nav-bar_root .vertical-nav-bar_custom_icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 24px;
+  block-size: 24px;
+  color: inherit;
+  fill: currentColor;
 }
 
 /* Justification: Default expanded mode horizontal alignment for icon and label side-by-side. */
@@ -283,4 +312,35 @@
   inline-size: 100%;
   --m3e-nav-item-active-container-color: var(--colors-secondary-container);
   --m3e-nav-item-active-icon-color: var(--colors-on-secondary-container);
+}
+
+/* Justification: Native mobile top appbar horizontal layout under 768px. */
+@media (max-width: 768px) {
+  .vertical-nav-bar_root,
+  .vertical-nav-bar_root[data-mode='compact'],
+  .vertical-nav-bar_root[data-mode='expanded'] {
+    flex-direction: row;
+    inline-size: auto;
+    block-size: 100%;
+    min-block-size: 100%;
+    background-color: transparent;
+  }
+  .vertical-nav-bar_root .vertical-nav-bar_items {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-1);
+    padding-block: 0;
+    padding-inline: 0;
+  }
+  .vertical-nav-bar_root .vertical-nav-bar_entry {
+    inline-size: auto;
+  }
+  .vertical-nav-bar_root .vertical-nav-bar_chip {
+    display: none;
+  }
+  .override-vertical-nav-bar[data-mode='compact'] m3e-nav-item,
+  .override-vertical-nav-bar[data-mode='expanded'] m3e-nav-item {
+    inline-size: 48px;
+    block-size: 48px;
+  }
 }

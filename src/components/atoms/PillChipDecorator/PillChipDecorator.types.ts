@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 export type PillChipPlacement = 'end' | 'start';
 
 export interface PillChipProps {
-  label: string;
+  label: ReactNode;
   badge?: string | number;
   testId?: string;
   onClick?: () => void;
@@ -14,7 +14,7 @@ export interface PillChipProps {
 
 export interface PillChipDecoratorProps {
   children: ReactNode;
-  label: string;
+  label: ReactNode;
   badge?: string | number;
   active?: boolean;
   open?: boolean;

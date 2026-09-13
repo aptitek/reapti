@@ -4,6 +4,14 @@
   display: inline-flex;
   align-items: center;
   box-sizing: border-box;
+  overflow: visible;
+}
+
+/* Justification: Elevate hovered pill chip decorator above sibling elements. */
+.pill-chip_decorator:hover,
+.pill-chip_decorator:focus-within,
+.pill-chip_decorator[data-open='true'] {
+  z-index: 20;
 }
 
 /* Justification: Pill chip extending on the side docked seamlessly at the edge of the decorated element. */
@@ -30,7 +38,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-2, 8px);
-  z-index: 1;
+  z-index: 20;
   pointer-events: none;
   cursor: pointer;
   opacity: 0;

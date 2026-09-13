@@ -14,9 +14,8 @@ export class VerticalNavBarElement extends M3eNavBarElement {
     css`
       :host {
         display: block;
-        overflow-x: visible;
-        overflow-y: auto;
-        scrollbar-width: thin;
+        overflow: visible;
+        scrollbar-width: none;
         inline-size: var(
           --vertical-nav-bar-width,
           var(--vertical-nav-bar-expanded-width, 240px)
@@ -27,6 +26,9 @@ export class VerticalNavBarElement extends M3eNavBarElement {
         transition:
           inline-size 300ms cubic-bezier(0.2, 0, 0, 1),
           width 300ms cubic-bezier(0.2, 0, 0, 1);
+      }
+      :host::-webkit-scrollbar {
+        display: none;
       }
       :host(:is(:state(--compact), :--compact)),
       :host([mode='compact']) {
@@ -40,7 +42,8 @@ export class VerticalNavBarElement extends M3eNavBarElement {
         width: var(--vertical-nav-bar-expanded-width, 240px);
       }
       .base {
-        contain: style;
+        contain: none;
+        overflow: visible;
         display: flex;
         flex-direction: column;
         align-items: stretch;
@@ -57,6 +60,28 @@ export class VerticalNavBarElement extends M3eNavBarElement {
           --vertical-nav-bar-container-color,
           var(--m3e-nav-bar-container-color, inherit)
         );
+      }
+      @media (max-width: 768px) {
+        :host,
+        :host(:is(:state(--compact), :--compact)),
+        :host([mode='compact']),
+        :host([mode='expanded']) {
+          inline-size: auto;
+          width: auto;
+          block-size: 100%;
+          height: 100%;
+        }
+        .base {
+          flex-direction: row;
+          align-items: center;
+          inline-size: auto;
+          width: auto;
+          block-size: 100%;
+          height: 100%;
+          padding-block: 0;
+          padding-inline: 0;
+          gap: 4px;
+        }
       }
       ::slotted(m3e-nav-item) {
         flex: none;

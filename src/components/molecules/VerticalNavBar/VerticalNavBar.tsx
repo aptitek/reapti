@@ -40,6 +40,8 @@ const NavItemRow: FC<NavItemRowProps> = ({
   const itemTestId = `${dataTestId}-item-${item.id}`;
   const chipTestId = `${dataTestId}-chip-${item.id}`;
   const orientation = isCompact ? 'vertical' : 'horizontal';
+  const ariaLabel =
+    item.ariaLabel ?? (typeof item.label === 'string' ? item.label : undefined);
 
   return (
     <PillChipDecorator
@@ -60,8 +62,15 @@ const NavItemRow: FC<NavItemRowProps> = ({
         orientation={orientation}
         data-orientation={orientation}
         onClick={onSelect}
+        aria-label={ariaLabel}
       >
-        {icon && <M3eIcon slot="icon" name={icon} />}
+        {item.customIcon ? (
+          <Box slot="icon" className="vertical-nav-bar_custom_icon">
+            {item.customIcon}
+          </Box>
+        ) : (
+          icon && <M3eIcon slot="icon" name={icon} />
+        )}
         {badgeValue !== undefined && (
           <M3eBadge slot="badge">{badgeValue}</M3eBadge>
         )}

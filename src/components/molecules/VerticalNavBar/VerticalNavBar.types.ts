@@ -7,10 +7,14 @@ export type { NavBarMode, VerticalNavBarElement };
 export interface VerticalNavBarItemConfig {
   /** Unique identifier for the navigation item */
   id: string;
-  /** Primary label text */
-  label: string;
+  /** Primary label text or node */
+  label: ReactNode;
   /** Material 3 icon name */
   icon?: string;
+  /** Optional custom icon element */
+  customIcon?: ReactNode;
+  /** Accessible label when label is a visual node */
+  ariaLabel?: string;
   /** Material 3 icon name when selected */
   selectedIcon?: string;
   /** Optional badge text or count */

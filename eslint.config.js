@@ -122,4 +122,12 @@ export default defineConfig([
     },
   },
   ...storybook.configs['flat/recommended'],
+  {
+    files: ['**/*.stories.{ts,tsx}'],
+    rules: {
+      'no-restricted-syntax': 'off',
+      'max-lines': 'off',
+      'max-lines-per-function': 'off',
+    },
+  },
 ]);
