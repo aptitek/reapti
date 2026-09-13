@@ -4,7 +4,14 @@
   flex-direction: column;
   box-sizing: border-box;
   inline-size: 100%;
-  --ticker-accent: var(--colors-primary);
+  --ticker-text-color: var(
+    --theme-on-surface,
+    var(--md-sys-color-on-surface, var(--colors-on-surface))
+  );
+  --ticker-accent: var(
+    --theme-primary,
+    var(--md-sys-color-primary, var(--colors-primary))
+  );
   --ticker-clip-prog: 100%;
   --ticker-fade-opacity: 1;
   --ticker-flourish-offset: 200;
@@ -12,15 +19,24 @@
 
 /* Justification: Dynamic semantic accent mapping without inline style violations. */
 .hero-ticker_root[data-accent='secondary'] {
-  --ticker-accent: var(--colors-secondary);
+  --ticker-accent: var(
+    --theme-secondary,
+    var(--md-sys-color-secondary, var(--colors-secondary))
+  );
 }
 
 .hero-ticker_root[data-accent='tertiary'] {
-  --ticker-accent: var(--colors-tertiary);
+  --ticker-accent: var(
+    --theme-tertiary,
+    var(--md-sys-color-tertiary, var(--colors-tertiary))
+  );
 }
 
 .hero-ticker_root[data-accent='error'] {
-  --ticker-accent: var(--colors-error);
+  --ticker-accent: var(
+    --theme-error,
+    var(--md-sys-color-error, var(--colors-error))
+  );
 }
 
 /* Justification: Flex layout alignment variants for left, center, and right. */
@@ -48,7 +64,7 @@
   flex-wrap: wrap;
   align-items: baseline;
   gap: 0.22em;
-  color: var(--colors-on-surface);
+  color: var(--ticker-text-color);
   -webkit-user-select: none;
   font-weight: 400;
   letter-spacing: -0.015em;
@@ -92,7 +108,7 @@
 
 /* Justification: Prefix slogan typography with Recursive brand casual slanted styling. */
 .hero-ticker_prefix {
-  font-family: var(--fonts-brand);
+  font-family: var(--font-body, var(--fonts-brand));
   font-variation-settings:
     'CASL' 1,
     'MONO' 0,
@@ -102,14 +118,14 @@
   font-style: italic;
   font-weight: 700;
   letter-spacing: -0.015em;
-  color: var(--colors-on-surface);
+  color: var(--ticker-text-color);
   display: inline;
   white-space: pre-wrap;
 }
 
 /* Justification: Suffix slogan typography with Recursive brand casual slanted styling. */
 .hero-ticker_suffix {
-  font-family: var(--fonts-brand);
+  font-family: var(--font-body, var(--fonts-brand));
   font-variation-settings:
     'CASL' 1,
     'MONO' 0,
@@ -119,7 +135,7 @@
   font-style: italic;
   font-weight: 700;
   letter-spacing: -0.015em;
-  color: var(--colors-on-surface);
+  color: var(--ticker-text-color);
   display: inline;
   white-space: pre-wrap;
 }
@@ -151,7 +167,7 @@
 
 /* Justification: Milkshake cursive text element with animated slant clip-path. */
 .hero-ticker_cursive-text {
-  font-family: var(--fonts-logo);
+  font-family: var(--font-title, var(--fonts-logo));
   font-style: normal;
   font-weight: 400;
   font-size: 1.15em;
@@ -291,9 +307,16 @@
   padding-inline: var(--spacing-1-5);
   padding-block: var(--spacing-0-5);
   border-radius: var(--radii-full);
-  background-color: var(--colors-surface-container);
+  background-color: var(
+    --theme-surface-container,
+    var(--md-sys-color-surface-container, var(--colors-surface-container))
+  );
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--colors-outline-variant);
+  border: 1px solid
+    var(
+      --theme-outline-variant,
+      var(--md-sys-color-outline-variant, var(--colors-outline-variant))
+    );
   margin-block-start: var(--spacing-2);
 }
 
@@ -308,7 +331,10 @@
   padding-inline: 0;
   padding-block: 0;
   cursor: pointer;
-  background-color: var(--colors-outline);
+  background-color: var(
+    --theme-outline,
+    var(--md-sys-color-outline, var(--colors-outline))
+  );
   transition-property: inline-size, background-color;
   transition-duration: var(--durations-short3);
   transition-timing-function: var(--easings-standard);
@@ -393,8 +419,14 @@
   .hero-ticker_root:not([data-mode='light'])
   .hero-ticker_controls,
 .dark .hero-ticker_root:not([data-mode='light']) .hero-ticker_controls {
-  background-color: var(--colors-surface-container);
-  border-color: var(--colors-outline-variant);
+  background-color: var(
+    --theme-surface-container,
+    var(--md-sys-color-surface-container, var(--colors-surface-container))
+  );
+  border-color: var(
+    --theme-outline-variant,
+    var(--md-sys-color-outline-variant, var(--colors-outline-variant))
+  );
   box-shadow: 0 4px 16px var(--colors-shadow);
 }
 
@@ -427,8 +459,14 @@
   }
 
   .hero-ticker_root:not([data-mode='light']) .hero-ticker_controls {
-    background-color: var(--colors-surface-container);
-    border-color: var(--colors-outline-variant);
+    background-color: var(
+      --theme-surface-container,
+      var(--md-sys-color-surface-container, var(--colors-surface-container))
+    );
+    border-color: var(
+      --theme-outline-variant,
+      var(--md-sys-color-outline-variant, var(--colors-outline-variant))
+    );
     box-shadow: 0 4px 16px var(--colors-shadow);
   }
 

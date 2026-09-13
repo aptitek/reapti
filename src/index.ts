@@ -126,3 +126,36 @@ export {
   useContentElement,
   useA11yString,
 } from './i18n/context.tsx';
+
+// Theme System
+export { solarizedTheme } from './theme/solarizedTheme.ts';
+export { md3Theme } from './theme/md3Theme.ts';
+export {
+  THEME_REGISTRY,
+  DEFAULT_THEME_NAME,
+  getTheme,
+  registerTheme,
+} from './theme/themeRegistry.ts';
+export { useThemeMode } from './theme/useThemeMode.ts';
+export { ThemeProvider } from './theme/ThemeProvider.tsx';
+export type { ThemeProviderProps } from './theme/ThemeProvider.tsx';
+export {
+  resolveNextThemeMode,
+  syncDocumentTheme,
+  resolveCurrentMode,
+} from './theme/themeProviderHelpers.ts';
+export { ThemeContext } from './theme/ThemeContext.ts';
+export type { ThemeContextValue } from './theme/ThemeContext.ts';
+export { useTheme } from './theme/useTheme.ts';
+export type {
+  ThemeTokens,
+  ColorRamp,
+  ElevationTokens,
+  RadiusTokens,
+  TypographyTokens,
+  MotionTokens,
+  SpacingTokens,
+  ThemeModeTokens,
+  ThemeMode,
+  ResolvedThemeMode,
+} from './theme/types.ts';

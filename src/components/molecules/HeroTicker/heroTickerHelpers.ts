@@ -25,10 +25,13 @@ export const DEFAULT_HERO_TICKER_ERASE_SPEED = 50;
 export const DEFAULT_HERO_TICKER_PAUSE_DURATION = 2600;
 
 export const THEME_ACCENT_VARS: Record<ThemeAccentRole, string> = {
-  primary: 'var(--colors-primary)',
-  secondary: 'var(--colors-secondary)',
-  tertiary: 'var(--colors-tertiary)',
-  error: 'var(--colors-error)',
+  primary:
+    'var(--theme-primary, var(--md-sys-color-primary, var(--colors-primary)))',
+  secondary:
+    'var(--theme-secondary, var(--md-sys-color-secondary, var(--colors-secondary)))',
+  tertiary:
+    'var(--theme-tertiary, var(--md-sys-color-tertiary, var(--colors-tertiary)))',
+  error: 'var(--theme-error, var(--md-sys-color-error, var(--colors-error)))',
 };
 
 export const DEFAULT_HERO_TICKER_LABELS = {

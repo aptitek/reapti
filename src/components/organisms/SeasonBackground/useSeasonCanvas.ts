@@ -38,53 +38,62 @@ interface CanvasAnimationContext {
   canvas: HTMLCanvasElement;
   container: HTMLDivElement;
   ctx: CanvasRenderingContext2D;
-  options: UseSeasonCanvasOptions;
+  optionsRef: RefObject<UseSeasonCanvasOptions>;
   leaves: LeafParticle[];
   streams: WindBreezeStream[];
 }
 
 function startCanvasAnimation(context: CanvasAnimationContext): () => void {
-  const { canvas, container, ctx, options, leaves, streams } = context;
+  const { canvas, container, ctx, optionsRef, leaves, streams } = context;
   let w = (canvas.width = container.clientWidth || 800);
   let h = (canvas.height = container.clientHeight || 600);
   const reducedMotion =
     typeof window !== 'undefined' &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const canopyOpts = { container, skySpace: options.skySpace };
-  let cachedCanopy = getCanopyMetrics(w, h, canopyOpts);
+  let cachedCanopy = getCanopyMetrics(w, h, {
+    container,
+    skySpace: optionsRef.current?.skySpace,
+  });
 
   const observer = new ResizeObserver(([entry]) => {
     if (!entry) return;
     w = canvas.width = entry.contentRect.width;
     h = canvas.height = entry.contentRect.height;
-    cachedCanopy = getCanopyMetrics(w, h, canopyOpts);
+    cachedCanopy = getCanopyMetrics(w, h, {
+      container,
+      skySpace: optionsRef.current?.skySpace,
+    });
   });
   observer.observe(container);
 
   let frame = 0;
   let animId = 0;
   function tick() {
-    if (options.mouseStateRef.current && options.windStateRef.current) {
+    const opts = optionsRef.current;
+    if (opts?.mouseStateRef.current && opts?.windStateRef.current) {
       if (++frame % 60 === 0) {
-        cachedCanopy = getCanopyMetrics(w, h, canopyOpts);
+        cachedCanopy = getCanopyMetrics(w, h, {
+          container,
+          skySpace: opts.skySpace,
+        });
       }
       stepCanvasPhysics({
-        mouseState: options.mouseStateRef.current,
-        windState: options.windStateRef.current,
+        mouseState: opts.mouseStateRef.current,
+        windState: opts.windStateRef.current,
         canopyCenter: cachedCanopy.center,
-        windIntensity: options.windIntensity,
+        windIntensity: opts.windIntensity,
       });
       renderSeasonCanvasFrame({
         ctx,
         viewport: { x: w, y: h },
         leaves,
         streams,
-        mouseState: options.mouseStateRef.current,
-        windState: options.windStateRef.current,
+        mouseState: opts.mouseStateRef.current,
+        windState: opts.windStateRef.current,
         canopyOrigin: cachedCanopy.center,
-        isDarkMode: options.isDarkMode,
+        isDarkMode: opts.isDarkMode,
         reducedMotion,
-        seasonProgress: options.seasonProgress ?? 1.0,
+        seasonProgress: opts.seasonProgress ?? 1.0,
       });
     }
     animId = requestAnimationFrame(tick);
@@ -109,19 +118,14 @@ function initLeafParticles(
 }
 
 export function useSeasonCanvas(options: UseSeasonCanvasOptions): void {
-  const {
-    canvasRef,
-    containerRef,
-    leafCount,
-    windIntensity,
-    isDarkMode,
-    mouseStateRef,
-    windStateRef,
-    seasonProgress,
-    skySpace,
-  } = options;
+  const { canvasRef, containerRef, leafCount, skySpace } = options;
+  const optionsRef = useRef(options);
   const leavesRef = useRef<LeafParticle[]>([]);
   const streamsRef = useRef<WindBreezeStream[]>([]);
+
+  useEffect(() => {
+    optionsRef.current = options;
+  }, [options]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -141,27 +145,16 @@ export function useSeasonCanvas(options: UseSeasonCanvasOptions): void {
     streamsRef.current = createBreezeStreams(
       DEFAULT_STREAM_COUNT,
       { x: w, y: h },
-      windStateRef.current ?? undefined
+      optionsRef.current?.windStateRef.current ?? undefined
     );
 
     return startCanvasAnimation({
       canvas,
       container,
       ctx,
-      options,
+      optionsRef,
       leaves: leavesRef.current,
       streams: streamsRef.current,
     });
-  }, [
-    canvasRef,
-    containerRef,
-    leafCount,
-    windIntensity,
-    isDarkMode,
-    mouseStateRef,
-    windStateRef,
-    seasonProgress,
-    skySpace,
-    options,
-  ]);
+  }, [canvasRef, containerRef, leafCount, skySpace]);
 }

@@ -1,3 +1,4 @@
+@import './theme/theme.css';
 @layer reset, base, tokens, recipes, utilities;
 
 .override-shape-button {

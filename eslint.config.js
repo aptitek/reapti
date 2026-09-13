@@ -83,7 +83,7 @@ export default defineConfig([
     },
   },
   {
-    files: ['src/tokens/**/*.{ts,tsx}'],
+    files: ['src/tokens/**/*.{ts,tsx}', 'src/theme/**/*.{ts,tsx}'],
     rules: {
       'm3-tokens/no-hardcoded-colors': 'off',
     },
@@ -112,6 +112,13 @@ export default defineConfig([
       'css-tokens/no-unperformant-transitions': 'error',
       'css-tokens/no-raw-font-family': 'error',
       'css-tokens/no-tailwind-directives': 'error',
+    },
+  },
+  {
+    files: ['src/theme/**/*.css'],
+    rules: {
+      'css-tokens/no-raw-colors': 'off',
+      'css-tokens/no-raw-font-family': 'off',
     },
   },
   ...storybook.configs['flat/recommended'],
