@@ -26,20 +26,20 @@ export function ThemeProvider({
   const [themeName, setThemeName] = useState<string>(defaultThemeName);
   const [mode, setMode] = useState<ThemeMode>(defaultMode);
 
+  const theme = useMemo(() => getTheme(themeName), [themeName]);
+
   const resolvedMode: ResolvedThemeMode = useMemo(
     () => resolveCurrentMode(mode, detectedMode),
     [mode, detectedMode]
   );
 
   useEffect(() => {
-    syncDocumentTheme(resolvedMode);
-  }, [resolvedMode]);
+    syncDocumentTheme(resolvedMode, theme);
+  }, [resolvedMode, theme]);
 
   const toggleMode = useCallback(() => {
     setMode(resolveNextThemeMode);
   }, []);
-
-  const theme = useMemo(() => getTheme(themeName), [themeName]);
 
   const value = useMemo(
     () => ({

@@ -127,7 +127,15 @@
   filter: blur(90px);
   pointer-events: none;
   z-index: 2;
-  background: var(--colors-surface-tint, rgba(255, 255, 255, 0.22));
+  background: var(
+    --color-celestial-sun-ambient-glow,
+    radial-gradient(
+      circle,
+      rgba(255, 243, 204, 0.45) 0%,
+      rgba(245, 175, 25, 0.18) 50%,
+      transparent 75%
+    )
+  );
 }
 
 .season_bg_root[data-mode='dark'] .season_ambient_glow {

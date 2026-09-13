@@ -126,7 +126,7 @@
   align-items: center;
   justify-content: center;
   margin-inline-end: var(--spacing-0-5);
-  color: var(--colors-onSurfaceVariant);
+  color: var(--colors-on-surface-variant);
   flex-shrink: 0;
 }
 
@@ -149,7 +149,7 @@
   padding-inline: var(--spacing-0-5);
   padding-block: var(--spacing-0-5);
   cursor: text;
-  color: var(--colors-onSurface);
+  color: var(--colors-on-surface);
   border-block-width: var(--border-widths-medium);
   border-block-style: solid;
   border-block-color: transparent;
@@ -188,7 +188,7 @@
 
 /* Justification: Stylized separator arrow icon between range boundaries with centered flex alignment. */
 .number-picker_separator {
-  color: var(--colors-onSurfaceVariant);
+  color: var(--colors-on-surface-variant);
   display: inline-flex;
   align-items: center;
   justify-content: center;

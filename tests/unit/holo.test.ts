@@ -12,14 +12,14 @@ describe('Holo Tokens', () => {
     expect(holoGradient).toContain('radial-gradient');
     expect(holoGradient).toContain('var(--mouse-x, 50%)');
     expect(holoGradient).toContain('var(--mouse-y, 50%)');
-    expect(holoGradient).toContain('rgba(255, 0, 0, 0)');
-    expect(holoGradient).toContain('rgba(138, 43, 226, 0)');
+    expect(holoGradient).toContain('rgba(220, 50, 47, 0)');
+    expect(holoGradient).toContain('rgba(211, 54, 130, 0)');
   });
 
   it('exports valid sheenGradient for lighting overlay', () => {
     expect(sheenGradient).toBeDefined();
     expect(sheenGradient).toContain('radial-gradient');
-    expect(sheenGradient).toContain('rgba(255, 255, 255, 0.15)');
+    expect(sheenGradient).toContain('rgba(253, 246, 227, 0.15)');
     expect(sheenGradient).toContain('transparent');
   });
 

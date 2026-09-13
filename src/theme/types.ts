@@ -21,14 +21,31 @@ export interface ColorRamp {
   onTertiary: string;
   tertiaryContainer: string;
   onTertiaryContainer: string;
+  error: string;
+  onError: string;
+  errorContainer: string;
+  onErrorContainer: string;
   background: string;
+  onBackground: string;
   surface: string;
   onSurface: string;
+  surfaceVariant: string;
+  onSurfaceVariant: string;
+  surfaceDim: string;
+  surfaceBright: string;
+  surfaceContainerLowest: string;
+  surfaceContainerLow: string;
   surfaceContainer: string;
   surfaceContainerHigh: string;
-  onSurfaceVariant: string;
+  surfaceContainerHighest: string;
   outline: string;
   outlineVariant: string;
+  shadow: string;
+  scrim: string;
+  inverseSurface: string;
+  inverseOnSurface: string;
+  inversePrimary: string;
+  surfaceTint: string;
 }
 
 export interface ElevationTokens {

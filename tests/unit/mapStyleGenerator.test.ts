@@ -10,28 +10,28 @@ import {
 describe('resolveMapThemeTokens', () => {
   it('resolves light mode tokens by default', () => {
     const tokens = resolveMapThemeTokens('light');
-    expect(tokens.background).toBe('#f8fafb');
-    expect(tokens.water).toBe('#97f0ff');
-    expect(tokens.textPrimary).toBe('#191c1d');
-    expect(tokens.halo).toBe('#f8fafb');
+    expect(tokens.background).toBe('#eee8d5');
+    expect(tokens.water).toBe('#eef5ce');
+    expect(tokens.textPrimary).toBe('#073642');
+    expect(tokens.halo).toBe('#eee8d5');
   });
 
   it('resolves dark mode tokens when specified', () => {
     const tokens = resolveMapThemeTokens('dark');
-    expect(tokens.background).toBe('#191c1d');
-    expect(tokens.water).toBe('#004f58');
-    expect(tokens.textPrimary).toBe('#e1e3e4');
-    expect(tokens.halo).toBe('#191c1d');
+    expect(tokens.background).toBe('#073642');
+    expect(tokens.water).toBe('#24420e');
+    expect(tokens.textPrimary).toBe('#fdf6e3');
+    expect(tokens.halo).toBe('#073642');
   });
 
   it('applies custom token overrides over defaults', () => {
     const tokens = resolveMapThemeTokens('light', {
-      background: '#ffffff',
-      water: '#00ffff',
+      background: '#fdf6e3',
+      water: '#2aa198',
     });
-    expect(tokens.background).toBe('#ffffff');
-    expect(tokens.water).toBe('#00ffff');
-    expect(tokens.textPrimary).toBe('#191c1d');
+    expect(tokens.background).toBe('#fdf6e3');
+    expect(tokens.water).toBe('#2aa198');
+    expect(tokens.textPrimary).toBe('#073642');
   });
 });
 
@@ -61,7 +61,7 @@ describe('generateMapStyle Structure', () => {
       paint?: Record<string, unknown>;
     }>;
     const bgLayer = layers.find((l) => l.id === 'background');
-    expect(bgLayer?.paint?.['background-color']).toBe('#191c1d');
+    expect(bgLayer?.paint?.['background-color']).toBe('#073642');
   });
 });
 
@@ -76,8 +76,8 @@ describe('generateMapStyle Overrides and Layers', () => {
       sprite: 'https://example.com/sprite',
       glyphs: 'https://example.com/fonts/{fontstack}/{range}.pbf',
       tokens: {
-        background: '#112233',
-        water: '#334455',
+        background: '#073642',
+        water: '#2aa198',
       },
     });
 
@@ -92,10 +92,10 @@ describe('generateMapStyle Overrides and Layers', () => {
       paint?: Record<string, unknown>;
     }>;
     const bgLayer = layers.find((l) => l.id === 'background');
-    expect(bgLayer?.paint?.['background-color']).toBe('#112233');
+    expect(bgLayer?.paint?.['background-color']).toBe('#073642');
 
     const waterLayer = layers.find((l) => l.id === 'water');
-    expect(waterLayer?.paint?.['fill-color']).toBe('#334455');
+    expect(waterLayer?.paint?.['fill-color']).toBe('#2aa198');
   });
 
   it('includes road, building, and label layers properly configured', () => {

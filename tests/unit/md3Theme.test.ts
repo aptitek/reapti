@@ -8,11 +8,11 @@ describe('md3Theme', () => {
     expect(md3Theme.dark).toBeDefined();
   });
 
-  it('contains valid light and dark mode colors', () => {
-    expect(md3Theme.light.colors.primary).toBe('#006874');
-    expect(md3Theme.light.colors.onSurface).toBe('#191c1d');
-    expect(md3Theme.dark.colors.primary).toBe('#80d5e3');
-    expect(md3Theme.dark.colors.onSurface).toBe('#e1e3e4');
+  it('contains valid light and dark mode colors calibrated to Solarized', () => {
+    expect(md3Theme.light.colors.primary).toBe('#859900');
+    expect(md3Theme.light.colors.onSurface).toBe('#073642');
+    expect(md3Theme.dark.colors.primary).toBe('#9ec43b');
+    expect(md3Theme.dark.colors.onSurface).toBe('#fdf6e3');
   });
 
   it('defines typography, motion, radii, and spacing scales', () => {

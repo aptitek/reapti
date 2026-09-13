@@ -16,9 +16,9 @@ describe('Switch Types Coverage', () => {
 
     const onCfg: SwitchStateConfig = {
       ghostIcon: '☀️',
-      color: '#006874',
-      trackColor: '#006874',
-      handleColor: '#ffffff',
+      color: '#859900',
+      trackColor: '#859900',
+      handleColor: '#fdf6e3',
       peekingIcon: '✈️',
       peekingRotation: 180,
       peekingSymmetry: true,

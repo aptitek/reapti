@@ -18,7 +18,7 @@
       "id": "background",
       "type": "background",
       "paint": {
-        "background-color": "#f8fafb"
+        "background-color": "#eee8d5"
       }
     },
     {
@@ -27,7 +27,7 @@
       "source": "openmaptiles",
       "source-layer": "park",
       "paint": {
-        "fill-color": "#cde7ed",
+        "fill-color": "#fde4ef",
         "fill-opacity": 0.4
       }
     },
@@ -42,7 +42,7 @@
         "wood"
       ],
       "paint": {
-        "fill-color": "#cde7ed",
+        "fill-color": "#fde4ef",
         "fill-opacity": 0.25
       }
     },
@@ -52,7 +52,7 @@
       "source": "openmaptiles",
       "source-layer": "water",
       "paint": {
-        "fill-color": "#97f0ff"
+        "fill-color": "#eef5ce"
       }
     },
     {
@@ -61,7 +61,7 @@
       "source": "openmaptiles",
       "source-layer": "waterway",
       "paint": {
-        "line-color": "#97f0ff",
+        "line-color": "#eef5ce",
         "line-width": 1.5
       }
     },
@@ -76,7 +76,7 @@
         "residential"
       ],
       "paint": {
-        "fill-color": "#f2f4f5",
+        "fill-color": "#f9f2e0",
         "fill-opacity": 0.6
       }
     },
@@ -86,8 +86,8 @@
       "source": "openmaptiles",
       "source-layer": "building",
       "paint": {
-        "fill-color": "#dbe4e6",
-        "fill-outline-color": "#bfc8ca"
+        "fill-color": "#f5eedc",
+        "fill-outline-color": "rgba(7, 54, 66, 0.10)"
       }
     },
     {
@@ -101,7 +101,7 @@
         "minor"
       ],
       "paint": {
-        "line-color": "#ffffff",
+        "line-color": "#fdf6e3",
         "line-width": 1.5
       }
     },
@@ -126,7 +126,7 @@
         false
       ],
       "paint": {
-        "line-color": "#bfc8ca",
+        "line-color": "rgba(7, 54, 66, 0.10)",
         "line-width": 3
       }
     },
@@ -151,7 +151,7 @@
         false
       ],
       "paint": {
-        "line-color": "#ffffff",
+        "line-color": "#fdf6e3",
         "line-width": 2
       }
     },
@@ -166,7 +166,7 @@
         "motorway"
       ],
       "paint": {
-        "line-color": "#6f797a",
+        "line-color": "rgba(7, 54, 66, 0.20)",
         "line-width": 4
       }
     },
@@ -181,7 +181,7 @@
         "motorway"
       ],
       "paint": {
-        "line-color": "#f2f4f5",
+        "line-color": "#f9f2e0",
         "line-width": 2.5
       }
     },
@@ -196,7 +196,7 @@
         2
       ],
       "paint": {
-        "line-color": "#6f797a",
+        "line-color": "rgba(7, 54, 66, 0.20)",
         "line-width": 1.5,
         "line-dasharray": [
           3,
@@ -217,8 +217,8 @@
         "text-size": 12
       },
       "paint": {
-        "text-color": "#006874",
-        "text-halo-color": "#f8fafb",
+        "text-color": "#859900",
+        "text-halo-color": "#eee8d5",
         "text-halo-width": 1.5
       }
     },
@@ -236,8 +236,8 @@
         "symbol-placement": "line"
       },
       "paint": {
-        "text-color": "#3f484a",
-        "text-halo-color": "#f8fafb",
+        "text-color": "#586e75",
+        "text-halo-color": "#eee8d5",
         "text-halo-width": 1.5
       }
     },
@@ -259,8 +259,8 @@
         "text-size": 15
       },
       "paint": {
-        "text-color": "#191c1d",
-        "text-halo-color": "#f8fafb",
+        "text-color": "#073642",
+        "text-halo-color": "#eee8d5",
         "text-halo-width": 1.5
       }
     }

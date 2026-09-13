@@ -98,13 +98,14 @@ float roundedBoxSdf(vec2 p, vec2 b, float r) {
 }
 
 vec4 getProceduralMapColor(vec2 uv, float unfoldedAspect) {
-  vec3 land = vec3(0.925, 0.933, 0.941);
-  vec3 dotColor = vec3(0.0, 0.42, 0.44);
-  vec3 road = vec3(0.85, 0.91, 0.98);
-  vec3 cardBg = vec3(1.0, 1.0, 1.0);
-  vec3 cardBorder = vec3(0.79, 0.81, 0.83);
-  vec3 pin = vec3(0.0, 0.42, 0.44);
-  vec3 bar = vec3(0.88, 0.90, 0.92);
+  // Pure Solarized color palette (zero pure white/black, zero M3 teal)
+  vec3 land = vec3(0.933, 0.910, 0.835);       // Solarized base2 (#eee8d5)
+  vec3 dotColor = vec3(0.165, 0.631, 0.596);   // Solarized cyan (#2aa198)
+  vec3 road = vec3(0.992, 0.965, 0.890);       // Solarized base3 (#fdf6e3)
+  vec3 cardBg = vec3(0.992, 0.965, 0.890);     // Solarized base3 (#fdf6e3)
+  vec3 cardBorder = vec3(0.576, 0.631, 0.631); // Solarized base1 (#93a1a1)
+  vec3 pin = vec3(0.165, 0.631, 0.596);        // Solarized cyan (#2aa198)
+  vec3 bar = vec3(0.576, 0.631, 0.631);        // Solarized base1 (#93a1a1)
 
   // Coordinate fixed to the paper's unfolded aspect ratio (squishes as paper folds)
   vec2 p = vec2((uv.x - 0.5) * unfoldedAspect, uv.y - 0.5);
@@ -167,14 +168,15 @@ void main() {
   // Valley ambient occlusion
   float ao = 1.0 - smoothstep(-0.05, -0.25, vDepth) * 0.35 * uFoldProgress;
 
-  // Ridge bezel highlight (crisp specular gleam on the rounded crease)
+  // Ridge bezel highlight (Solarized base3 specular gleam on the rounded crease)
   vec3 viewDir = vec3(0.0, 0.0, 1.0);
   vec3 halfVec = normalize(lightDir + viewDir);
   float spec = pow(max(0.0, dot(norm, halfVec)), 16.0);
   float bezelHighlight = spec * vBezel * 0.25;
+  vec3 highlightColor = vec3(0.992, 0.965, 0.890) * bezelHighlight;
 
   // Shaded composite: flat planar lighting + bezel highlight + valley AO
-  vec3 shaded = color.rgb * (0.68 + 0.35 * diffuse) * ao + vec3(bezelHighlight);
+  vec3 shaded = color.rgb * (0.68 + 0.35 * diffuse) * ao + highlightColor;
   gl_FragColor = vec4(shaded, color.a * alpha);
 }
 `;

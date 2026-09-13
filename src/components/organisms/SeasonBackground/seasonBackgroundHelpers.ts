@@ -208,7 +208,7 @@ export function renderHillsSvgString(
   const distSpring = Math.min(norm, 4 - norm);
   const strokeColor = isDark
     ? 'var(--color-celestial-night-sky-glow, rgba(180,215,225,0.12))'
-    : 'var(--colors-surface-tint, rgba(255, 255, 255, 0.22))';
+    : 'var(--color-hill-ridge-stroke, rgba(253, 246, 227, 0.22))';
 
   const output = svgRaw
     .replace('fill="#eee8d5"', `fill="${hillTokens.hillBack}"`)
