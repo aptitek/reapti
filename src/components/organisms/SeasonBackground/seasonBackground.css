@@ -1,0 +1,376 @@
+@keyframes solarizedGentleSway {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(1.8deg) translateY(-2px);
+  }
+}
+
+@keyframes solarizedCoronaPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.16);
+    opacity: 0.85;
+  }
+}
+
+@keyframes solarizedCloudDrift {
+  0% {
+    transform: translateX(-4%);
+  }
+  50% {
+    transform: translateX(4%);
+  }
+  100% {
+    transform: translateX(-4%);
+  }
+}
+
+@keyframes solarizedGodraysShimmer {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  }
+  50% {
+    opacity: 0.58;
+    transform: translate(-50%, -50%) rotate(2.2deg) scale(1.04);
+  }
+}
+
+@keyframes solarizedAuroraWave {
+  0% {
+    transform: translateY(0) scaleY(1) rotate(0deg);
+    filter: blur(55px) hue-rotate(0deg);
+  }
+  50% {
+    transform: translateY(-24px) scaleY(1.18) rotate(1.5deg);
+    filter: blur(65px) hue-rotate(25deg);
+  }
+  100% {
+    transform: translateY(0) scaleY(1) rotate(0deg);
+    filter: blur(55px) hue-rotate(0deg);
+  }
+}
+
+@keyframes solarizedAuroraDrift {
+  0% {
+    transform: translateX(-8%) scaleX(1);
+  }
+  50% {
+    transform: translateX(8%) scaleX(1.12);
+  }
+  100% {
+    transform: translateX(-8%) scaleX(1);
+  }
+}
+
+.season_bg_root {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  background-color: var(
+    --color-solarized-base3,
+    var(--colors-surface, #fdf6e3)
+  );
+  color: var(--color-solarized-base00, var(--colors-on-surface, #657b83));
+}
+
+.season_bg_root[data-mode='dark'] {
+  background-color: var(
+    --color-solarized-base03,
+    var(--colors-surface, #002b36)
+  );
+  color: var(--color-solarized-base0, var(--colors-on-surface, #839496));
+}
+
+.season_sky_backdrop {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    var(--color-sky-zenith, #fdf8f0) 0%,
+    var(--color-sky-pastel-pink, #f5cad3) 24%,
+    var(--color-sky-pastel-orange, #fcd9be) 52%,
+    var(--color-sky-pastel-yellow, #fae8be) 80%,
+    var(--color-sky-horizon, #eee6d3) 100%
+  );
+  transition: opacity 800ms ease;
+}
+
+.season_bg_root[data-mode='dark'] .season_sky_backdrop {
+  background: linear-gradient(
+    180deg,
+    var(--color-solarized-base03, #002b36) 0%,
+    var(--color-solarized-base02, #073642) 65%,
+    var(--color-solarized-base01, #586e75) 180%
+  );
+}
+
+.season_ambient_glow {
+  position: absolute;
+  inset-block-start: 6%;
+  inset-inline-end: 12%;
+  inline-size: 520px;
+  block-size: 520px;
+  border-radius: var(--radii-full, 9999px);
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 2;
+  background: var(--colors-surface-tint, rgba(255, 255, 255, 0.22));
+}
+
+.season_bg_root[data-mode='dark'] .season_ambient_glow {
+  background: var(--color-celestial-night-sky-glow, rgba(180, 215, 225, 0.12));
+}
+
+.season_celestial_container {
+  position: absolute;
+  inset-block-start: 14%;
+  inset-inline-end: 18%;
+  inline-size: 120px;
+  block-size: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.season_sun_orb {
+  position: relative;
+  inline-size: 96px;
+  block-size: 96px;
+  border-radius: var(--radii-full, 9999px);
+  background: radial-gradient(
+    circle at center,
+    var(--color-celestial-sun-golden-core, #fff3cc) 0%,
+    var(--color-celestial-sun-golden-mid, #f5af19) 58%,
+    var(--color-celestial-sun-golden-rim, #d48800) 100%
+  );
+  box-shadow:
+    0 0 0 2.5px var(--color-sun-rim-border, rgba(255, 255, 255, 0.55)),
+    0 0 24px 6px var(--color-celestial-sun-golden-mid, #f5af19),
+    0 0 60px 18px var(--color-celestial-sun-golden-aura, #e67e22);
+}
+
+.season_sun_orb::after {
+  content: '';
+  position: absolute;
+  inset: -14px;
+  border-radius: var(--radii-full, 9999px);
+  background: radial-gradient(
+    circle,
+    var(--color-celestial-sun-golden-mid, #f5af19) 0%,
+    transparent 72%
+  );
+  opacity: 0.35;
+  animation: solarizedCoronaPulse 3.6s ease-in-out infinite;
+}
+
+.season_moon_orb {
+  position: relative;
+  inline-size: 96px;
+  block-size: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(
+    0 0 24px var(--color-celestial-moon-aura, rgba(180, 215, 225, 0.35))
+  );
+}
+
+.season_moon_svg {
+  inline-size: 100%;
+  block-size: 100%;
+  display: block;
+}
+
+.season_godrays_svg {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  inline-size: 320vmax;
+  block-size: 320vmax;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: -1;
+  transform-origin: center center;
+  animation: solarizedGodraysShimmer 11s ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+
+.season_starfield_overlay {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.season_star_dot {
+  position: absolute;
+  border-radius: var(--radii-full, 9999px);
+  background-color: var(--color-solarized-base2, #eee8d5);
+}
+
+.season_aurora_wrapper {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: -10%;
+  inline-size: 120%;
+  block-size: 55%;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+  opacity: 0.78;
+  mix-blend-mode: screen;
+}
+
+.season_aurora_primary {
+  position: absolute;
+  inset-block-start: 5%;
+  inset-inline-start: 5%;
+  inline-size: 90%;
+  block-size: 220px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    var(--color-solarized-cyan, #2aa198) 0%,
+    var(--color-solarized-blue, #268bd2) 45%,
+    transparent 75%
+  );
+  filter: blur(60px);
+  animation: solarizedAuroraWave 14s ease-in-out infinite;
+}
+
+.season_aurora_secondary {
+  position: absolute;
+  inset-block-start: 15%;
+  inset-inline-start: 15%;
+  inline-size: 75%;
+  block-size: 180px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    var(--color-solarized-violet, #6c71c4) 0%,
+    var(--color-solarized-magenta, #d33682) 40%,
+    transparent 70%
+  );
+  filter: blur(65px);
+  animation: solarizedAuroraDrift 18s ease-in-out infinite;
+}
+
+.season_aurora_tertiary {
+  position: absolute;
+  inset-block-start: 8%;
+  inset-inline-end: 10%;
+  inline-size: 60%;
+  block-size: 160px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    var(--color-solarized-green, #859900) 0%,
+    var(--color-solarized-cyan, #2aa198) 50%,
+    transparent 70%
+  );
+  filter: blur(50px);
+  opacity: 0.65;
+  animation: solarizedAuroraWave 11s ease-in-out infinite reverse;
+}
+
+.season_clouds {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 380px;
+  z-index: 2;
+  pointer-events: none;
+  animation: solarizedCloudDrift 24s ease-in-out infinite;
+}
+
+.season_hills {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.season_clouds svg,
+.season_hills svg,
+.season_tree_wrapper svg,
+.season_grass_wrapper svg {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.season_tree_wrapper {
+  position: absolute;
+  inset-inline-start: clamp(0%, 2vi, 3%);
+  inset-block-end: 0;
+  block-size: min(84%, 820px);
+  max-inline-size: min(52%, 680px);
+  aspect-ratio: 500 / 600;
+  inline-size: auto;
+  z-index: 5;
+  pointer-events: none;
+  transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  filter: drop-shadow(0 22px 28px var(--color-shadow-tree, rgba(0, 0, 0, 0.2)));
+}
+
+@media (min-width: 900px) {
+  .season_tree_wrapper {
+    inset-inline-start: 1%;
+    inset-block-end: 0;
+  }
+}
+
+.season_tree_wrapper .tree-swaying-canopy {
+  transform-origin: bottom center;
+  animation: solarizedGentleSway 8s ease-in-out infinite;
+}
+
+.season_canvas {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.season_grass_wrapper {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 76px;
+  z-index: 6;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.season_content_wrapper {
+  position: relative;
+  z-index: 10;
+  inline-size: 100%;
+  block-size: 100%;
+}

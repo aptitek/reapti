@@ -1,0 +1,120 @@
+<svg viewBox="0 0 500 600" fill="none" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <defs>
+    <linearGradient id="treeTrunkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#586e75" />
+      <stop offset="100%" stop-color="#073642" />
+    </linearGradient>
+    <linearGradient id="treeCanopyGrad1" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#859900" />
+      <stop offset="100%" stop-color="#4d7318" />
+    </linearGradient>
+    <linearGradient id="treeCanopyGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1f4e2b" />
+      <stop offset="100%" stop-color="#2e6030" />
+    </linearGradient>
+    <linearGradient id="treeCanopyWarm" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a6bd1a" />
+      <stop offset="100%" stop-color="#c2d936" />
+    </linearGradient>
+
+    <!-- Spring pure blossom pink canopy gradients -->
+    <linearGradient id="treeCanopyGrad1Spring" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#fbb1bd" />
+      <stop offset="100%" stop-color="#f48498" />
+    </linearGradient>
+    <linearGradient id="treeCanopyGrad2Spring" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f48498" />
+      <stop offset="100%" stop-color="#fbb1bd" />
+    </linearGradient>
+    <linearGradient id="treeCanopyWarmSpring" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffccd5" />
+      <stop offset="100%" stop-color="#ffccd5" />
+    </linearGradient>
+
+    <!-- Summer pure botanical green canopy gradients -->
+    <linearGradient id="treeCanopyGrad1Summer" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#859900" />
+      <stop offset="100%" stop-color="#4d7318" />
+    </linearGradient>
+    <linearGradient id="treeCanopyGrad2Summer" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1f4e2b" />
+      <stop offset="100%" stop-color="#2e6030" />
+    </linearGradient>
+    <linearGradient id="treeCanopyWarmSummer" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a6bd1a" />
+      <stop offset="100%" stop-color="#c2d936" />
+    </linearGradient>
+  </defs>
+
+  <!-- Root mound shadow -->
+  <ellipse cx="220" cy="565" rx="140" ry="24" fill="rgba(0, 0, 0, 0.16)" />
+
+  <!-- Organic Trunk & Limbs -->
+  <g id="treeTrunk">
+    <path d="M170,570 C190,530 200,480 205,430 C210,380 212,320 220,260 C228,210 240,160 250,130 C258,165 264,220 258,280 C252,340 250,420 262,490 C268,525 285,555 310,570 C260,565 215,565 170,570 Z" fill="url(#treeTrunkGrad)" />
+    <path d="M216,330 C180,310 145,285 115,240 C135,240 165,260 195,285 C205,293 214,310 216,330 Z" fill="url(#treeTrunkGrad)" />
+    <path d="M145,260 C120,230 85,210 60,195 C75,198 105,215 130,235 Z" fill="url(#treeTrunkGrad)" />
+    <path d="M255,295 C295,275 340,260 385,245 C355,258 315,285 258,325 Z" fill="url(#treeTrunkGrad)" />
+    <path d="M320,265 C360,240 405,225 440,215 C410,230 370,255 330,280 Z" fill="url(#treeTrunkGrad)" />
+    <path d="M242,175 C230,125 210,85 190,65 C205,80 222,110 236,155 Z" fill="url(#treeTrunkGrad)" />
+    <path d="M248,160 C265,115 295,80 325,55 C305,80 280,115 256,150 Z" fill="url(#treeTrunkGrad)" />
+  </g>
+
+  <!-- Winter branch snow (under leaves, stationary - does not sway with canopy) -->
+  <g id="treeWinterBranchSnow">
+    <!-- Left Branch: aligned with upper contour of Branch L1 (M115,240 C135,240 165,260 195,285 C205,293 214,310 216,330) -->
+    <path d="M115,240 C135,240 165,260 195,285 C205,293 214,310 216,330 C214,322 205,285 195,277 C165,252 135,232 115,232 C113,234 113,237 115,240 Z" fill="#e0f2f1" />
+
+    <!-- Right Branch: aligned with upper contour of Branch R1 (M255,295 C295,275 340,260 385,245) -->
+    <path d="M255,295 C295,275 340,260 385,245 C382,236 340,250 295,266 C275,274 262,283 255,295 Z" fill="#e0f2f1" />
+  </g>
+
+  <!-- Swaying Foliage Crown Clusters -->
+  <g class="tree-swaying-canopy">
+    <!-- Deep canopy layer -->
+    <ellipse cx="140" cy="220" rx="75" ry="55" fill="url(#treeCanopyGrad2)" opacity="0.95" data-cluster="0" data-grad="grad2" />
+    <ellipse cx="340" cy="230" rx="90" ry="60" fill="url(#treeCanopyGrad2)" opacity="0.9" data-cluster="1" data-grad="grad2" />
+    <ellipse cx="230" cy="150" rx="100" ry="70" fill="url(#treeCanopyGrad2)" opacity="0.9" data-cluster="2" data-grad="grad2" />
+
+    <!-- Mid canopy clusters -->
+    <ellipse cx="170" cy="180" rx="85" ry="65" fill="url(#treeCanopyGrad1)" data-cluster="3" data-grad="grad1" />
+    <ellipse cx="280" cy="185" rx="85" ry="62" fill="url(#treeCanopyGrad1)" data-cluster="4" data-grad="grad1" />
+    <ellipse cx="225" cy="110" rx="80" ry="55" fill="url(#treeCanopyGrad1)" data-cluster="5" data-grad="grad1" />
+    <ellipse cx="365" cy="190" rx="65" ry="50" fill="url(#treeCanopyWarm)" opacity="0.92" data-cluster="6" data-grad="warm" />
+
+    <!-- Foreground sun/wind kissed puffs -->
+    <ellipse cx="110" cy="205" rx="55" ry="42" fill="url(#treeCanopyGrad1)" data-cluster="7" data-grad="grad1" />
+    <ellipse cx="230" cy="210" rx="70" ry="50" fill="url(#treeCanopyGrad1)" data-cluster="8" data-grad="grad1" />
+    <ellipse cx="300" cy="140" rx="65" ry="48" fill="url(#treeCanopyWarm)" data-cluster="9" data-grad="warm" />
+    <ellipse cx="180" cy="130" rx="58" ry="44" fill="url(#treeCanopyWarm)" opacity="0.88" data-cluster="10" data-grad="warm" />
+    <ellipse cx="400" cy="215" rx="52" ry="38" fill="url(#treeCanopyGrad1)" data-cluster="11" data-grad="grad1" />
+
+    <!-- Outer leaf accents -->
+    <circle cx="95" cy="170" r="14" fill="url(#treeCanopyWarm)" data-cluster="12" data-grad="warm" />
+    <circle cx="435" cy="195" r="12" fill="url(#treeCanopyGrad1)" data-cluster="13" data-grad="grad1" />
+    <circle cx="330" cy="85" r="15" fill="url(#treeCanopyGrad1)" data-cluster="14" data-grad="grad1" />
+    <circle cx="160" cy="90" r="13" fill="url(#treeCanopyWarm)" data-cluster="15" data-grad="warm" />
+    <circle cx="410" cy="250" r="11" fill="url(#treeCanopyWarm)" data-cluster="16" data-grad="warm" />
+
+    <!-- Winter snow caps on foliage crown -->
+    <g id="treeWinterSnow">
+      <!-- 1. Top Crown Cap: aligned with top apex of Cluster 5 (cx=225, cy=110, rx=80, ry=55, top=55) -->
+      <path d="M155,84 C175,64 200,55 225,55 C250,55 275,64 295,84 C270,96 245,100 225,100 C205,100 180,96 155,84 Z" fill="#f8fcfd" />
+
+      <!-- 2. Upper-Left Canopy: aligned with top apex of Cluster 10 (cx=180, cy=130, rx=58, ry=44, top=86) -->
+      <path d="M135,103 C150,89 165,86 180,86 C195,86 210,91 220,100 C205,112 190,116 178,116 C162,116 148,112 135,103 Z" fill="#f8fcfd" />
+
+      <!-- 3. Upper-Right Canopy: aligned with top apex of Cluster 9 (cx=300, cy=140, rx=65, ry=48, top=92) -->
+      <path d="M250,110 C270,95 285,92 300,92 C318,92 335,97 352,112 C335,124 318,128 300,128 C282,128 265,122 250,110 Z" fill="#f8fcfd" />
+
+      <!-- 4. Outer-Left Foliage: aligned with top apex of Cluster 7 (cx=110, cy=205, rx=55, ry=42, top=163) -->
+      <path d="M65,182 C80,168 95,163 110,163 C125,163 140,168 152,178 C138,190 125,194 110,194 C95,194 80,190 65,182 Z" fill="#f8fcfd" />
+
+      <!-- 5. Center Canopy Shelf: aligned with top apex of Cluster 8 (cx=230, cy=210, rx=70, ry=50, top=160) -->
+      <path d="M180,176 C198,163 214,160 230,160 C246,160 262,163 280,176 C262,188 246,192 230,192 C214,192 198,188 180,176 Z" fill="#e0f2f1" />
+
+      <!-- 6. Outer-Right Foliage: aligned with top apex of Cluster 11 (cx=400, cy=215, rx=52, ry=38, top=177) -->
+      <path d="M360,192 C375,180 388,177 400,177 C414,177 428,182 440,192 C428,204 414,208 400,208 C386,208 372,204 360,192 Z" fill="#f8fcfd" />
+    </g>
+  </g>
+</svg>

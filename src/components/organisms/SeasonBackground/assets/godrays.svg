@@ -1,0 +1,24 @@
+<svg viewBox="-1600 -1600 3200 3200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <defs>
+    <radialGradient id="godrayBeamGrad" cx="0" cy="0" r="1600" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fff3cc" stop-opacity="0.75" />
+      <stop offset="20%" stop-color="#f5af19" stop-opacity="0.48" />
+      <stop offset="48%" stop-color="#fcd9be" stop-opacity="0.25" />
+      <stop offset="76%" stop-color="#f5cad3" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#f5cad3" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <polygon points="0,0 -1600,520 -1600,760" fill="url(#godrayBeamGrad)" />
+  <polygon points="0,0 -1600,920 -1200,1600" fill="url(#godrayBeamGrad)" />
+  <polygon points="0,0 -850,1600 -450,1600" fill="url(#godrayBeamGrad)" />
+  <polygon points="0,0 -200,1600 350,1600" fill="url(#godrayBeamGrad)" />
+  <polygon points="0,0 520,1600 1080,1600" fill="url(#godrayBeamGrad)" />
+  <polygon points="0,0 1200,1600 1600,1250" fill="url(#godrayBeamGrad)" />
+  <polygon points="0,0 1600,600 1600,920" fill="url(#godrayBeamGrad)" />
+  <polygon points="0,0 -1600,180 -1600,380" fill="url(#godrayBeamGrad)" opacity="0.8" />
+  <polygon points="0,0 -1600,-150 -1600,50" fill="url(#godrayBeamGrad)" opacity="0.6" />
+  <polygon points="0,0 -1400,-700 -950,-1150" fill="url(#godrayBeamGrad)" opacity="0.5" />
+  <polygon points="0,0 -400,-1500 200,-1500" fill="url(#godrayBeamGrad)" opacity="0.5" />
+  <polygon points="0,0 700,-1300 1300,-850" fill="url(#godrayBeamGrad)" opacity="0.5" />
+  <polygon points="0,0 1600,-350 1600,180" fill="url(#godrayBeamGrad)" opacity="0.7" />
+</svg>
