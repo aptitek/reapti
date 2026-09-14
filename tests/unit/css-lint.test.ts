@@ -32,10 +32,10 @@ m3e-card::part(container) {
   it('allows native component overrides when explicitly scoped', async () => {
     const code = `
 .override-btn m3e-button {
-  color: var(--color);
+  color: var(--theme-primary);
 }
 m3e-button[data-override] {
-  color: var(--color);
+  color: var(--theme-primary);
 }
 .override-card m3e-card::part(container) {
   padding: var(--spacing);
@@ -144,5 +144,50 @@ describe('CSS Directives & Production Styles', () => {
     const results = await eslint.lintFiles(['src/index.css']);
     const msgs = results[0]?.messages ?? [];
     expect(msgs).toHaveLength(0);
+  });
+});
+
+describe('CSS Theme Enforcement', () => {
+  it('enforces theme variables and forbids raw color fallbacks via enforce-theme', async () => {
+    const badCode = `
+.bad-theme-box {
+  color: var(--custom-unknown-color);
+  background-color: var(--theme-primary, #859900);
+}
+`;
+    const badResults = await eslint.lintText(badCode, {
+      filePath: 'src/bad-theme.css',
+    });
+    const badMsgs = badResults[0]?.messages.map((m) => m.message) ?? [];
+    expect(
+      badMsgs.some((m) =>
+        m.includes(
+          'Color "--custom-unknown-color" does not conform to the theme system'
+        )
+      )
+    ).toBe(true);
+    expect(
+      badMsgs.some((m) =>
+        m.includes(
+          'Raw color fallback "#859900" detected inside theme variable'
+        )
+      )
+    ).toBe(true);
+
+    const goodCode = `
+.good-theme-box {
+  color: var(--theme-on-surface);
+  background-color: var(--fancy-switch-track-bg);
+  border-color: var(--theme-outline);
+}
+`;
+    const goodResults = await eslint.lintText(goodCode, {
+      filePath: 'src/good-theme.css',
+    });
+    const goodMsgs =
+      goodResults[0]?.messages.filter(
+        (m) => m.ruleId === 'css-tokens/enforce-theme'
+      ) ?? [];
+    expect(goodMsgs).toHaveLength(0);
   });
 });

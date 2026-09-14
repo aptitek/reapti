@@ -123,7 +123,7 @@ export function resolveMeridianSwitchProps(
         isFrench: dir === 'to-off',
         isFlying: true,
       }),
-    ...symmetricHandle('var(--colors-outline)'),
+    ...symmetricHandle('var(--fancy-switch-uk-white)'),
     ...DEFAULT_TRACK,
     ...rest,
   };

@@ -300,11 +300,37 @@
 
 .switch_handle_slot .fancy_pin_drop,
 .switch_handle_slot .fancy_laptop_home,
-.switch_handle_slot .fancy_sun_glyph {
+.switch_handle_slot .fancy_sun_glyph,
+.switch_handle_slot .fancy_moon_glyph,
+.fancy_zenith_handle .fancy_sun_glyph,
+.fancy_zenith_handle .fancy_moon_glyph {
   color: var(--fancy-switch-thumb-text);
 }
 
 /* Justification: Celeste zenith horizon rising animation for the opposite-side peeking icon */
+.fancy_switch_zenith {
+  --switch-handle-color-on: var(--fancy-switch-sun-thumb);
+  --switch-handle-color-off: var(--fancy-switch-moon-thumb);
+}
+
+.fancy_switch_zenith .switch_handle_slot {
+  border-radius: var(--radius-full);
+  transition:
+    translate var(--durations-medium2) var(--easings-emphasized),
+    background-color var(--durations-medium2) var(--easings-emphasized),
+    box-shadow var(--durations-medium2) var(--easings-emphasized);
+}
+
+.fancy_switch_zenith[data-checked='true'] .switch_handle_slot {
+  background-color: var(--fancy-switch-sun-thumb);
+  box-shadow: var(--fancy-switch-sun-shadow);
+}
+
+.fancy_switch_zenith[data-checked='false'] .switch_handle_slot {
+  background-color: var(--fancy-switch-moon-thumb);
+  box-shadow: var(--fancy-switch-moon-shadow);
+}
+
 .fancy_switch_zenith .switch_ghost_slot {
   opacity: 0;
   transition:
@@ -380,8 +406,14 @@
 }
 
 /* Justification: Border shadow applied to the national flag puck handle. */
+.fancy_switch_meridian {
+  --switch-handle-color-on: var(--fancy-switch-fr-white);
+  --switch-handle-color-off: var(--fancy-switch-uk-white);
+}
+
 .fancy_switch_meridian .switch_handle_slot {
   box-shadow: var(--fancy-switch-flag-shadow);
+  border-radius: var(--radius-full);
 }
 
 /* Justification: Celestial glyph SVGs scaled dynamically to the selected icon token size. */

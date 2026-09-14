@@ -11,7 +11,7 @@ describe('resolveMapThemeTokens', () => {
   it('resolves light mode tokens by default', () => {
     const tokens = resolveMapThemeTokens('light');
     expect(tokens.background).toBe('#eee8d5');
-    expect(tokens.water).toBe('#eef5ce');
+    expect(tokens.water).toBe('rgba(133, 153, 0, 0.14)');
     expect(tokens.textPrimary).toBe('#073642');
     expect(tokens.halo).toBe('#eee8d5');
   });
@@ -19,7 +19,7 @@ describe('resolveMapThemeTokens', () => {
   it('resolves dark mode tokens when specified', () => {
     const tokens = resolveMapThemeTokens('dark');
     expect(tokens.background).toBe('#073642');
-    expect(tokens.water).toBe('#24420e');
+    expect(tokens.water).toBe('rgba(133, 153, 0, 0.20)');
     expect(tokens.textPrimary).toBe('#fdf6e3');
     expect(tokens.halo).toBe('#073642');
   });

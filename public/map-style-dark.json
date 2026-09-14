@@ -27,7 +27,7 @@
       "source": "openmaptiles",
       "source-layer": "park",
       "paint": {
-        "fill-color": "#4e1232",
+        "fill-color": "rgba(211, 54, 130, 0.20)",
         "fill-opacity": 0.4
       }
     },
@@ -42,7 +42,7 @@
         "wood"
       ],
       "paint": {
-        "fill-color": "#4e1232",
+        "fill-color": "rgba(211, 54, 130, 0.20)",
         "fill-opacity": 0.25
       }
     },
@@ -52,7 +52,7 @@
       "source": "openmaptiles",
       "source-layer": "water",
       "paint": {
-        "fill-color": "#24420e"
+        "fill-color": "rgba(133, 153, 0, 0.20)"
       }
     },
     {
@@ -61,7 +61,7 @@
       "source": "openmaptiles",
       "source-layer": "waterway",
       "paint": {
-        "line-color": "#24420e",
+        "line-color": "rgba(133, 153, 0, 0.20)",
         "line-width": 1.5
       }
     },
@@ -76,7 +76,7 @@
         "residential"
       ],
       "paint": {
-        "fill-color": "#042831",
+        "fill-color": "#002b36",
         "fill-opacity": 0.6
       }
     },
@@ -86,7 +86,7 @@
       "source": "openmaptiles",
       "source-layer": "building",
       "paint": {
-        "fill-color": "#0a3d4a",
+        "fill-color": "#073642",
         "fill-outline-color": "rgba(147, 161, 161, 0.12)"
       }
     },
@@ -101,7 +101,7 @@
         "minor"
       ],
       "paint": {
-        "line-color": "#0f4857",
+        "line-color": "rgba(147, 161, 161, 0.08)",
         "line-width": 1.5
       }
     },
@@ -151,7 +151,7 @@
         false
       ],
       "paint": {
-        "line-color": "#0f4857",
+        "line-color": "rgba(147, 161, 161, 0.08)",
         "line-width": 2
       }
     },
@@ -166,7 +166,7 @@
         "motorway"
       ],
       "paint": {
-        "line-color": "rgba(147, 161, 161, 0.25)",
+        "line-color": "rgba(147, 161, 161, 0.22)",
         "line-width": 4
       }
     },
@@ -181,7 +181,7 @@
         "motorway"
       ],
       "paint": {
-        "line-color": "#155364",
+        "line-color": "rgba(147, 161, 161, 0.14)",
         "line-width": 2.5
       }
     },
@@ -196,7 +196,7 @@
         2
       ],
       "paint": {
-        "line-color": "rgba(147, 161, 161, 0.25)",
+        "line-color": "rgba(147, 161, 161, 0.22)",
         "line-width": 1.5,
         "line-dasharray": [
           3,
@@ -236,7 +236,7 @@
         "symbol-placement": "line"
       },
       "paint": {
-        "text-color": "#839496",
+        "text-color": "#93a1a1",
         "text-halo-color": "#073642",
         "text-halo-width": 1.5
       }

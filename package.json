@@ -150,6 +150,7 @@
       "files": [
         "src/**/*",
         "tests/**/*",
+        "scripts/eslint/**/*",
         ".storybook/**/*",
         "eslint.config.js",
         "tsconfig.json",

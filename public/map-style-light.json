@@ -27,7 +27,7 @@
       "source": "openmaptiles",
       "source-layer": "park",
       "paint": {
-        "fill-color": "#fde4ef",
+        "fill-color": "rgba(211, 54, 130, 0.14)",
         "fill-opacity": 0.4
       }
     },
@@ -42,7 +42,7 @@
         "wood"
       ],
       "paint": {
-        "fill-color": "#fde4ef",
+        "fill-color": "rgba(211, 54, 130, 0.14)",
         "fill-opacity": 0.25
       }
     },
@@ -52,7 +52,7 @@
       "source": "openmaptiles",
       "source-layer": "water",
       "paint": {
-        "fill-color": "#eef5ce"
+        "fill-color": "rgba(133, 153, 0, 0.14)"
       }
     },
     {
@@ -61,7 +61,7 @@
       "source": "openmaptiles",
       "source-layer": "waterway",
       "paint": {
-        "line-color": "#eef5ce",
+        "line-color": "rgba(133, 153, 0, 0.14)",
         "line-width": 1.5
       }
     },
@@ -76,7 +76,7 @@
         "residential"
       ],
       "paint": {
-        "fill-color": "#f9f2e0",
+        "fill-color": "#eee8d5",
         "fill-opacity": 0.6
       }
     },
@@ -86,7 +86,7 @@
       "source": "openmaptiles",
       "source-layer": "building",
       "paint": {
-        "fill-color": "#f5eedc",
+        "fill-color": "#eee8d5",
         "fill-outline-color": "rgba(7, 54, 66, 0.10)"
       }
     },
@@ -181,7 +181,7 @@
         "motorway"
       ],
       "paint": {
-        "line-color": "#f9f2e0",
+        "line-color": "#eee8d5",
         "line-width": 2.5
       }
     },

@@ -112,6 +112,7 @@ export default defineConfig([
       'css-tokens/no-unperformant-transitions': 'error',
       'css-tokens/no-raw-font-family': 'error',
       'css-tokens/no-tailwind-directives': 'error',
+      'css-tokens/enforce-theme': 'error',
     },
   },
   {
@@ -119,6 +120,7 @@ export default defineConfig([
     rules: {
       'css-tokens/no-raw-colors': 'off',
       'css-tokens/no-raw-font-family': 'off',
+      'css-tokens/enforce-theme': 'off',
     },
   },
   ...storybook.configs['flat/recommended'],
