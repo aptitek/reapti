@@ -29,8 +29,8 @@
   border-end-start-radius: var(--border-radii-none, 0px);
   border-start-end-radius: var(--radii-full, 9999px);
   border-end-end-radius: var(--radii-full, 9999px);
-  background-color: var(--colors-secondary-container);
-  color: var(--colors-on-secondary-container);
+  background-color: var(--pill-chip-bg, var(--colors-base03));
+  color: var(--pill-chip-color, var(--colors-base3));
   font-size: var(--font-sizes-sm, 14px);
   font-weight: var(--font-weights-medium, 500);
   line-height: var(--line-heights-sm, 20px);

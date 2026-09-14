@@ -411,6 +411,7 @@ export const cssTokensPlugin = {
                       varName.startsWith('--holo-') ||
                       varName.startsWith('--aurora-') ||
                       varName.startsWith('--color-') ||
+                      varName.startsWith('--social-') ||
                       varName.startsWith('--shadows-');
                     if (
                       !isThemeToken &&

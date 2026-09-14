@@ -2,7 +2,7 @@
   "name": "Reapti Material Dark",
   "description": "Lyon Map2Poster theme generated from reapti MD3 design tokens (dark)",
   "bg": "#002b36",
-  "water": "rgba(211, 54, 130, 0.20)",
+  "water": "#d33682",
   "parks": "rgba(38, 139, 210, 0.20)",
   "road_motorway": "#859900",
   "road_primary": "rgba(147, 161, 161, 0.22)",

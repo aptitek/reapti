@@ -39,7 +39,7 @@ export const verticalAppBarStyles = css`
     overflow: visible;
     background-color: var(
       --m3e-app-bar-container-color,
-      var(--colors-surface, #ffffff)
+      var(--colors-surface, #eee8d5)
     );
     transition:
       background-color 200ms cubic-bezier(0.2, 0, 0, 1),
@@ -49,22 +49,22 @@ export const verticalAppBarStyles = css`
   }
   :host([side='left']) .base {
     border-inline-end: 1px solid
-      var(--colors-outline-variant, rgba(0, 0, 0, 0.08));
+      var(--colors-outline-variant, rgba(7, 54, 66, 0.1));
   }
   :host([side='right']) .base {
     border-inline-start: 1px solid
-      var(--colors-outline-variant, rgba(0, 0, 0, 0.08));
+      var(--colors-outline-variant, rgba(7, 54, 66, 0.1));
   }
   .base.on-scroll,
   :host([elevated]) .base {
     background-color: var(
       --m3e-app-bar-container-color-on-scroll,
-      var(--colors-surface-container, #f3f3f3)
+      var(--colors-surface-container, #eee8d5)
     );
     box-shadow: var(
       --m3e-app-bar-container-elevation-on-scroll,
-      0 1px 3px 1px rgba(0, 0, 0, 0.15),
-      0 1px 2px 0 rgba(0, 0, 0, 0.3)
+      0 1px 3px 1px rgba(7, 54, 66, 0.12),
+      0 1px 2px 0 rgba(7, 54, 66, 0.08)
     );
   }
   .top-section {

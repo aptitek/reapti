@@ -88,6 +88,40 @@ function checkRampPurity(
   }
 }
 
+const SOLARIZED_CANONICAL = new Set([
+  '#002b36',
+  '#073642',
+  '#586e75',
+  '#657b83',
+  '#839496',
+  '#93a1a1',
+  '#eee8d5',
+  '#fdf6e3',
+  '#b58900',
+  '#cb4b16',
+  '#dc322f',
+  '#d33682',
+  '#6c71c4',
+  '#268bd2',
+  '#2aa198',
+  '#859900',
+]);
+
+function checkCanonicalColors(
+  themeName: string,
+  mode: string,
+  colors: Record<string, string>
+): void {
+  for (const [role, val] of Object.entries(colors)) {
+    if (val.startsWith('#')) {
+      expect(
+        SOLARIZED_CANONICAL.has(val.toLowerCase()),
+        `Theme "${themeName}" mode "${mode}" role "${role}" has non-solarized color: ${val}`
+      ).toBe(true);
+    }
+  }
+}
+
 function checkElevationPurity(
   themeName: string,
   mode: string,
@@ -114,10 +148,6 @@ describe('Color Theme Audit: Zero Pure Black & Pure White', () => {
             colors[role],
             `Theme "${name}" mode "${mode}" is missing color role "${role}"`
           ).toBeDefined();
-          expect(
-            typeof colors[role],
-            `Theme "${name}" mode "${mode}" role "${role}" must be a string`
-          ).toBe('string');
         }
       }
     }
@@ -138,6 +168,14 @@ describe('Color Theme Audit: Zero Pure Black & Pure White', () => {
       }
     }
   });
+
+  it('guarantees only canonical Solarized colors are used in all registered themes', () => {
+    for (const [name, theme] of themeEntries) {
+      for (const mode of ['light', 'dark'] as const) {
+        checkCanonicalColors(name, mode, theme[mode].colors);
+      }
+    }
+  });
 });
 
 describe('Color Theme Audit: Dynamic Theme Application', () => {
@@ -148,24 +186,24 @@ describe('Color Theme Audit: Dynamic Theme Application', () => {
       },
     } as unknown as HTMLElement;
 
-    const exotic = THEME_REGISTRY['exotic'] as ThemeTokens;
-    applyThemeVariables('light', exotic, target);
+    const solarized = THEME_REGISTRY['solarized'] as ThemeTokens;
+    applyThemeVariables('light', solarized, target);
 
     expect(target.style.setProperty).toHaveBeenCalledWith(
       '--theme-primary',
-      '#00d68f'
+      '#859900'
     );
     expect(target.style.setProperty).toHaveBeenCalledWith(
       '--theme-secondary',
-      '#ff007f'
+      '#d33682'
     );
     expect(target.style.setProperty).toHaveBeenCalledWith(
       '--theme-tertiary',
-      '#7b2cbf'
+      '#268bd2'
     );
     expect(target.style.setProperty).toHaveBeenCalledWith(
       '--theme-surface',
-      '#f3e8ee'
+      '#eee8d5'
     );
   });
 
@@ -181,14 +219,26 @@ describe('Color Theme Audit: Dynamic Theme Application', () => {
         },
       } as unknown as Document;
 
-      const exotic = THEME_REGISTRY['exotic'] as ThemeTokens;
-      syncDocumentTheme('dark', exotic);
+      const solarized = THEME_REGISTRY['solarized'] as ThemeTokens;
+      syncDocumentTheme('dark', solarized);
 
       expect(setAttribute).toHaveBeenCalledWith('data-theme', 'dark');
-      expect(setAttribute).toHaveBeenCalledWith('data-theme-name', 'exotic');
-      expect(setProperty).toHaveBeenCalledWith('--theme-primary', '#00ff9f');
+      expect(setAttribute).toHaveBeenCalledWith('data-theme-name', 'solarized');
+      expect(setProperty).toHaveBeenCalledWith('--theme-primary', '#859900');
     } finally {
       globalThis.document = origDoc;
     }
+  });
+
+  it('verifies primary is solarized green and secondary is solarized pink/magenta', () => {
+    const solarized = THEME_REGISTRY['solarized'] as ThemeTokens;
+    expect(solarized.light.colors.primary).toBe('#859900');
+    expect(solarized.dark.colors.primary).toBe('#859900');
+    expect(solarized.light.colors.secondary).toBe('#d33682');
+    expect(solarized.dark.colors.secondary).toBe('#d33682');
+    expect(solarized.light.colors.secondaryContainer).toBe('#d33682');
+    expect(solarized.dark.colors.secondaryContainer).toBe('#d33682');
+    expect(solarized.light.colors.onSecondaryContainer).toBe('#fdf6e3');
+    expect(solarized.dark.colors.onSecondaryContainer).toBe('#fdf6e3');
   });
 });

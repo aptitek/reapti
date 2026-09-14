@@ -85,11 +85,8 @@ export const md3SemanticTokens = {
     onPrimaryContainer: c('#073642', '#fdf6e3'),
     secondary: c('#d33682', '#d33682'),
     onSecondary: c('#fdf6e3', '#fdf6e3'),
-    secondaryContainer: c(
-      'rgba(211, 54, 130, 0.14)',
-      'rgba(211, 54, 130, 0.20)'
-    ),
-    onSecondaryContainer: c('#073642', '#fdf6e3'),
+    secondaryContainer: c('#d33682', '#d33682'),
+    onSecondaryContainer: c('#fdf6e3', '#fdf6e3'),
     tertiary: c('#268bd2', '#268bd2'),
     onTertiary: c('#002b36', '#002b36'),
     tertiaryContainer: c(

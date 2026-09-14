@@ -171,8 +171,8 @@
   border-end-start-radius: 0;
   border-start-end-radius: var(--radii-full);
   border-end-end-radius: var(--radii-full);
-  background-color: var(--colors-secondary-container);
-  color: var(--colors-on-secondary-container);
+  background-color: var(--pill-chip-bg, var(--colors-base03));
+  color: var(--pill-chip-color, var(--colors-base3));
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
@@ -282,7 +282,7 @@
   border-end-start-radius: var(--radii-full);
   border-start-end-radius: 0;
   border-end-end-radius: 0;
-  background-color: var(--colors-secondary-container);
+  background-color: var(--pill-chip-bg, var(--colors-base03));
   z-index: 1;
   pointer-events: none;
   transition: opacity var(--durations-short2) var(--easings-standard);
@@ -295,7 +295,10 @@
 .override-vertical-nav-bar[data-mode='compact']
   .vertical-nav-bar_entry:focus-within
   m3e-nav-item:not([selected]) {
-  --m3e-nav-item-inactive-icon-color: var(--colors-on-secondary-container);
+  --m3e-nav-item-inactive-icon-color: var(
+    --pill-chip-color,
+    var(--colors-base3)
+  );
   --m3e-nav-item-inactive-hover-state-layer-color: transparent;
 }
 

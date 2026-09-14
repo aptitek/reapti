@@ -1,12 +1,10 @@
 import type { ThemeTokens } from './types.ts';
 import { solarizedTheme } from './solarizedTheme.ts';
 import { md3Theme } from './md3Theme.ts';
-import { exoticTheme } from './exoticTheme.ts';
 
 export const THEME_REGISTRY: Record<string, ThemeTokens> = {
   solarized: solarizedTheme,
   md3: md3Theme,
-  exotic: exoticTheme,
 };
 
 export const DEFAULT_THEME_NAME = 'solarized';

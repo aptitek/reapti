@@ -46,7 +46,7 @@ const COLOR_SWATCHES: readonly SwatchDef[] = [
 const HOLD_LABEL = 'Hold Action';
 const TONAL_LABEL = 'Tonal Action';
 const CHIP_SEGMENTS = [
-  { id: 'exotic', label: 'Exotic Dev', interaction: 'button' as const },
+  { id: 'solarized', label: 'Solarized', interaction: 'button' as const },
   { id: 'audit', label: 'Audit Mode', interaction: 'button' as const },
 ];
 
@@ -133,22 +133,6 @@ export const Md3Light: Story = {
 export const Md3Dark: Story = {
   args: {
     defaultThemeName: 'md3',
-    defaultMode: 'dark',
-    children: <ThemeDemo />,
-  },
-};
-
-export const ExoticLight: Story = {
-  args: {
-    defaultThemeName: 'exotic',
-    defaultMode: 'light',
-    children: <ThemeDemo />,
-  },
-};
-
-export const ExoticDark: Story = {
-  args: {
-    defaultThemeName: 'exotic',
     defaultMode: 'dark',
     children: <ThemeDemo />,
   },
