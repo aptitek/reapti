@@ -287,8 +287,8 @@
 .switch_root.switch_bimodal[data-checked='false'] .switch_track_frame,
 .switch_root.switch_bimodal[data-checked='true'] .switch_track_frame {
   background-color: var(--fancy-switch-track-bg);
-  border: 2px solid var(--fancy-switch-track-border);
-  box-shadow: var(--fancy-switch-shadow-inset);
+  border: var(--m3e-switch-track-outline-width, 2px) solid
+    var(--fancy-switch-track-border, var(--colors-outline));
   box-sizing: border-box;
 }
 

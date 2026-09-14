@@ -143,14 +143,18 @@
   overflow: hidden;
   pointer-events: none;
   z-index: 0;
+  box-sizing: border-box;
+  border: var(--m3e-switch-track-outline-width, 2px) solid var(--colors-outline);
   background-color: var(--switch-track-color-off);
-  transition: background-color var(--durations-medium2)
-    var(--easings-emphasized);
+  transition:
+    background-color var(--durations-medium2) var(--easings-emphasized),
+    border-color var(--durations-medium2) var(--easings-emphasized);
 }
 
 /* Justification: Checked state background fill transition on the visual track frame. */
 .switch_root[data-checked='true'] .switch_track_frame {
   background-color: var(--switch-track-color-on);
+  border-color: transparent;
 }
 
 /* Justification: Layer 1 Ghost icon and glyph slot positioned on opposite slider side from handle with idle opacity. */
