@@ -134,3 +134,25 @@ describe('Color Theme Bridge: Component CSS Health', () => {
     }
   });
 });
+
+describe('Color Theme Bridge: Terminal Solarized Tokens', () => {
+  const themeCssPath = resolve(process.cwd(), 'src/theme/theme.css');
+  const themeCss = readFileSync(themeCssPath, 'utf-8');
+
+  const REQUIRED_TERMINAL_TOKENS = [
+    '--theme-terminal-bg',
+    '--theme-terminal-header-bg',
+    '--theme-terminal-header-border',
+    '--theme-terminal-header-title',
+    '--theme-terminal-text',
+    '--theme-terminal-border',
+  ];
+
+  it('defines terminal solarized tokens in theme.css', () => {
+    for (const token of REQUIRED_TERMINAL_TOKENS) {
+      expect(themeCss.includes(token), `theme.css must define "${token}"`).toBe(
+        true
+      );
+    }
+  });
+});
