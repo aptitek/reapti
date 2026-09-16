@@ -79,6 +79,7 @@ interface SeasonBackdropLayersProps {
   seasonProgress: number;
   parallaxOffset: Point2D;
   flowerScale: FlowerScaleFactors;
+  treeOverlay?: React.ReactNode;
 }
 
 const SeasonBackdropLayers: FC<SeasonBackdropLayersProps> = (props) => {
@@ -89,6 +90,7 @@ const SeasonBackdropLayers: FC<SeasonBackdropLayersProps> = (props) => {
     seasonProgress,
     parallaxOffset,
     flowerScale,
+    treeOverlay,
   } = props;
   return (
     <>
@@ -109,6 +111,7 @@ const SeasonBackdropLayers: FC<SeasonBackdropLayersProps> = (props) => {
         isDarkMode={isDarkMode}
         parallax={parallaxOffset}
         flowerScale={flowerScale}
+        treeOverlay={treeOverlay}
       />
       <ForegroundGrassLayer
         showGrass={config.showGrass}
@@ -200,6 +203,7 @@ export const SeasonBackground: FC<SeasonBackgroundProps> = (props) => {
         seasonProgress={seasonProgress}
         parallaxOffset={parallaxOffset}
         flowerScale={flowerScale}
+        treeOverlay={props.treeOverlay}
       />
       {children && <Box className="season_content_wrapper">{children}</Box>}
     </Box>

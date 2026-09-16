@@ -62,6 +62,11 @@ export interface SeasonBackgroundProps {
   skySpace?: string | number;
 
   /**
+   * Optional overlay content rendered inside the tree container (e.g. branch mascot).
+   */
+  treeOverlay?: ReactNode;
+
+  /**
    * Alias for `skySpace`. Sets the clearance between the container top and the tree canopy.
    */
   treeTopSpacing?: string | number;

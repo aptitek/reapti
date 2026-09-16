@@ -215,4 +215,15 @@ describe('useContainerDimensions in SeasonBackground', () => {
     cleanup();
     vi.unstubAllGlobals();
   });
+
+  it('renders treeOverlay inside the tree container when provided', () => {
+    const overlay = createElement('span', { id: 'test-perch-overlay' });
+    const html = renderToStaticMarkup(
+      createElement(SeasonBackground, {
+        treeOverlay: overlay,
+      })
+    );
+    expect(html).toContain('id="test-perch-overlay"');
+    expect(html).toContain('season_tree_svg_host');
+  });
 });

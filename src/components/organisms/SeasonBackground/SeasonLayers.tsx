@@ -1,4 +1,4 @@
-import { useEffect, useRef, type FC } from 'react';
+import { useEffect, useRef, type FC, type ReactNode } from 'react';
 import { Box } from 'styled-system/jsx';
 import type { Point2D } from './SeasonBackground.types.ts';
 import {
@@ -103,6 +103,7 @@ export const LandscapeLayer: FC<{
   isDarkMode: boolean;
   parallax: Point2D;
   flowerScale?: FlowerScaleFactors;
+  treeOverlay?: ReactNode;
 }> = ({
   showClouds,
   showHills,
@@ -111,6 +112,7 @@ export const LandscapeLayer: FC<{
   isDarkMode,
   parallax,
   flowerScale,
+  treeOverlay,
 }) => (
   <>
     {showClouds && (
@@ -135,10 +137,15 @@ export const LandscapeLayer: FC<{
         id="peacefulTreeContainer"
         className="season_tree_wrapper"
         transform={`translate(${parallax.x}px, ${parallax.y}px)`}
-        dangerouslySetInnerHTML={{
-          __html: renderTreeSvgString(treeSvgRaw, seasonProgress, isDarkMode),
-        }}
-      />
+      >
+        <Box
+          className="season_tree_svg_host"
+          dangerouslySetInnerHTML={{
+            __html: renderTreeSvgString(treeSvgRaw, seasonProgress, isDarkMode),
+          }}
+        />
+        {treeOverlay}
+      </Box>
     )}
   </>
 );

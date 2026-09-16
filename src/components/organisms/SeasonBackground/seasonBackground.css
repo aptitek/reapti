@@ -348,6 +348,10 @@
   block-size: 100%;
 }
 
+.season_tree_svg_host {
+  display: contents;
+}
+
 .season_tree_wrapper {
   position: absolute;
   inset-inline-start: clamp(0%, 2vi, 3%);
