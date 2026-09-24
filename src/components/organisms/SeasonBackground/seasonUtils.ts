@@ -4,6 +4,9 @@ import type {
   SeasonThemeMode,
   SeasonTransitionState,
   SeasonVariant,
+  SeasonalCanopyTokens,
+  SeasonalGrassTokens,
+  SeasonalHillTokens,
 } from './SeasonBackground.types.ts';
 import {
   CANOPY_NIGHT_SEASON_PALETTES,
@@ -18,32 +21,7 @@ import {
   getLightSeasonalLeafPalette,
 } from './seasonPalettes.ts';
 
-export interface SeasonalCanopyTokens {
-  trunkPrimary: string;
-  trunkSecondary: string;
-  foliage1A: string;
-  foliage1B: string;
-  foliage2A: string;
-  foliage2B: string;
-  foliageWarmA: string;
-  foliageWarmB: string;
-  blossomOpacity: number;
-  snowOpacity: number;
-}
-
-export interface SeasonalHillTokens {
-  hillBack: string;
-  hillMid: string;
-  hillFront: string;
-}
-
-export interface SeasonalGrassTokens {
-  primaryStart: string;
-  primaryMid: string;
-  primaryEnd: string;
-  secondaryStart: string;
-  secondaryEnd: string;
-}
+export type { SeasonalCanopyTokens, SeasonalHillTokens, SeasonalGrassTokens };
 
 export interface ResolvedBackgroundConfig {
   interactive: boolean;
@@ -75,13 +53,75 @@ const DEFAULT_BG_CONFIG: ResolvedBackgroundConfig = {
   season: 'summer',
 };
 
+/** Resolves the Northern Hemisphere season variant from date. */
+export function getNorthernHemisphereSeason(
+  date: Date = new Date()
+): 'spring' | 'summer' | 'fall' | 'winter' {
+  const month = date.getMonth();
+  if (month >= 2 && month <= 4) return 'spring';
+  if (month >= 5 && month <= 7) return 'summer';
+  if (month >= 8 && month <= 10) return 'fall';
+  return 'winter';
+}
+
+const SEASON_PROGRESS_MAP: Record<SeasonVariant, number> = {
+  spring: 0.0,
+  summer: 1.0,
+  fall: 2.0,
+  autumn: 2.0,
+  winter: 3.0,
+};
+
+/** Resolves continuous floating-point Northern Hemisphere season progress (0.0 to 4.0). */
+export function getNorthernHemisphereSeasonProgress(
+  date: Date = new Date()
+): number {
+  const y = date.getFullYear();
+  const time = date.getTime();
+  const sp = new Date(y, 2, 1).getTime();
+  const su = new Date(y, 5, 1).getTime();
+  const fa = new Date(y, 8, 1).getTime();
+  const wi = new Date(y, 11, 1).getTime();
+
+  let start = fa;
+  let end = wi;
+  let base = 2.0;
+
+  if (time >= sp && time < su) {
+    start = sp;
+    end = su;
+    base = 0.0;
+  } else if (time >= su && time < fa) {
+    start = su;
+    end = fa;
+    base = 1.0;
+  } else if (time >= wi) {
+    start = wi;
+    end = new Date(y + 1, 2, 1).getTime();
+    base = 3.0;
+  } else if (time < sp) {
+    start = new Date(y - 1, 11, 1).getTime();
+    end = sp;
+    base = 3.0;
+  }
+
+  return base + Math.max(0, Math.min(1, (time - start) / (end - start)));
+}
+
 export function resolveBackgroundConfig(
-  props: SeasonBackgroundProps
+  props: SeasonBackgroundProps,
+  date: Date = new Date()
 ): ResolvedBackgroundConfig {
   const skySpace = props.skySpace ?? props.treeTopSpacing ?? props.treeTopSpace;
+  const defaultSeason = getNorthernHemisphereSeason(date);
+  const defaultSeasonProgress = getNorthernHemisphereSeasonProgress(date);
   return {
     ...DEFAULT_BG_CONFIG,
     ...props,
+    season: props.season ?? defaultSeason,
+    seasonProgress:
+      props.seasonProgress ??
+      (props.season !== undefined ? undefined : defaultSeasonProgress),
     skySpace,
   };
 }
@@ -97,15 +137,16 @@ export function resolveIsDark(
 
 export function resolveSeasonProgress(
   season?: SeasonVariant,
-  seasonProgress?: number
+  seasonProgress?: number,
+  date: Date = new Date()
 ): number {
   if (typeof seasonProgress === 'number' && !Number.isNaN(seasonProgress)) {
     return ((seasonProgress % 4) + 4) % 4;
   }
-  if (season === 'spring') return 0.0;
-  if (season === 'fall' || season === 'autumn') return 2.0;
-  if (season === 'winter') return 3.0;
-  return 1.0;
+  if (season !== undefined) {
+    return SEASON_PROGRESS_MAP[season] ?? 1.0;
+  }
+  return getNorthernHemisphereSeasonProgress(date);
 }
 
 export function getSeasonTransitionState(
@@ -119,18 +160,18 @@ export function getSeasonTransitionState(
 }
 
 export function interpolateHex(hexA: string, hexB: string, t: number): string {
-  const cleanA = hexA.replace('#', '');
-  const cleanB = hexB.replace('#', '');
-  const r1 = parseInt(cleanA.substring(0, 2), 16) || 0;
-  const g1 = parseInt(cleanA.substring(2, 4), 16) || 0;
-  const b1 = parseInt(cleanA.substring(4, 6), 16) || 0;
-  const r2 = parseInt(cleanB.substring(0, 2), 16) || 0;
-  const g2 = parseInt(cleanB.substring(2, 4), 16) || 0;
-  const b2 = parseInt(cleanB.substring(4, 6), 16) || 0;
-  const r = Math.round(r1 + (r2 - r1) * t);
-  const g = Math.round(g1 + (g2 - g1) * t);
-  const b = Math.round(b1 + (b2 - b1) * t);
-  return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+  const cA = hexA.replace('#', '');
+  const cB = hexB.replace('#', '');
+  const parse = (c: string, idx: number) =>
+    parseInt(c.substring(idx, idx + 2), 16) || 0;
+  const mix = (c1: number, c2: number) =>
+    Math.round(c1 + (c2 - c1) * t)
+      .toString(16)
+      .padStart(2, '0');
+  const r = mix(parse(cA, 0), parse(cB, 0));
+  const g = mix(parse(cA, 2), parse(cB, 2));
+  const b = mix(parse(cA, 4), parse(cB, 4));
+  return `#${r}${g}${b}`;
 }
 
 export function getSeasonalCanopyTokens(
@@ -185,7 +226,6 @@ export function getSeasonalHillTokens(
     : HILLS_SEASON_PALETTES;
   const pFrom = palettes[fromIndex]!;
   const pTo = palettes[toIndex]!;
-
   return {
     hillBack: interpolateHex(pFrom.back, pTo.back, blendFactor),
     hillMid: interpolateHex(pFrom.mid, pTo.mid, blendFactor),
@@ -207,7 +247,6 @@ export function getSeasonalGrassTokens(
     : GRASS_SEASON_PALETTES;
   const pFrom = palettes[fromIndex]!;
   const pTo = palettes[toIndex]!;
-
   return {
     primaryStart: interpolateHex(pFrom.pStart, pTo.pStart, blendFactor),
     primaryMid: interpolateHex(pFrom.pMid, pTo.pMid, blendFactor),

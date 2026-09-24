@@ -25,7 +25,7 @@ export interface SeasonBackgroundProps {
    * - 'summer': Lush green botanical meadow and leaves with golden sun.
    * - 'fall' / 'autumn': Rich fiery orange, amber, and russet foliage and leaves.
    * - 'winter': Snow-capped canopy and hills with drifting snowflakes.
-   * @default 'summer'
+   * @default Current Northern Hemisphere season based on local calendar date ('spring' | 'summer' | 'fall' | 'winter')
    */
   season?: SeasonVariant;
 
@@ -179,4 +179,31 @@ export interface SeasonTransitionState {
   fromIndex: number;
   toIndex: number;
   blendFactor: number;
+}
+
+export interface SeasonalCanopyTokens {
+  trunkPrimary: string;
+  trunkSecondary: string;
+  foliage1A: string;
+  foliage1B: string;
+  foliage2A: string;
+  foliage2B: string;
+  foliageWarmA: string;
+  foliageWarmB: string;
+  blossomOpacity: number;
+  snowOpacity: number;
+}
+
+export interface SeasonalHillTokens {
+  hillBack: string;
+  hillMid: string;
+  hillFront: string;
+}
+
+export interface SeasonalGrassTokens {
+  primaryStart: string;
+  primaryMid: string;
+  primaryEnd: string;
+  secondaryStart: string;
+  secondaryEnd: string;
 }

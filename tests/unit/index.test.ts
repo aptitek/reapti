@@ -32,6 +32,9 @@ import {
   CelestialLayer,
   LandscapeLayer,
   ForegroundGrassLayer,
+  getNorthernHemisphereSeason,
+  getNorthernHemisphereSeasonProgress,
+  resolveSeasonProgress,
   ContentProvider,
   useLocale,
   useContentElement,
@@ -78,6 +81,9 @@ describe('Library Entry Point Exports', () => {
     expect(CelestialLayer).toBeDefined();
     expect(LandscapeLayer).toBeDefined();
     expect(ForegroundGrassLayer).toBeDefined();
+    expect(getNorthernHemisphereSeason).toBeDefined();
+    expect(getNorthernHemisphereSeasonProgress).toBeDefined();
+    expect(resolveSeasonProgress).toBeDefined();
   });
 
   it('exports i18n utilities', () => {

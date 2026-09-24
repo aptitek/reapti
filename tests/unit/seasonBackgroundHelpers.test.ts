@@ -8,6 +8,7 @@ import {
   renderHillsSvgString,
   renderGrassSvgString,
   STAR_POSITIONS,
+  getNorthernHemisphereSeason,
 } from '../../src/components/organisms/SeasonBackground/seasonBackgroundHelpers.ts';
 
 describe('seasonBackgroundHelpers - Config & Geometry', () => {
@@ -17,7 +18,19 @@ describe('seasonBackgroundHelpers - Config & Geometry', () => {
     expect(defaults.showTree).toBe(true);
     expect(defaults.leafCount).toBe(44);
     expect(defaults.windIntensity).toBe(1.0);
-    expect(defaults.season).toBe('summer');
+    expect(defaults.season).toBe(getNorthernHemisphereSeason());
+
+    const springConfig = resolveBackgroundConfig({}, new Date(2026, 3, 1));
+    expect(springConfig.season).toBe('spring');
+
+    const summerConfig = resolveBackgroundConfig({}, new Date(2026, 6, 1));
+    expect(summerConfig.season).toBe('summer');
+
+    const fallConfig = resolveBackgroundConfig({}, new Date(2026, 9, 1));
+    expect(fallConfig.season).toBe('fall');
+
+    const winterConfig = resolveBackgroundConfig({}, new Date(2026, 0, 1));
+    expect(winterConfig.season).toBe('winter');
 
     const custom = resolveBackgroundConfig({
       showTree: false,

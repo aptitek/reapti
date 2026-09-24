@@ -19,7 +19,11 @@ export {
   calculateFlowerScale,
   type FlowerScaleFactors,
 } from './seasonLandscapePalettes.ts';
-export { resolveBackgroundConfig, resolveIsDark } from './seasonUtils.ts';
+export {
+  resolveBackgroundConfig,
+  resolveIsDark,
+  getNorthernHemisphereSeason,
+} from './seasonUtils.ts';
 
 export function calculateParallaxOffset(
   clientX: number,

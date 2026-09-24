@@ -149,6 +149,11 @@ export type {
   SeasonThemeMode,
   SeasonVariant,
 } from './components/organisms/SeasonBackground/SeasonBackground.types.ts';
+export {
+  getNorthernHemisphereSeason,
+  getNorthernHemisphereSeasonProgress,
+  resolveSeasonProgress,
+} from './components/organisms/SeasonBackground/seasonUtils.ts';
 
 // i18n
 export { ContentProvider } from './i18n/ContentProvider.tsx';
