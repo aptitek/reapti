@@ -79,12 +79,8 @@ export const CelestialLayer: FC<{
           {STAR_POSITIONS.map((star) => (
             <Box
               key={star.id}
-              className={`season_star_dot season_star_phase_${star.phase}${star.isSparkle ? ' season_star_sparkle' : ''}`}
-              left={star.left}
-              top={star.top}
-              width={`${star.size}px`}
-              height={`${star.size}px`}
-              opacity={star.opacity}
+              data-star={star.id}
+              className={`season_star_dot season_star_${star.id} season_star_phase_${star.phase}${star.isSparkle ? ' season_star_sparkle' : ''}`}
             >
               {star.isSparkle && <Box className="season_star_glint" />}
             </Box>

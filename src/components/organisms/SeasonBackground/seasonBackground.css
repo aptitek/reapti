@@ -47,11 +47,11 @@
 @keyframes starTwinklePulse {
   0%,
   100% {
-    opacity: 0.4;
+    opacity: calc(var(--star-opacity, 0.8) * 0.45);
     transform: scale(0.85);
   }
   50% {
-    opacity: 1;
+    opacity: var(--star-opacity, 0.8);
     transform: scale(1.18);
   }
 }
@@ -59,12 +59,12 @@
 @keyframes starGlintFlare {
   0%,
   100% {
-    opacity: 0.2;
+    opacity: 0.08;
     transform: translate(-50%, -50%) scale(0.6) rotate(0deg);
   }
   50% {
-    opacity: 0.95;
-    transform: translate(-50%, -50%) scale(1.2) rotate(45deg);
+    opacity: 0.65;
+    transform: translate(-50%, -50%) scale(1.05) rotate(45deg);
   }
 }
 
@@ -284,20 +284,267 @@
   position: absolute;
   inset-block-start: 50%;
   inset-inline-start: 50%;
-  background-color: var(--color-solarized-base3, #fdf6e3);
-  border-radius: var(--radii-full, 9999px);
   transform: translate(-50%, -50%);
-  box-shadow: 0 0 4px var(--color-solarized-cyan, #2aa198);
+  pointer-events: none;
 }
 
 .season_star_glint::before {
-  inline-size: 14px;
-  block-size: 1.5px;
+  inline-size: 16px;
+  block-size: 2px;
+  clip-path: polygon(0% 50%, 50% 0%, 100% 50%, 50% 100%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--color-solarized-base3, #fdf6e3) 25%, transparent)
+      20%,
+    color-mix(in srgb, var(--color-solarized-base3, #fdf6e3) 80%, transparent)
+      50%,
+    color-mix(in srgb, var(--color-solarized-base3, #fdf6e3) 25%, transparent)
+      80%,
+    transparent 100%
+  );
+  filter: drop-shadow(
+    0 0 1.5px
+      color-mix(in srgb, var(--color-solarized-cyan, #2aa198) 45%, transparent)
+  );
 }
 
 .season_star_glint::after {
+  inline-size: 2px;
+  block-size: 16px;
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    color-mix(in srgb, var(--color-solarized-base3, #fdf6e3) 25%, transparent)
+      20%,
+    color-mix(in srgb, var(--color-solarized-base3, #fdf6e3) 80%, transparent)
+      50%,
+    color-mix(in srgb, var(--color-solarized-base3, #fdf6e3) 25%, transparent)
+      80%,
+    transparent 100%
+  );
+  filter: drop-shadow(
+    0 0 1.5px
+      color-mix(in srgb, var(--color-solarized-cyan, #2aa198) 45%, transparent)
+  );
+}
+
+/* Individual Starfield Coordinates & Dimensions */
+.season_star_star-01 {
+  inset-inline-start: 8%;
+  inset-block-start: 12%;
+  inline-size: 2.2px;
+  block-size: 2.2px;
+  --star-opacity: 0.8;
+  opacity: var(--star-opacity);
+}
+
+.season_star_star-02 {
+  inset-inline-start: 14%;
+  inset-block-start: 28%;
+  inline-size: 1.6px;
+  block-size: 1.6px;
+  --star-opacity: 0.6;
+  opacity: var(--star-opacity);
+}
+
+.season_star_star-03 {
+  inset-inline-start: 22%;
+  inset-block-start: 8%;
+  inline-size: 2.8px;
+  block-size: 2.8px;
+  --star-opacity: 0.95;
+  opacity: var(--star-opacity);
+}
+
+.season_star_star-04 {
+  inset-inline-start: 28%;
+  inset-block-start: 34%;
+  inline-size: 1.4px;
+  block-size: 1.4px;
+  --star-opacity: 0.5;
+  opacity: var(--star-opacity);
+}
+
+.season_star_star-05 {
+  inset-inline-start: 35%;
+  inset-block-start: 18%;
+  inline-size: 2px;
+  block-size: 2px;
+  --star-opacity: 0.7;
+  opacity: var(--star-opacity);
+}
+
+.season_star_star-06 {
+  inset-inline-start: 42%;
+  inset-block-start: 6%;
+  inline-size: 3px;
+  block-size: 3px;
+  --star-opacity: 1;
+  opacity: var(--star-opacity);
+}
+
+.season_star_star-07 {
+  inset-inline-start: 48%;
+  inset-block-start: 26%;
   inline-size: 1.5px;
-  block-size: 14px;
+  block-size: 1.5px;
+  --star-opacity: 0.6;
+  opacity: var(--star-opacity);
+}
+
+.season_star_star-08 {
+  inset-inline-start: 55%;
+  inset-block-start: 14%;
+  inline-size: 2.2px;
+  block-size: 2.2px;
+  --star-opacity: 0.8;
+  opacity: var(--star-opacity);
+}
+
+.season_star_star-09 {
+  inset-inline-start: 62%;
+  inset-block-start: 38%;
+  inline-size: 1.8px;
+  block-size: 1.8px;
+  --star-opacity: 0.65;
+  opacity: var(--star-opacity);
+}
+
+.season_star_star-10 {
+  inset-inline-start: 68%;
+  inset-block-start: 9%;
+  inline-size: 3.1px;
+  block-size: 3.1px;
+  --star-opacity: 0.95;
+  opacity: var(--star-opacity);
+}
+
+.season_star_star-11 {
+  inset-inline-start: 75%;
+  inset-block-start: 22%;
+  inline-size: 1.6px;
+  block-size: 1.6px;
+  --star-opacity: 0.7;
+  opacity: var(--star-opacity);
+}
+
+.season_star_star-12 {
+  inset-inline-start: 82%;
+  inset-block-start: 7%;
+  inline-size: 2.8px;
+  block-size: 2.8px;
+  --star-opacity: 0.9;
+  opacity: var(--star-opacity);
+}
+
+.season_star_star-13 {
+  inset-inline-start: 88%;
+  inset-block-start: 32%;
+  inline-size: 1.5px;
+  block-size: 1.5px;
+  --star-opacity: 0.55;
+  opacity: var(--star-opacity);
+}
+
+.season_star_star-14 {
+  inset-inline-start: 94%;
+  inset-block-start: 16%;
+  inline-size: 2px;
+  block-size: 2px;
+  --star-opacity: 0.75;
+  opacity: var(--star-opacity);
+}
+
+.season_star_star-15 {
+  inset-inline-start: 11%;
+  inset-block-start: 45%;
+  inline-size: 1.4px;
+  block-size: 1.4px;
+  --star-opacity: 0.5;
+  opacity: var(--star-opacity);
+}
+
+.season_star_star-16 {
+  inset-inline-start: 26%;
+  inset-block-start: 48%;
+  inline-size: 2.1px;
+  block-size: 2.1px;
+  --star-opacity: 0.7;
+  opacity: var(--star-opacity);
+}
+
+.season_star_star-17 {
+  inset-inline-start: 52%;
+  inset-block-start: 44%;
+  inline-size: 1.7px;
+  block-size: 1.7px;
+  --star-opacity: 0.6;
+  opacity: var(--star-opacity);
+}
+
+.season_star_star-18 {
+  inset-inline-start: 72%;
+  inset-block-start: 46%;
+  inline-size: 2.2px;
+  block-size: 2.2px;
+  --star-opacity: 0.75;
+  opacity: var(--star-opacity);
+}
+
+.season_star_star-19 {
+  inset-inline-start: 86%;
+  inset-block-start: 42%;
+  inline-size: 1.8px;
+  block-size: 1.8px;
+  --star-opacity: 0.65;
+  opacity: var(--star-opacity);
+}
+
+.season_star_star-20 {
+  inset-inline-start: 4%;
+  inset-block-start: 36%;
+  inline-size: 1.5px;
+  block-size: 1.5px;
+  --star-opacity: 0.55;
+  opacity: var(--star-opacity);
+}
+
+.season_star_star-21 {
+  inset-inline-start: 38%;
+  inset-block-start: 41%;
+  inline-size: 2.7px;
+  block-size: 2.7px;
+  --star-opacity: 0.9;
+  opacity: var(--star-opacity);
+}
+
+.season_star_star-22 {
+  inset-inline-start: 60%;
+  inset-block-start: 24%;
+  inline-size: 1.5px;
+  block-size: 1.5px;
+  --star-opacity: 0.6;
+  opacity: var(--star-opacity);
+}
+
+.season_star_star-23 {
+  inset-inline-start: 79%;
+  inset-block-start: 37%;
+  inline-size: 1.9px;
+  block-size: 1.9px;
+  --star-opacity: 0.7;
+  opacity: var(--star-opacity);
+}
+
+.season_star_star-24 {
+  inset-inline-start: 92%;
+  inset-block-start: 46%;
+  inline-size: 2.6px;
+  block-size: 2.6px;
+  --star-opacity: 0.85;
+  opacity: var(--star-opacity);
 }
 
 .season_aurora_wrapper {

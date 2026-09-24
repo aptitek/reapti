@@ -98,6 +98,8 @@ describe('SeasonLayers - Celestial Layer', () => {
     expect(nightHtml).toContain('season_moon_orb');
     expect(nightHtml).toContain('season_starfield_overlay');
     expect(nightHtml).toContain('season_star_dot');
+    expect(nightHtml).toContain('season_star_star-01');
+    expect(nightHtml).toContain('data-star="star-01"');
     expect(nightHtml).toContain('season_star_sparkle');
     expect(nightHtml).toContain('season_star_glint');
     expect(nightHtml).toContain('season_star_phase_');
