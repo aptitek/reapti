@@ -10,12 +10,24 @@
   cursor: pointer;
 
   /* Theme color defaults */
-  --switch-track-color-on: var(--colors-primary);
-  --switch-track-color-off: var(--colors-surface-container-highest);
-  --switch-handle-color-on: var(--colors-on-primary);
-  --switch-handle-color-off: var(--colors-outline);
-  --switch-ghost-color-on: var(--switch-handle-color-on);
-  --switch-ghost-color-off: var(--switch-handle-color-off);
+  --switch-track-border-color: var(
+    --fancy-switch-track-border,
+    var(--colors-outline)
+  );
+  --switch-track-color-on: var(
+    --fancy-switch-track-bg,
+    var(--theme-background)
+  );
+  --switch-track-color-off: var(
+    --fancy-switch-track-bg,
+    var(--theme-background)
+  );
+  --switch-handle-color-on: var(--colors-primary);
+  --switch-handle-color-off: var(--colors-base01);
+  --switch-handle-icon-color-on: var(--colors-base3);
+  --switch-handle-icon-color-off: var(--colors-base2);
+  --switch-ghost-color-on: var(--colors-base01);
+  --switch-ghost-color-off: var(--colors-base01);
   --switch-peeking-color-on: var(--switch-handle-color-on);
   --switch-peeking-color-off: var(--switch-handle-color-off);
 
@@ -144,17 +156,18 @@
   pointer-events: none;
   z-index: 0;
   box-sizing: border-box;
-  border: var(--m3e-switch-track-outline-width, 2px) solid var(--colors-outline);
+  border: var(--m3e-switch-track-outline-width, 2px) solid
+    var(--switch-track-border-color, var(--colors-outline));
   background-color: var(--switch-track-color-off);
   transition:
     background-color var(--durations-medium2) var(--easings-emphasized),
     border-color var(--durations-medium2) var(--easings-emphasized);
 }
 
-/* Justification: Checked state background fill transition on the visual track frame. */
+/* Justification: Checked state background fill and border transition on the visual track frame. */
 .switch_root[data-checked='true'] .switch_track_frame {
   background-color: var(--switch-track-color-on);
-  border-color: transparent;
+  border-color: var(--switch-track-border-color, var(--colors-outline));
 }
 
 /* Justification: Layer 1 Ghost icon and glyph slot positioned on opposite slider side from handle with idle opacity. */
@@ -276,7 +289,10 @@
   block-size: var(--switch-handle-size);
   inset-inline-start: var(--switch-handle-start);
   translate: 0px 0px;
-  transition: translate var(--durations-medium2) var(--easings-emphasized);
+  border-radius: var(--radii-full);
+  transition:
+    translate var(--durations-medium2) var(--easings-emphasized),
+    color var(--durations-medium2) var(--easings-emphasized);
 }
 
 /* Justification: SVG icons inside the handle slot must be block display and non-shrinking for strict optical centering. */
@@ -285,13 +301,35 @@
   flex-shrink: 0;
 }
 
+/* Justification: Font icons inside handle slot scaled to standard icon size and optically centered. */
+.switch_handle_slot .material-symbols-rounded,
+.switch_handle_slot [class*='m3e-icon'],
+.switch_handle_slot .switch-mdi-icon {
+  font-size: var(--m3e-switch-selected-icon-size, var(--spacing-4));
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Justification: Font icons inside ghost slot scaled to standard icon size and optically centered. */
+.switch_ghost_slot .material-symbols-rounded,
+.switch_ghost_slot [class*='m3e-icon'],
+.switch_ghost_slot .switch-mdi-icon {
+  font-size: var(--m3e-switch-selected-icon-size, var(--spacing-4));
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Justification: Unchecked handle slot content color mapping to track contrast. */
 .switch_root[data-checked='false'] .switch_handle_slot {
-  color: var(--switch-track-color-off);
+  color: var(--switch-handle-icon-color-off, var(--colors-base2));
 }
 
 /* Justification: Checked handle slot content color mapping and travel translation. */
 .switch_root[data-checked='true'] .switch_handle_slot {
   translate: var(--switch-handle-travel) 0px;
-  color: var(--switch-track-color-on);
+  color: var(--switch-handle-icon-color-on, var(--colors-base3));
 }

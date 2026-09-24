@@ -35,16 +35,16 @@ describe('Switch Default Border Specifications', () => {
     );
   });
 
-  it('configures base Switch track frame with default outline token when unchecked', () => {
+  it('configures base Switch track frame with persistent outline token across states', () => {
     const switchCss = readFileSync(
       resolve(__dirname, '../../src/components/atoms/Switch/switch.css'),
       'utf-8'
     );
     expect(switchCss).toMatch(
-      /\.switch_track_frame\s*\{[\s\S]*?border:\s*var\(--m3e-switch-track-outline-width,\s*2px\)\s*solid\s*var\(--colors-outline\);/
+      /\.switch_track_frame\s*\{[\s\S]*?border:\s*var\(--m3e-switch-track-outline-width,\s*2px\)\s*solid\s*var\(--switch-track-border-color,\s*var\(--colors-outline\)\);/
     );
     expect(switchCss).toMatch(
-      /\.switch_root\[data-checked='true'\] \.switch_track_frame\s*\{[\s\S]*?border-color:\s*transparent;/
+      /\.switch_root\[data-checked='true'\] \.switch_track_frame\s*\{[\s\S]*?border-color:\s*var\(--switch-track-border-color,\s*var\(--colors-outline\)\);/
     );
   });
 
